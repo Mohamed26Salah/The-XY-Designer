@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
-
+import FirebaseAuth
 struct Home: View {
     var body: some View {
         VStack {
+            Text(Auth.auth().currentUser?.uid ?? "No User")
             Image(systemName: "house")
                 .scaleEffect(3)
                 .padding(30)

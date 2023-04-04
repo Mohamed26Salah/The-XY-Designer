@@ -24,15 +24,15 @@ class LoginViewModel: AuthService {
                 }
                 return
             }
-            if (!self.checkIfEmailIsVerified()) {
+            if (self.checkIfEmailIsVerified()) {
+                completion(.success(true))
+            }
+            else {
                 self.showVerify = true
                 self.sendVerificationEmail()
                 self.errorMessage = "A veification email has been sent to your email!"
                 self.showError.toggle()
                 self.showLoading = false
-            }
-            else {
-                completion(.success(true))
             }
             
         }

@@ -40,11 +40,13 @@ struct Login: View {
                         .disabled(loginModel.showVerify)
                         .opacity(loginModel.showVerify ? 0.4 : 1)
                         .padding(.top,30)
-
+                    
                     HStack {
                         Button {
                             if (loginModel.showVerify) {
-                                loginModel.isUserVerified()
+                                loginModel.isUserVerified { result in
+                                    coordinator.path.append(.mainView)
+                                }
                             } else {
                                 loginModel.SignIn { result in
                                     coordinator.path.append(.mainView)
@@ -67,22 +69,17 @@ struct Login: View {
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
-
                             
-                    }
+                            
+                        }
+                        Spacer()
                         Button {
-                            NavigationLink("Register") {
-                                Register()
-                            }
+                            coordinator.path.append(.register)
                         } label: {
                             HStack(spacing: 15){
                                 Text("Sign Up ?")
                                     .fontWeight(.semibold)
                                     .contentTransition(.identity)
-                                
-                                Image(systemName: "person.badge.plus")
-                                    .font(.title3)
-                                    .rotationEffect(.init(degrees: 0))
                             }
                         }
                         .foregroundColor(.primary)
@@ -91,17 +88,17 @@ struct Login: View {
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
-
                             
+                            
+                        }
                     }
-                }
-                   
-                   
+                    
+                    
                     
                 }
                 .padding(.horizontal,30)
                 .padding(.vertical,15)
-               
+                
             }
             .alert(loginModel.errorMessage, isPresented: $loginModel.showError) {
             }

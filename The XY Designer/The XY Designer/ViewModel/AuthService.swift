@@ -15,7 +15,7 @@ class AuthService: ObservableObject {
     var isSignedIn: Bool {
         return auth.currentUser != nil
     }
-    @Published var goToHomeAuth = false
+    
     @Published var errorMessage: String = ""
     @Published var showError: Bool = false
     @Published var showLoading: Bool = false
@@ -40,24 +40,40 @@ class AuthService: ObservableObject {
             return false
         }
         let isEmailVerified = user.isEmailVerified
-        if (!isEmailVerified) {
-            return false
-        }else {
+        if (isEmailVerified) {
             return true
+        }else {
+            return false
         }
     }
-    func isUserVerified(){
-        if (!checkIfEmailIsVerified()) {
-            DispatchQueue.main.async {
-                //till here
-                self.errorMessage = "Email is Not Verified Yet, check your email please"
-                self.showError.toggle()
+    func isUserVerified(completion: @escaping (Result<Bool, Error>)->Void) {
+        
+        Auth.auth().currentUser?.reload(completion: { (error) in
+            
+            if let error = error {
+                print(error)
+            } else {
+                if Auth.auth().currentUser != nil && Auth.auth().currentUser!.isEmailVerified {
+                    completion(.success(true))
+                } else {
+                    DispatchQueue.main.async {
+                        self.errorMessage = "Email is Not Verified Yet, check your email please"
+                        self.showError.toggle()
+                    }
+                }
             }
-        } else {
-            //MARK: Send to Home
-            print("User is Verified")
-        }
+        })
     }
+//    func isUserVerified(completion: @escaping (Result<Bool, Error>)->Void){
+//        if (checkIfEmailIsVerified()) {
+//            completion(.success(true))
+//        } else {
+//            DispatchQueue.main.async {
+//                self.errorMessage = "Email is Not Verified Yet, check your email please"
+//                self.showError.toggle()
+//            }
+//        }
+//    }
 
     func sendVerificationEmail() {
         guard let user = Auth.auth().currentUser else {

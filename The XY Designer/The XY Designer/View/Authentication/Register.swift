@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Register: View {
     @StateObject var RegisterModel: RegisterViewModel = .init()
+    @EnvironmentObject var coordinator: Coordinator
     var body: some View {
         ZStack {
             ScrollView(.vertical, showsIndicators: false) {
@@ -46,14 +47,19 @@ struct Register: View {
                         .opacity(RegisterModel.showVerify ? 0.4 : 1)
                         .padding(.top,30)
                     
-                    //MARK: Stopped Here
-//                    NavigationStack{
-                        Button(action: RegisterModel.showVerify ? RegisterModel.isUserVerified : RegisterModel.signUp) {
-                            //                    ProgressView("Processing")
-                            //                                .tint(.primary)
-                            //                                .foregroundColor(.secondary)
+                    
+                    HStack {
+                        Button {
+                            if (RegisterModel.showVerify) {
+                                RegisterModel.isUserVerified { result in
+                                    coordinator.path.append(.mainView)
+                                }
+                            } else {
+                                RegisterModel.signUp()
+                            }
+                        } label: {
                             HStack(spacing: 15){
-                                Text(RegisterModel.showVerify ? "Verify Email" : "Go To Home?")
+                                Text(RegisterModel.showVerify ? "Verify Email" : "Sign Up")
                                     .fontWeight(.semibold)
                                     .contentTransition(.identity)
                                 
@@ -61,16 +67,37 @@ struct Register: View {
                                     .font(.title3)
                                     .rotationEffect(.init(degrees: 45))
                             }
-                            .foregroundColor(.primary)
-                            .padding(.horizontal,25)
-                            .padding(.vertical)
-                            .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .foregroundColor(.secondary.opacity(0.3))
+                        }
+                        .foregroundColor(.primary)
+                        .padding(.horizontal,25)
+                        .padding(.vertical)
+                        .background{
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(.secondary.opacity(0.3))
+                        }
+                        Spacer()
+                        Button {
+                            coordinator.path.removeLast()
+                        } label: {
+                            HStack(spacing: 15){
+                                Text("Sign In")
+                                    .fontWeight(.semibold)
+                                    .contentTransition(.identity)
                                 
-                                
+                                Image(systemName: "line.diagonal.arrow")
+                                    .font(.title3)
+                                    .rotationEffect(.init(degrees: 0))
                             }
                         }
+                        .foregroundColor(.primary)
+                        .padding(.horizontal,25)
+                        .padding(.vertical)
+                        .background{
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .foregroundColor(.secondary.opacity(0.3))
+                        }
+                    }
+                    
                 }
                 .padding(.horizontal,30)
                 .padding(.vertical,15)
