@@ -16,6 +16,7 @@
 		AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */; };
 		AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412E29CC84C8007C02AA /* ProfileViewModel.swift */; };
 		AB9B413129CC861C007C02AA /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B413029CC861C007C02AA /* Profile.swift */; };
+		AB9B44C529DDC4B000A94157 /* RoomCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */; };
 		ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4329CCF85F00EB88E1 /* Home.swift */; };
 		ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */; };
 		ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */; };
@@ -47,6 +48,7 @@
 		AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		AB9B412E29CC84C8007C02AA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		AB9B413029CC861C007C02AA /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCaptureController.swift; sourceTree = "<group>"; };
 		ABAEBA4329CCF85F00EB88E1 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlaneApi.swift; sourceTree = "<group>"; };
 		ABD54DC929C49FE3000E7506 /* The XY Designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The XY Designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +81,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB9B44C329DDC48E00A94157 /* UIViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */,
+			);
+			path = UIViewController;
+			sourceTree = "<group>";
+		};
 		ABD54DC029C49FE3000E7506 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +112,7 @@
 				AB3A2CE929C629C400B2717A /* GoogleService-Info.plist */,
 				ABD54DDC29C4A18A000E7506 /* Model */,
 				ABD54DDB29C4A17F000E7506 /* ViewModel */,
+				AB9B44C329DDC48E00A94157 /* UIViewController */,
 				ABD54DDA29C4A173000E7506 /* View */,
 				ABD54DD029C49FE4000E7506 /* Assets.xcassets */,
 				ABD54DD229C49FE4000E7506 /* Preview Content */,
@@ -278,6 +289,7 @@
 				AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */,
 				AB3A2CED29C6380D00B2717A /* User.swift in Sources */,
 				AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */,
+				AB9B44C529DDC4B000A94157 /* RoomCaptureController.swift in Sources */,
 				ABD54DE229C4BE02000E7506 /* Login.swift in Sources */,
 				ABD54DE429C4BE10000E7506 /* Register.swift in Sources */,
 				ABD54DF729C4CCA3000E7506 /* LoginViewModel.swift in Sources */,

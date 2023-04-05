@@ -40,6 +40,7 @@ struct The_XY_DesignerApp: App {
         WindowGroup {
             NavigationStack (path: $coordinator.path){
 //               AnyView(isSignedIn ? AnyView(MainView()) : AnyView(Login()))
+                // MARK: problem here isSignedIn 2 times
                 userFirstView()
                 .navigationDestination(for: Route.self) { route in
                     switch route {

@@ -11,7 +11,7 @@ import FirebaseAuth
 class LoginViewModel: AuthService {
     @Published var email: String = ""
     @Published var password: String = ""
-   func SignIn(completion: @escaping (Result<Bool, Error>)->Void) {
+   func SignIn(completion: @escaping ()->Void) {
 //    func SignIn() {
         self.showLoading = true
         UIApplication.shared.closeKeyboard()
@@ -25,7 +25,7 @@ class LoginViewModel: AuthService {
                 return
             }
             if (self.checkIfEmailIsVerified()) {
-                completion(.success(true))
+                completion()
             }
             else {
                 self.showVerify = true

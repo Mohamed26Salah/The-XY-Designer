@@ -48,7 +48,7 @@ struct Login: View {
                                     coordinator.path.append(.mainView)
                                 }
                             } else {
-                                loginModel.SignIn { result in
+                                loginModel.SignIn {
                                    coordinator.path.append(.mainView)
                                 }
                             }
