@@ -53,9 +53,7 @@ struct MainView: View {
                         ForEach(Tab.allCases, id: \.rawValue) { tab in
                                 screens["\(tab.rawValue.capitalized)"]!.offset(y: -20)
                             .tag(tab)
-
                         }
-
                     }
                 }
                 VStack {
@@ -64,11 +62,11 @@ struct MainView: View {
                 }
                 .ignoresSafeArea(edges: [.bottom])
             }
-            .onAppear {
-                if !isSignedIn {
-                    coordinator.path.append(.login)
-                }
-            }
+//            .onAppear {
+//                if !isSignedIn {
+//                    coordinator.path.append(.login)
+//                }
+//            }
     }
 
 }

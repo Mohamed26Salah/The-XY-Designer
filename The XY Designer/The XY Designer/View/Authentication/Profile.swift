@@ -54,7 +54,8 @@ struct Profile: View {
                         Spacer()
                         Button("LogOut") {
                             ProfileModel.logOutUser()
-                            coordinator.path = [.login]
+//                            coordinator.path = [.login]
+                            coordinator.reset()
                         }
                     }
                     

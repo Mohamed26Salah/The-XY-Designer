@@ -23,7 +23,14 @@ class Coordinator: ObservableObject {
         path = [Route]()
     }
 }
-
+@ViewBuilder
+func userFirstView() -> some View{
+    if (isSignedIn) {
+        AnyView(MainView())
+    }else {
+        AnyView(Login())
+    }
+}
 @main
 struct The_XY_DesignerApp: App {
     // register app delegate for Firebase setup
@@ -33,7 +40,7 @@ struct The_XY_DesignerApp: App {
         WindowGroup {
             NavigationStack (path: $coordinator.path){
 //               AnyView(isSignedIn ? AnyView(MainView()) : AnyView(Login()))
-                MainView()
+                userFirstView()
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case .login:

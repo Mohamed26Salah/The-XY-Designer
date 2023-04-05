@@ -49,7 +49,7 @@ struct Login: View {
                                 }
                             } else {
                                 loginModel.SignIn { result in
-                                    coordinator.path.append(.mainView)
+                                   coordinator.path.append(.mainView)
                                 }
                             }
                         } label: {

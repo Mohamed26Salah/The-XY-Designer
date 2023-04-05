@@ -61,7 +61,7 @@ class RegisterViewModel: AuthService {
             }
             self.addUserToDataBase(resultUser)
             self.showVerify = true
-            self.auth.signIn(withEmail: self.email, password: self.password)
+//            self.auth.signIn(withEmail: self.email, password: self.password)
             self.sendVerificationEmail()
             DispatchQueue.main.async {
                 self.errorMessage = "A veification email has been sent to your email!"
