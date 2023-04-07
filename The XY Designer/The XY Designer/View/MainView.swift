@@ -17,9 +17,10 @@ struct MainView: View {
     }
     let screens: [String: AnyView] = [
         "House": AnyView(Home()),
-        "Plus": AnyView(RoomPlaneApi()),
+        "Plus": AnyView(view3DRoomTemp()),
         "Person": AnyView(Profile()),
     ]
+//    "Plus": AnyView(RoomPlaneApi()),
     var isSignedIn: Bool {
         return Auth.auth().currentUser != nil
     }
@@ -62,11 +63,7 @@ struct MainView: View {
                 }
                 .ignoresSafeArea(edges: [.bottom])
             }
-//            .onAppear {
-//                if !isSignedIn {
-//                    coordinator.path.append(.login)
-//                }
-//            }
+
     }
 
 }

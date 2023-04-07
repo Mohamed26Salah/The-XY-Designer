@@ -10,6 +10,7 @@ import SwiftUI
 struct Register: View {
     @StateObject var RegisterModel: RegisterViewModel = .init()
     @EnvironmentObject var coordinator: Coordinator
+//    @State private var readyToNavigate : Bool = false
     var body: some View {
         ZStack {
             ScrollView(.vertical, showsIndicators: false) {
@@ -53,6 +54,7 @@ struct Register: View {
                             if (RegisterModel.showVerify) {
                                 RegisterModel.isUserVerified { result in
                                     coordinator.path.append(.mainView)
+//                                    readyToNavigate = true
                                 }
                             } else {
                                 RegisterModel.signUp()
@@ -75,6 +77,9 @@ struct Register: View {
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
                         }
+//                        .navigationDestination(isPresented: $readyToNavigate) {
+//                            MainView()
+//                        }
                         Spacer()
                         Button {
                             coordinator.path.removeLast()
@@ -116,6 +121,7 @@ struct Register: View {
         
     }
 }
+
 
 
 struct Register_Previews: PreviewProvider {

@@ -7,10 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB00AE9129E0A8E90091085D /* tempRoomStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */; };
+		AB00AE9429E0A9410091085D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB00AE9329E0A9410091085D /* UserDefaults.swift */; };
+		AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */; };
+		AB29D22229E033C300557B2B /* Earth.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB29D22129E033C300557B2B /* Earth.usdz */; };
 		AB3A2CEA29C629C400B2717A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB3A2CE929C629C400B2717A /* GoogleService-Info.plist */; };
 		AB3A2CED29C6380D00B2717A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CEC29C6380D00B2717A /* User.swift */; };
 		AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */; };
 		AB3A2CF329C64DD700B2717A /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CF229C64DD700B2717A /* Validator.swift */; };
+		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */; };
+		AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D129DF65C4005FDCA8 /* Themes.swift */; };
+		AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D329DF65DD005FDCA8 /* Samples.swift */; };
+		AB5FC6DD29DF78E7005FDCA8 /* defaultLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6DC29DF78E7005FDCA8 /* defaultLightNode.swift */; };
+		AB5FC6DF29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */; };
+		AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */; };
+		AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */; };
 		AB9B412929CC6805007C02AA /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412829CC6805007C02AA /* AuthService.swift */; };
 		AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412A29CC7559007C02AA /* ForgetPassword.swift */; };
 		AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */; };
@@ -38,11 +49,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tempRoomStruct.swift; sourceTree = "<group>"; };
+		AB00AE9329E0A9410091085D /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view3DRoomTemp.swift; sourceTree = "<group>"; };
+		AB29D22129E033C300557B2B /* Earth.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Earth.usdz; sourceTree = "<group>"; };
 		AB3A2CE929C629C400B2717A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AB3A2CEB29C62C5F00B2717A /* The-XY-Designer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "The-XY-Designer-Info.plist"; sourceTree = SOURCE_ROOT; };
 		AB3A2CEC29C6380D00B2717A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AB3A2CF229C64DD700B2717A /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom.swift; sourceTree = "<group>"; };
+		AB5FC6D129DF65C4005FDCA8 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
+		AB5FC6D329DF65DD005FDCA8 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
+		AB5FC6DC29DF78E7005FDCA8 /* defaultLightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultLightNode.swift; sourceTree = "<group>"; };
+		AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extenstions.swift"; sourceTree = "<group>"; };
+		AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3DRoom.swift; sourceTree = "<group>"; };
+		AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRenderereDelegate.swift; sourceTree = "<group>"; };
 		AB9B412829CC6805007C02AA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		AB9B412A29CC7559007C02AA /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
 		AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -81,10 +103,77 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB00AE9229E0A92A0091085D /* Extenstions */ = {
+			isa = PBXGroup;
+			children = (
+				AB00AE9329E0A9410091085D /* UserDefaults.swift */,
+			);
+			path = Extenstions;
+			sourceTree = "<group>";
+		};
+		AB5FC6C729DF6046005FDCA8 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				AB9B412829CC6805007C02AA /* AuthService.swift */,
+				ABD54DF629C4CCA3000E7506 /* LoginViewModel.swift */,
+				AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */,
+				AB9B412E29CC84C8007C02AA /* ProfileViewModel.swift */,
+				AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		AB5FC6C829DF6074005FDCA8 /* RoomBuilder */ = {
+			isa = PBXGroup;
+			children = (
+				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */,
+			);
+			path = RoomBuilder;
+			sourceTree = "<group>";
+		};
+		AB5FC6D029DF65A7005FDCA8 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				AB5FC6D129DF65C4005FDCA8 /* Themes.swift */,
+				AB5FC6D329DF65DD005FDCA8 /* Samples.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		AB5FC6DB29DF78CA005FDCA8 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				AB5FC6E329DF8C15005FDCA8 /* Hacks */,
+				AB5FC6D029DF65A7005FDCA8 /* Mocks */,
+				AB5FC6DC29DF78E7005FDCA8 /* defaultLightNode.swift */,
+				AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		AB5FC6E029DF7CAC005FDCA8 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */,
+				AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */,
+				AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */,
+			);
+			path = Room;
+			sourceTree = "<group>";
+		};
+		AB5FC6E329DF8C15005FDCA8 /* Hacks */ = {
+			isa = PBXGroup;
+			children = (
+				AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */,
+			);
+			path = Hacks;
+			sourceTree = "<group>";
+		};
 		AB9B44C329DDC48E00A94157 /* UIViewController */ = {
 			isa = PBXGroup;
 			children = (
 				AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */,
+				AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */,
 			);
 			path = UIViewController;
 			sourceTree = "<group>";
@@ -110,10 +199,13 @@
 			children = (
 				AB3A2CEB29C62C5F00B2717A /* The-XY-Designer-Info.plist */,
 				AB3A2CE929C629C400B2717A /* GoogleService-Info.plist */,
+				AB29D22129E033C300557B2B /* Earth.usdz */,
 				ABD54DDC29C4A18A000E7506 /* Model */,
 				ABD54DDB29C4A17F000E7506 /* ViewModel */,
 				AB9B44C329DDC48E00A94157 /* UIViewController */,
 				ABD54DDA29C4A173000E7506 /* View */,
+				AB5FC6DB29DF78CA005FDCA8 /* Scene */,
+				AB00AE9229E0A92A0091085D /* Extenstions */,
 				ABD54DD029C49FE4000E7506 /* Assets.xcassets */,
 				ABD54DD229C49FE4000E7506 /* Preview Content */,
 			);
@@ -132,10 +224,10 @@
 			isa = PBXGroup;
 			children = (
 				ABD54DF329C4C9F2000E7506 /* Customs */,
-				ABD54DE029C4BDD9000E7506 /* Authentication */,
 				ABD54DDD29C4A1AB000E7506 /* CustomTabBar */,
+				ABD54DE029C4BDD9000E7506 /* Authentication */,
+				AB5FC6E029DF7CAC005FDCA8 /* Room */,
 				ABAEBA4329CCF85F00EB88E1 /* Home.swift */,
-				ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */,
 				ABD54DCE29C49FE3000E7506 /* MainView.swift */,
 				ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */,
 			);
@@ -145,11 +237,8 @@
 		ABD54DDB29C4A17F000E7506 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				AB9B412829CC6805007C02AA /* AuthService.swift */,
-				ABD54DF629C4CCA3000E7506 /* LoginViewModel.swift */,
-				AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */,
-				AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */,
-				AB9B412E29CC84C8007C02AA /* ProfileViewModel.swift */,
+				AB5FC6C729DF6046005FDCA8 /* Authentication */,
+				AB5FC6C829DF6074005FDCA8 /* RoomBuilder */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -263,6 +352,7 @@
 			files = (
 				ABD54DD429C49FE4000E7506 /* Preview Assets.xcassets in Resources */,
 				ABD54DD129C49FE4000E7506 /* Assets.xcassets in Resources */,
+				AB29D22229E033C300557B2B /* Earth.usdz in Resources */,
 				AB3A2CEA29C629C400B2717A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,20 +369,30 @@
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
+				AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */,
+				AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */,
 				ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */,
 				AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */,
 				ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */,
 				AB9B412929CC6805007C02AA /* AuthService.swift in Sources */,
+				AB5FC6DD29DF78E7005FDCA8 /* defaultLightNode.swift in Sources */,
+				AB5FC6DF29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift in Sources */,
 				AB3A2CF329C64DD700B2717A /* Validator.swift in Sources */,
 				ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */,
+				AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */,
+				AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */,
 				AB9B413129CC861C007C02AA /* Profile.swift in Sources */,
 				AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */,
+				AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */,
+				AB00AE9429E0A9410091085D /* UserDefaults.swift in Sources */,
 				AB3A2CED29C6380D00B2717A /* User.swift in Sources */,
 				AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */,
 				AB9B44C529DDC4B000A94157 /* RoomCaptureController.swift in Sources */,
 				ABD54DE229C4BE02000E7506 /* Login.swift in Sources */,
 				ABD54DE429C4BE10000E7506 /* Register.swift in Sources */,
+				AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */,
 				ABD54DF729C4CCA3000E7506 /* LoginViewModel.swift in Sources */,
+				AB00AE9129E0A8E90091085D /* tempRoomStruct.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
