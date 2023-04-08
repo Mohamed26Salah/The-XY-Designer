@@ -10,14 +10,17 @@ import SwiftUI
 import RoomPlan
 import GameController
 
-class BuildMyRoom {
+class BuildMyRoom: ObservableObject {
     var scene: SCNScene = SCNScene()
     private let cameraHeight: Float = 15
     var room: CapturedRoom
     let node: SCNNode!
-    var pressedOnFurniture: Bool = false
+    @Published var pressedOnFurniture: Bool = false
     var selectedFurniture: MaterialNode?
-    var furnitureSpeed: Float = 5
+    var selectedFurniturePosition: SCNVector3?
+    var selectedFurnitureRotation: SCNVector4?
+    var furnitureSpeed: Float = 0.05
+    var rotationAngle: CGFloat = 0.0
     init(
         room: CapturedRoom
     ) {
@@ -184,6 +187,9 @@ private extension BuildMyRoom {
 }
 // MARK: - Touch / Pick node / Controls
 extension BuildMyRoom {
+    func onEachFrame(){
+        print("Fuck Joex")
+    }
     func pick(_ furnitureNode: MaterialNode) {
         //    if let inCurrentTeamHero = game.currentTeam?.heroes.first(where: { $0 == hero }) {
         //      // Pressed hero is in current team
@@ -198,6 +204,7 @@ extension BuildMyRoom {
         case .object:
             furnitureNode.highlight(with: .red, for: 0.5)
             selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             pressedOnFurniture = true
             break;
         case .wall:
@@ -219,22 +226,99 @@ extension BuildMyRoom {
         
         
     }
+    
     func handleRightPad(dPad: GCControllerDirectionPad, xAxis: Float, yAxis: Float) {
         if xAxis == yAxis, xAxis == 0 {
-            selectedFurniture?.physicsBody?.velocity = SCNVector3()
-            selectedFurniture?.physicsBody?.mass = 0
-            //        hero.node.physicsBody?.angularVelocity = SCNVector4()
-            return
+            if let selectedFurniture = selectedFurniture {
+                selectedFurniture.position = selectedFurniturePosition ?? SCNVector3(x: 0, y: 0, z: 0)
+                return
+            }
+            
+        }else {
+            if (xAxis != 0){
+                if let selectedFurniture = selectedFurniture {
+                    let movementPosition = SCNVector3(xAxis, 0, -yAxis) * furnitureSpeed
+                    if pressedOnFurniture {
+                        selectedFurniture.position += movementPosition
+                        selectedFurniturePosition = selectedFurniture.position
+                    }
+                }
+            }
+            
+            
         }
-        
-        let velocity = SCNVector3(xAxis, 0, -yAxis) * furnitureSpeed
-        if pressedOnFurniture {
-            print("da5l hna")
-            selectedFurniture!.physicsBody?.velocity = velocity
-            selectedFurniture!.physicsBody?.mass = 1
-        }
-       
     }
+    func leftRotation() {
+        rotationAngle -= 45
+        let rotationAngle: CGFloat = rotationAngle
+        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        
+        if let selectedFurniture = selectedFurniture {
+            if pressedOnFurniture {
+                // Create an SCNAction to animate the rotation
+                let rotateAction = SCNAction.rotate(by: .pi / 4, around: SCNVector3(0, 1, 0), duration: 0.5)
+                
+                // Apply the action to the node
+                selectedFurniture.runAction(rotateAction)
+            }
+        }
+    }
+    //    func rightRotation(){
+//        rotationAngle -= 45
+//        let rotationAngle: CGFloat = rotationAngle
+//        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+//        if let selectedFurniture = selectedFurniture {
+//            if pressedOnFurniture {
+//                selectedFurniture.rotation = rotation
+//            }
+//        }
+//    }
+    func rightRotation() {
+        rotationAngle += 45
+        let rotationAngle: CGFloat = rotationAngle
+        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        
+        if let selectedFurniture = selectedFurniture {
+            if pressedOnFurniture {
+                // Create an SCNAction to animate the rotation
+                let rotateAction = SCNAction.rotate(by: -.pi / 4, around: SCNVector3(0, 1, 0), duration: 0.5)
+                
+                // Apply the action to the node
+                selectedFurniture.runAction(rotateAction)
+            }
+        }
+    }
+    func leftHoldRotation(){
+        rotationAngle -= 45
+        let rotationAngle: CGFloat = rotationAngle
+        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        
+        if let selectedFurniture = selectedFurniture {
+            if pressedOnFurniture {
+                // Create an SCNAction to animate the rotation
+                let rotateAction = SCNAction.rotate(by: .pi / .pi, around: SCNVector3(0, 1, 0), duration: 0.5)
+                
+                // Apply the action to the node
+                selectedFurniture.runAction(rotateAction)
+            }
+        }
+    }
+    func rightHoldRotation(){
+        rotationAngle += 1
+        let rotationAngle: CGFloat = rotationAngle
+        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        
+        if let selectedFurniture = selectedFurniture {
+            if pressedOnFurniture {
+                // Create an SCNAction to animate the rotation
+                let rotateAction = SCNAction.rotate(by: -.pi / .pi, around: SCNVector3(0, 1, 0), duration: 0.5)
+                
+                // Apply the action to the node
+                selectedFurniture.runAction(rotateAction)
+            }
+        }
+    }
+    
 }
 
 
