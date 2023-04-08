@@ -14,6 +14,11 @@
 		AB3A2CED29C6380D00B2717A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CEC29C6380D00B2717A /* User.swift */; };
 		AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */; };
 		AB3A2CF329C64DD700B2717A /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CF229C64DD700B2717A /* Validator.swift */; };
+		AB4CCA9D29E19D39007E3864 /* SCNNode+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCA9C29E19D39007E3864 /* SCNNode+Helpers.swift */; };
+		AB4CCA9F29E19D6E007E3864 /* DebugHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */; };
+		AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA129E1A60F007E3864 /* Entity.swift */; };
+		AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */; };
+		AB4CCAA829E1B3F6007E3864 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA729E1B3F6007E3864 /* Control.swift */; };
 		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */; };
 		AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D129DF65C4005FDCA8 /* Themes.swift */; };
 		AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D329DF65DD005FDCA8 /* Samples.swift */; };
@@ -56,6 +61,11 @@
 		AB3A2CEC29C6380D00B2717A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AB3A2CF229C64DD700B2717A /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		AB4CCA9C29E19D39007E3864 /* SCNNode+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Helpers.swift"; sourceTree = "<group>"; };
+		AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugHelpers.swift; sourceTree = "<group>"; };
+		AB4CCAA129E1A60F007E3864 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
+		AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialNode.swift; sourceTree = "<group>"; };
+		AB4CCAA729E1B3F6007E3864 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
 		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom.swift; sourceTree = "<group>"; };
 		AB5FC6D129DF65C4005FDCA8 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		AB5FC6D329DF65DD005FDCA8 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
@@ -109,6 +119,14 @@
 			path = Extenstions;
 			sourceTree = "<group>";
 		};
+		AB4CCAA629E1B3E8007E3864 /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				AB4CCAA729E1B3F6007E3864 /* Control.swift */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
 		AB5FC6C729DF6046005FDCA8 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
@@ -141,10 +159,15 @@
 		AB5FC6DB29DF78CA005FDCA8 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				AB4CCAA629E1B3E8007E3864 /* Control */,
 				AB5FC6E329DF8C15005FDCA8 /* Hacks */,
 				AB5FC6D029DF65A7005FDCA8 /* Mocks */,
 				AB5FC6DC29DF78E7005FDCA8 /* defaultLightNode.swift */,
 				AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */,
+				AB4CCA9C29E19D39007E3864 /* SCNNode+Helpers.swift */,
+				AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */,
+				AB4CCAA129E1A60F007E3864 /* Entity.swift */,
+				AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -364,10 +387,13 @@
 				AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
+				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
 				AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */,
+				AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */,
 				AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */,
 				ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */,
+				AB4CCA9F29E19D6E007E3864 /* DebugHelpers.swift in Sources */,
 				AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */,
 				ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */,
 				AB9B412929CC6805007C02AA /* AuthService.swift in Sources */,
@@ -382,10 +408,12 @@
 				AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */,
 				AB00AE9429E0A9410091085D /* UserDefaults.swift in Sources */,
 				AB3A2CED29C6380D00B2717A /* User.swift in Sources */,
+				AB4CCAA829E1B3F6007E3864 /* Control.swift in Sources */,
 				AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */,
 				AB9B44C529DDC4B000A94157 /* RoomCaptureController.swift in Sources */,
 				ABD54DE229C4BE02000E7506 /* Login.swift in Sources */,
 				ABD54DE429C4BE10000E7506 /* Register.swift in Sources */,
+				AB4CCA9D29E19D39007E3864 /* SCNNode+Helpers.swift in Sources */,
 				AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */,
 				ABD54DF729C4CCA3000E7506 /* LoginViewModel.swift in Sources */,
 				AB00AE9129E0A8E90091085D /* tempRoomStruct.swift in Sources */,

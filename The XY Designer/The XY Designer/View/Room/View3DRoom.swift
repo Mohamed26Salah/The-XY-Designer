@@ -20,8 +20,6 @@ struct View3DRoom: View {
         print("3da elroom")
 //        self._RoomModel = StateObject(wrappedValue: BuildMyRoom(room: room))
         RoomModel = BuildMyRoom(room: room)
-        
-        
         savedRoomModel = tempRoomStruct(room: room)
         savedRoomModel.saveRoomToUserDefaults(room: room)
         
