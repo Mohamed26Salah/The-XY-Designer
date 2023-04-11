@@ -32,6 +32,7 @@
 		AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412E29CC84C8007C02AA /* ProfileViewModel.swift */; };
 		AB9B413129CC861C007C02AA /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B413029CC861C007C02AA /* Profile.swift */; };
 		AB9B44C529DDC4B000A94157 /* RoomCaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */; };
+		ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */; };
 		ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4329CCF85F00EB88E1 /* Home.swift */; };
 		ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */; };
 		ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */; };
@@ -50,6 +51,8 @@
 		ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DF429C4CA17000E7506 /* CustomTextField.swift */; };
 		ABD54DF729C4CCA3000E7506 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DF629C4CCA3000E7506 /* LoginViewModel.swift */; };
 		ABD54DF929C4D091000E7506 /* SecureTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DF829C4D091000E7506 /* SecureTextField.swift */; };
+		ABFC200229E4D54D003827CF /* ColorKit in Frameworks */ = {isa = PBXBuildFile; productRef = ABFC200129E4D54D003827CF /* ColorKit */; };
+		ABFC200429E4DDFB003827CF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC200329E4DDFB003827CF /* UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +82,7 @@
 		AB9B412E29CC84C8007C02AA /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		AB9B413029CC861C007C02AA /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomCaptureController.swift; sourceTree = "<group>"; };
+		ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDelegate.swift; sourceTree = "<group>"; };
 		ABAEBA4329CCF85F00EB88E1 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlaneApi.swift; sourceTree = "<group>"; };
 		ABD54DC929C49FE3000E7506 /* The XY Designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The XY Designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +96,7 @@
 		ABD54DF429C4CA17000E7506 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		ABD54DF629C4CCA3000E7506 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		ABD54DF829C4D091000E7506 /* SecureTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureTextField.swift; sourceTree = "<group>"; };
+		ABFC200329E4DDFB003827CF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +109,7 @@
 				ABD54DED29C4C30C000E7506 /* FirebaseStorage in Frameworks */,
 				ABD54DF229C4C439000E7506 /* GoogleSignInSwift in Frameworks */,
 				ABD54DE929C4C30C000E7506 /* FirebaseFirestore in Frameworks */,
+				ABFC200229E4D54D003827CF /* ColorKit in Frameworks */,
 				ABD54DEB29C4C30C000E7506 /* FirebaseFirestoreSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				AB00AE9329E0A9410091085D /* UserDefaults.swift */,
+				ABFC200329E4DDFB003827CF /* UIColor.swift */,
 			);
 			path = Extenstions;
 			sourceTree = "<group>";
@@ -168,6 +175,7 @@
 				AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */,
 				AB4CCAA129E1A60F007E3864 /* Entity.swift */,
 				AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */,
+				ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -323,6 +331,7 @@
 				ABD54DEC29C4C30C000E7506 /* FirebaseStorage */,
 				ABD54DEF29C4C439000E7506 /* GoogleSignIn */,
 				ABD54DF129C4C439000E7506 /* GoogleSignInSwift */,
+				ABFC200129E4D54D003827CF /* ColorKit */,
 			);
 			productName = "The XY Designer";
 			productReference = ABD54DC929C49FE3000E7506 /* The XY Designer.app */;
@@ -355,6 +364,7 @@
 			packageReferences = (
 				ABD54DE529C4C30C000E7506 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				ABD54DEE29C4C439000E7506 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				ABFC200029E4D54D003827CF /* XCRemoteSwiftPackageReference "ColorKit" */,
 			);
 			productRefGroup = ABD54DCA29C49FE3000E7506 /* Products */;
 			projectDirPath = "";
@@ -386,6 +396,7 @@
 				ABD54DF929C4D091000E7506 /* SecureTextField.swift in Sources */,
 				AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
+				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
@@ -395,6 +406,7 @@
 				ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */,
 				AB4CCA9F29E19D6E007E3864 /* DebugHelpers.swift in Sources */,
 				AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */,
+				ABFC200429E4DDFB003827CF /* UIColor.swift in Sources */,
 				ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */,
 				AB9B412929CC6805007C02AA /* AuthService.swift in Sources */,
 				AB5FC6DD29DF78E7005FDCA8 /* defaultLightNode.swift in Sources */,
@@ -637,6 +649,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		ABFC200029E4D54D003827CF /* XCRemoteSwiftPackageReference "ColorKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Boris-Em/ColorKit";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -669,6 +689,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ABD54DEE29C4C439000E7506 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
 			productName = GoogleSignInSwift;
+		};
+		ABFC200129E4D54D003827CF /* ColorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABFC200029E4D54D003827CF /* XCRemoteSwiftPackageReference "ColorKit" */;
+			productName = ColorKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

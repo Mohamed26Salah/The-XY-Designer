@@ -10,6 +10,12 @@ import SwiftUI
 import RoomPlan
 import GameController
 
+struct FurnitureConstants {
+    static let cameraHeight: Float = 15
+    static let furnitureSpeed: Float = 0.05
+    static let rotationAngle: CGFloat = 0.0
+}
+
 class BuildMyRoom: ObservableObject {
     var scene: SCNScene = SCNScene()
     private let cameraHeight: Float = 15
@@ -19,8 +25,12 @@ class BuildMyRoom: ObservableObject {
     var selectedFurniture: MaterialNode?
     var selectedFurniturePosition: SCNVector3?
     var selectedFurnitureRotation: SCNVector4?
+    var oldFurniturePosition: SCNVector3?
     var furnitureSpeed: Float = 0.05
     var rotationAngle: CGFloat = 0.0
+    let contactDelegate = ContactDelegate()
+    var cameraNode = SCNNode()
+    @Published var cameraRotation: CGFloat?
     init(
         room: CapturedRoom
     ) {
@@ -46,7 +56,7 @@ private extension BuildMyRoom {
     }
     func prepareCamera() {
         // Setup camera
-        let cameraNode = SCNNode()
+        cameraNode = SCNNode()
         cameraNode.name = "CameraHuyamera"
         cameraNode.camera = SCNCamera()
         cameraNode.eulerAngles = SCNVector3(Float.pi / -3, 0, 0)
@@ -79,6 +89,8 @@ private extension BuildMyRoom {
         createRoomPlane(addPlaneTO: node)
         scene.rootNode.addChildNode(node)
         scene.background.contents = Color.DarkTheme.Violet.background.cgColor
+        scene.physicsWorld.contactDelegate = contactDelegate
+        contactDelegate.onBegin = onContactBegin(contact:)
         
         prepareCamera()
         prepareLight()
@@ -110,9 +122,15 @@ private extension BuildMyRoom {
             let stringUUID = wall.identifier.uuidString
             let boxNode = MaterialNode(type: .wall, id: stringUUID)
             boxNode.geometry = box
-            //                let boxNode = SCNNode(geometry: box)
-            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
             boxNode.simdTransform = wall.transform
+            //                let boxNode = SCNNode(geometry: box)
+            //            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+            boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+            boxNode.physicsBody?.mass = 0
+            boxNode.physicsBody?.restitution = 0
+            boxNode.physicsBody?.categoryBitMask = EntityType.wall.rawValue
+            //            boxNode.physicsBody?.collisionBitMask = EntityType.wall.rawValue | EntityType.object.rawValue
+            //            boxNode.physicsBody?.contactTestBitMask = EntityType.wall.rawValue | EntityType.object.rawValue
             node.addChildNode(boxNode)
         }
         
@@ -128,7 +146,12 @@ private extension BuildMyRoom {
             boxNode.geometry = box
             //                let boxNode = SCNNode(geometry: box)
             boxNode.simdTransform = object.transform
-            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+            boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+            boxNode.physicsBody?.mass = 0
+            boxNode.physicsBody?.restitution = 1
+            boxNode.physicsBody?.categoryBitMask = EntityType.object.rawValue
+            boxNode.physicsBody?.collisionBitMask = EntityType.wall.rawValue
+            boxNode.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
             node.addChildNode(boxNode)
         }
         
@@ -187,19 +210,7 @@ private extension BuildMyRoom {
 }
 // MARK: - Touch / Pick node / Controls
 extension BuildMyRoom {
-    func onEachFrame(){
-        print("Fuck Joex")
-    }
     func pick(_ furnitureNode: MaterialNode) {
-        //    if let inCurrentTeamHero = game.currentTeam?.heroes.first(where: { $0 == hero }) {
-        //      // Pressed hero is in current team
-        //      game.currentHero = hero
-        //      hero.node.highlight()
-        //    } else {
-        //      // Hero is not allowed to be picked, it's another team's turn
-        //      hero.node.highlight(with: .red, for: 0.1)
-        //    }
-        print(furnitureNode.type)
         switch furnitureNode.type {
         case .object:
             furnitureNode.highlight(with: .red, for: 0.5)
@@ -228,6 +239,7 @@ extension BuildMyRoom {
     }
     
     func handleRightPad(dPad: GCControllerDirectionPad, xAxis: Float, yAxis: Float) {
+        oldFurniturePosition = selectedFurniture?.position
         if xAxis == yAxis, xAxis == 0 {
             if let selectedFurniture = selectedFurniture {
                 selectedFurniture.position = selectedFurniturePosition ?? SCNVector3(x: 0, y: 0, z: 0)
@@ -250,8 +262,8 @@ extension BuildMyRoom {
     }
     func leftRotation() {
         rotationAngle -= 45
-        let rotationAngle: CGFloat = rotationAngle
-        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        //        let rotationAngle: CGFloat = rotationAngle
+        //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
             if pressedOnFurniture {
@@ -264,19 +276,19 @@ extension BuildMyRoom {
         }
     }
     //    func rightRotation(){
-//        rotationAngle -= 45
-//        let rotationAngle: CGFloat = rotationAngle
-//        let rotation = SCNVector4(0, 1, 0, rotationAngle)
-//        if let selectedFurniture = selectedFurniture {
-//            if pressedOnFurniture {
-//                selectedFurniture.rotation = rotation
-//            }
-//        }
-//    }
+    //        rotationAngle -= 45
+    //        let rotationAngle: CGFloat = rotationAngle
+    //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+    //        if let selectedFurniture = selectedFurniture {
+    //            if pressedOnFurniture {
+    //                selectedFurniture.rotation = rotation
+    //            }
+    //        }
+    //    }
     func rightRotation() {
         rotationAngle += 45
-        let rotationAngle: CGFloat = rotationAngle
-        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        //        let rotationAngle: CGFloat = rotationAngle
+        //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
             if pressedOnFurniture {
@@ -290,8 +302,8 @@ extension BuildMyRoom {
     }
     func leftHoldRotation(){
         rotationAngle -= 45
-        let rotationAngle: CGFloat = rotationAngle
-        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        //        let rotationAngle: CGFloat = rotationAngle
+        //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
             if pressedOnFurniture {
@@ -305,8 +317,8 @@ extension BuildMyRoom {
     }
     func rightHoldRotation(){
         rotationAngle += 1
-        let rotationAngle: CGFloat = rotationAngle
-        let rotation = SCNVector4(0, 1, 0, rotationAngle)
+        //        let rotationAngle: CGFloat = rotationAngle
+        //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
             if pressedOnFurniture {
@@ -320,6 +332,48 @@ extension BuildMyRoom {
     }
     
 }
+// MARK: - SCNPhysicsContact
+
+private extension BuildMyRoom {
+    
+    func onContactBegin(contact: SCNPhysicsContact) {
+        let nodeA = contact.nodeA as! MaterialNode //wall
+        let nodeB = contact.nodeB as! MaterialNode
+                if (nodeA.type == .object){
+                        DispatchQueue.main.async { [weak self] in
+                            nodeB.highlight(with: .red, for: 0.01)
+                            nodeA.highlight(with: .green, for: 0.05)
+        //                nodeA.position.x = oldPosition.x / 1.1
+        //                nodeA.position.z = oldPosition.z / 1.1
+                    }
+                    return
+
+                }
+                if(nodeB.type == .object) {
+                        DispatchQueue.main.async { [weak self] in
+                            nodeB.highlight(with: .red, for: 0.01)
+                            nodeA.highlight(with: .green, for: 0.05)
+        //                nodeB.position.x = oldPosition.x / 1.1
+        //                nodeB.position.z = oldPosition.z / 1.1
+                    }
+                    return
+                }
+        
+        
+    }
+}
+//MARK: - Update On Each Frame
+
+extension BuildMyRoom {
+    func onEachFrame(){
+//        print("Inside Frame")
+        DispatchQueue.main.async { [self] in
+            //Collison wa baz
+            // Rotation also baz
+        }
+    }
+}
+
 
 
 

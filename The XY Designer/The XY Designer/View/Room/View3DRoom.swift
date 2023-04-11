@@ -13,15 +13,15 @@ struct View3DRoom: View {
     var room: CapturedRoom
     var RoomModel: BuildMyRoom
     var savedRoomModel: tempRoomStruct
+    var dominantRoomColors: [String:[String]]
     @Environment(\.dismiss) var dismiss
-    init(room: CapturedRoom) {
-        print("da5l elinit")
+    init(room: CapturedRoom,dominantRoomColors: [String:[String]]) {
         self.room = room
-        print("3da elroom")
+        self.dominantRoomColors = dominantRoomColors
 //        self._RoomModel = StateObject(wrappedValue: BuildMyRoom(room: room))
         RoomModel = BuildMyRoom(room: room)
-        savedRoomModel = tempRoomStruct(room: room)
-        savedRoomModel.saveRoomToUserDefaults(room: room)
+        savedRoomModel = tempRoomStruct(room: room,dominantRoomColors: dominantRoomColors)
+        savedRoomModel.saveRoomToUserDefaults(room: room,dominantRoomColors: dominantRoomColors)
         
     }
 //    var sceneRendererDelegate = SceneRendererDelegate()

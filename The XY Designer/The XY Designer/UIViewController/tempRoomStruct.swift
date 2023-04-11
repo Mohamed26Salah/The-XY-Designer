@@ -7,14 +7,15 @@
 
 import Foundation
 import RoomPlan
+import UIKit
 struct tempRoomStruct: Codable {
     var room: CapturedRoom?
-    
-    func saveRoomToUserDefaults(room:CapturedRoom) {
-        let roomToSave = tempRoomStruct(room: room)
+    var dominantRoomColors: [String: [String]] = [:]
+    func saveRoomToUserDefaults(room:CapturedRoom,dominantRoomColors: [String: [String]]) {
+        let roomToSave = tempRoomStruct(room: room,dominantRoomColors: dominantRoomColors)
         let userDefaults = UserDefaults.standard
         do {
-            try userDefaults.setObject(roomToSave, forKey: "roomToSave")
+            try userDefaults.setObject(roomToSave, forKey: "roomToSaveColors")
         } catch {
             print(error.localizedDescription)
         }
@@ -22,7 +23,7 @@ struct tempRoomStruct: Codable {
     func retrieveRoomToUserDefaults()->tempRoomStruct? {
         let userDefaults = UserDefaults.standard
         do {
-            return try userDefaults.getObject(forKey: "roomToSave", castTo: tempRoomStruct.self)
+            return try userDefaults.getObject(forKey: "roomToSaveColors", castTo: tempRoomStruct.self)
         } catch {
             print(error.localizedDescription)
         }
@@ -31,3 +32,6 @@ struct tempRoomStruct: Codable {
     }
     
 }
+//CurrentNames
+//roomToSave
+//roomToSaveColors

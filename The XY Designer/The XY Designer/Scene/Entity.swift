@@ -14,7 +14,7 @@ protocol Entity {
 }
 
 enum EntityType: Int {
-  case object
+  case object = 1
   case wall
   case door
   case opening
