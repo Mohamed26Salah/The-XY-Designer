@@ -54,9 +54,28 @@ private extension BuildMyRoom {
         let spotlight = defaultLightNode(mode: .spot)
         spotlight.position = fieldCenter + SCNVector3(0, cameraHeight, 0)
         spotlight.look(at: fieldCenter)
-        spotlight.light?.shadowRadius = 5
+//        spotlight.light?.shadowRadius = 5
         //        spotlight.light?.castsShadow = false
         scene.rootNode.addChildNode(spotlight)
+        scene.rootNode.addChildNode(defaultLightNode(mode: .ambient))
+    }
+    func prepareLight2(){
+        let spotLight = SCNNode()
+        spotLight.light = SCNLight()
+        spotLight.light?.type = SCNLight.LightType.spot
+        spotLight.light?.spotInnerAngle = 120
+        spotLight.light?.spotOuterAngle = 120
+        spotLight.light?.color = UIColor.white
+        spotLight.light?.castsShadow = true
+        spotLight.light?.automaticallyAdjustsShadowProjection = true
+        spotLight.light?.shadowSampleCount = 32
+        spotLight.light?.shadowRadius = 8
+        spotLight.light?.shadowMode = .deferred
+        spotLight.light?.shadowMapSize = CGSize(width: 2048, height: 2048)
+        spotLight.light?.shadowColor = UIColor.black.withAlphaComponent(1)
+        spotLight.position = SCNVector3(x: 0, y: 5, z: 0)
+        spotLight.eulerAngles = SCNVector3(-Float.pi / 2, 0, 0)
+        scene.rootNode.addChildNode(spotLight)
         scene.rootNode.addChildNode(defaultLightNode(mode: .ambient))
     }
     func prepareCamera() {
@@ -98,7 +117,8 @@ private extension BuildMyRoom {
         contactDelegate.onBegin = onContactBegin(contact:)
         
         prepareCamera()
-        prepareLight()
+//        prepareLight()
+        prepareLight2()
     }
     
     func createRoomPlane(addPlaneTO node : SCNNode){

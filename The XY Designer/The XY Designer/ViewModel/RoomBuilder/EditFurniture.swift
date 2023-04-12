@@ -14,4 +14,14 @@ class EditFurniture{
         material.diffuse.contents = UIColor(color)
         node.geometry?.materials = [material]
     }
+    func applyTexture(to node: SCNNode, imageName: String) {
+        let material = SCNMaterial()
+        material.diffuse.contents = UIImage(named: imageName)
+        node.geometry?.materials = [material]
+    }
+    func applyTextureFromGallery(to node: SCNNode, imageName: UIImage) {
+        let material = SCNMaterial()
+        material.diffuse.contents = imageName
+        node.geometry?.materials = [material]
+    }
 }

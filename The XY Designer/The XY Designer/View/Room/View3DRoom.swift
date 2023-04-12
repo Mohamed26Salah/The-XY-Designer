@@ -28,6 +28,14 @@ struct view3DRoom: View {
 //            colors.toColorArray()
 //        }
         self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: dominantRoomColors))
+        let stringRoomColors = dominantRoomColors.mapValues { $0.map { $0.hexString } }
+//        savedRoomModel = tempRoomStruct(room: room,dominantRoomColors: stringRoomColors)
+        savedRoomModel.saveRoomToUserDefaults(room: room,dominantRoomColors: stringRoomColors)
+//        let roomColors = stringRoomColors.mapValues { $0.compactMap { UIColor(hexString: $0) } }
+//        print("ROOM UIColors\(dominantRoomColors)")
+//        print("ROOM StringColors\(stringRoomColors)")
+//        print("ROOM BackToUIColor\(roomColors)")
+
     }
     var body: some View {
         let drag = DragGesture()

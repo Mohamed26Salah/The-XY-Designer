@@ -26,13 +26,11 @@ struct view3DRoomTemp: View {
         //                RoomModel = BuildMyRoom(room: room)
         //            }
         //        }
-        room = (savedRoomModel.retrieveRoomToUserDefaults()?.room)!
+//        let joex = (savedRoomModel.retrieveRoomToUserDefaults())!
+        self.room = (savedRoomModel.retrieveRoomToUserDefaults()?.room)!
         self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
-        self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
-        let dominantRoomColorsUIColors = dominantRoomColors.mapValues { colors in
-            colors.toColorArray()
-        }
-        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: dominantRoomColorsUIColors))
+        let uIDominantRoomColors = dominantRoomColors.mapValues { $0.compactMap { UIColor(hexString: $0) } }
+        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: uIDominantRoomColors))
     }
     var body: some View {
         let drag = DragGesture()

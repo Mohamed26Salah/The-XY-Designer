@@ -9,39 +9,41 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    var rgba: (red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        return (red, green, blue, alpha)
+    var hexString: String {
+        let components = cgColor.components
+        let r = components?[0] ?? 0
+        let g = components?[1] ?? 0
+        let b = (components?.count ?? 0) > 2 ? components?[2] : g
+        let a = cgColor.alpha
+
+        let rgba: Int = (Int)(r*255)<<24 | (Int)(g*255)<<16 | (Int)(b!*255)<<8 | (Int)(a*255)
+        return String(format: "#%08x", rgba)
     }
+    convenience init?(hexString: String) {
+            let r, g, b, a: CGFloat
+
+            if hexString.hasPrefix("#") {
+                let start = hexString.index(hexString.startIndex, offsetBy: 1)
+                let hexColor = String(hexString[start...])
+
+                if hexColor.count == 8 {
+                    let scanner = Scanner(string: hexColor)
+                    var hexNumber: UInt64 = 0
+
+                    if scanner.scanHexInt64(&hexNumber) {
+                        r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                        g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                        b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                        a = CGFloat(hexNumber & 0x000000ff) / 255
+
+                        self.init(red: r, green: g, blue: b, alpha: a)
+                        return
+                    }
+                }
+            }
+
+            return nil
+        }
 }
 
-extension Array where Element == UIColor {
-    func toStringArray() -> [String] {
-        return self.map { color in
-            let rgba = color.rgba
-            return "red: \(rgba.red), green: \(rgba.green), blue: \(rgba.blue), alpha: \(rgba.alpha)"
-        }
-    }
-}
 
-extension Array where Element == String {
-    func toColorArray() -> [UIColor] {
-        return self.compactMap { string -> UIColor? in
-            let components = string.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-            guard components.count == 4 else { return nil }
-            let redString = components[0].split(separator: ":")[1].trimmingCharacters(in: .whitespaces)
-            let greenString = components[1].split(separator: ":")[1].trimmingCharacters(in: .whitespaces)
-            let blueString = components[2].split(separator: ":")[1].trimmingCharacters(in: .whitespaces)
-            let alphaString = components[3].split(separator: ":")[1].trimmingCharacters(in: .whitespaces)
-            guard let red = NumberFormatter().number(from:redString)?.doubleValue,
-                  let green = NumberFormatter().number(from:greenString)?.doubleValue,
-                  let blue = NumberFormatter().number(from:blueString)?.doubleValue,
-                  let alpha = NumberFormatter().number(from:alphaString)?.doubleValue else { return nil }
-            return UIColor(red:red/255.0 ,green:green/255.0 ,blue :blue/255.0 ,alpha :alpha)
-        }
-    }
-}

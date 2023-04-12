@@ -17,7 +17,7 @@ struct MainView: View {
     }
     let screens: [String: AnyView] = [
         "House": AnyView(Home()),
-        "Plus": AnyView(RoomPlaneApi()),
+        "Plus": AnyView(view3DRoomTemp()),
         "Person": AnyView(Profile()),
     ]
 //    "Plus": AnyView(RoomPlaneApi()),
