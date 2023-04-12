@@ -67,8 +67,9 @@ struct ScanningView: View {
             
             
         }
+        //HEEEEEEEEEERRR YA SAAAALH
         .fullScreenCover(isPresented: $captureController.roomIsReady) {
-            View3DRoom(room: captureController.finalResult!,dominantRoomColors: captureController.roomColors)
+            view3DRoom(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
         }
         
         

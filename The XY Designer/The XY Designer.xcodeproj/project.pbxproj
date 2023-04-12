@@ -19,6 +19,7 @@
 		AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA129E1A60F007E3864 /* Entity.swift */; };
 		AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */; };
 		AB4CCAA829E1B3F6007E3864 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA729E1B3F6007E3864 /* Control.swift */; };
+		AB4E042A29E5E22900450517 /* EditNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E042929E5E22900450517 /* EditNode.swift */; };
 		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */; };
 		AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D129DF65C4005FDCA8 /* Themes.swift */; };
 		AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D329DF65DD005FDCA8 /* Samples.swift */; };
@@ -35,6 +36,8 @@
 		ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */; };
 		ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4329CCF85F00EB88E1 /* Home.swift */; };
 		ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */; };
+		ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE27E429E6016A003656E3 /* ColorCircle.swift */; };
+		ABBE27E729E61BB5003656E3 /* EditFurniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE27E629E61BB5003656E3 /* EditFurniture.swift */; };
 		ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */; };
 		ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DCE29C49FE3000E7506 /* MainView.swift */; };
 		ABD54DD129C49FE4000E7506 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABD54DD029C49FE4000E7506 /* Assets.xcassets */; };
@@ -69,6 +72,7 @@
 		AB4CCAA129E1A60F007E3864 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialNode.swift; sourceTree = "<group>"; };
 		AB4CCAA729E1B3F6007E3864 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
+		AB4E042929E5E22900450517 /* EditNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNode.swift; sourceTree = "<group>"; };
 		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom.swift; sourceTree = "<group>"; };
 		AB5FC6D129DF65C4005FDCA8 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		AB5FC6D329DF65DD005FDCA8 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
@@ -85,6 +89,8 @@
 		ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDelegate.swift; sourceTree = "<group>"; };
 		ABAEBA4329CCF85F00EB88E1 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlaneApi.swift; sourceTree = "<group>"; };
+		ABBE27E429E6016A003656E3 /* ColorCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircle.swift; sourceTree = "<group>"; };
+		ABBE27E629E61BB5003656E3 /* EditFurniture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFurniture.swift; sourceTree = "<group>"; };
 		ABD54DC929C49FE3000E7506 /* The XY Designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The XY Designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = The_XY_DesignerApp.swift; sourceTree = "<group>"; };
 		ABD54DCE29C49FE3000E7506 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */,
+				ABBE27E629E61BB5003656E3 /* EditFurniture.swift */,
 			);
 			path = RoomBuilder;
 			sourceTree = "<group>";
@@ -186,6 +193,7 @@
 				ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */,
 				AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */,
 				AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */,
+				AB4E042929E5E22900450517 /* EditNode.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -304,6 +312,7 @@
 				ABD54DF429C4CA17000E7506 /* CustomTextField.swift */,
 				ABD54DF829C4D091000E7506 /* SecureTextField.swift */,
 				AB3A2CF229C64DD700B2717A /* Validator.swift */,
+				ABBE27E429E6016A003656E3 /* ColorCircle.swift */,
 			);
 			path = Customs;
 			sourceTree = "<group>";
@@ -400,6 +409,7 @@
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
+				ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */,
 				AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */,
 				AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */,
 				AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */,
@@ -415,6 +425,8 @@
 				ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */,
 				AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */,
 				AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */,
+				ABBE27E729E61BB5003656E3 /* EditFurniture.swift in Sources */,
+				AB4E042A29E5E22900450517 /* EditNode.swift in Sources */,
 				AB9B413129CC861C007C02AA /* Profile.swift in Sources */,
 				AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */,
 				AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */,

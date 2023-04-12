@@ -21,3 +21,8 @@ enum EntityType: Int {
   case window
   case platForm
 }
+
+enum UserChoices: String, CaseIterable{
+    case Movement
+    case Customize
+}

@@ -24,7 +24,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
     var sessionConfig: RoomCaptureSession.Configuration
     var finalResult: CapturedRoom?
 //    @Published var roomColors: [String: [UIColor]] = [:]
-    @Published var roomColors: [String: [String]] = [:]
+    var roomColors: [String: [UIColor]] = [:]
 
     var openingsCounter = 0
     var windowsCounter = 0
@@ -52,12 +52,11 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
         let context = CIContext(options: nil)
         let cgImage = context.createCGImage(ciImage, from: ciImage.extent)!
         let uiImage = UIImage(cgImage: cgImage)
-        print(room.walls.count)
         if(room.walls.count != wallsCounter){
             do {
                 let dominantColors = try uiImage.dominantColors()
                 if let wall = room.walls.last {
-                    roomColors[wall.identifier.uuidString] = dominantColors.toStringArray()
+                    roomColors["Wall+\(wall.identifier.uuidString)"] = dominantColors
                     wallsCounter = room.walls.count
                 }
 
@@ -69,7 +68,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
             do {
                 let dominantColors = try uiImage.dominantColors()
                 if let object = room.objects.last {
-                    roomColors[object.identifier.uuidString] = dominantColors.toStringArray()
+                    roomColors["Object+\(object.identifier.uuidString)"] = dominantColors
                     objectsCounter = room.objects.count
                 }
             }catch {
@@ -80,7 +79,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
             do {
                 let dominantColors = try uiImage.dominantColors()
                 if let door = room.doors.last {
-                    roomColors[door.identifier.uuidString] = dominantColors.toStringArray()
+                    roomColors["Door+\(door.identifier.uuidString)"] = dominantColors
                     doorsCounter = room.doors.count
                 }
             }catch {
@@ -91,7 +90,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
             do {
                 let dominantColors = try uiImage.dominantColors()
                 if let window = room.windows.last {
-                    roomColors[window.identifier.uuidString] = dominantColors.toStringArray()
+                    roomColors["Window+\(window.identifier.uuidString)"] = dominantColors
                     windowsCounter = room.windows.count
                 }
             }catch {
@@ -102,7 +101,7 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
             do {
                 let dominantColors = try uiImage.dominantColors()
                 if let opening = room.openings.last {
-                    roomColors[opening.identifier.uuidString] = dominantColors.toStringArray()
+                    roomColors["Opening+\(opening.identifier.uuidString)"] = dominantColors
                     openingsCounter = room.openings.count
                 }
             }catch {

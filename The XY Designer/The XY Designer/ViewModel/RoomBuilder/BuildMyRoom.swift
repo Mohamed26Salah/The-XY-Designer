@@ -9,6 +9,7 @@ import SceneKit
 import SwiftUI
 import RoomPlan
 import GameController
+import ColorKit
 
 struct FurnitureConstants {
     static let cameraHeight: Float = 15
@@ -20,8 +21,8 @@ class BuildMyRoom: ObservableObject {
     var scene: SCNScene = SCNScene()
     private let cameraHeight: Float = 15
     var room: CapturedRoom
+    var dominantRoomColors: [String : [UIColor]]
     let node: SCNNode!
-    @Published var pressedOnFurniture: Bool = false
     var selectedFurniture: MaterialNode?
     var selectedFurniturePosition: SCNVector3?
     var selectedFurnitureRotation: SCNVector4?
@@ -30,12 +31,16 @@ class BuildMyRoom: ObservableObject {
     var rotationAngle: CGFloat = 0.0
     let contactDelegate = ContactDelegate()
     var cameraNode = SCNNode()
+    @Published var selectedFurnitureCanMove: Bool = false
     @Published var cameraRotation: CGFloat?
+    @Published var userChoice: UserChoices = .Movement
     init(
-        room: CapturedRoom
+        room: CapturedRoom,
+        dominantRoomColors: [String : [UIColor]]
     ) {
         node = SCNNode()
         self.room = room
+        self.dominantRoomColors = dominantRoomColors
         setupScene()
     }
     
@@ -118,7 +123,12 @@ private extension BuildMyRoom {
         for wall in walls{
             let box = SCNBox(width: CGFloat(wall.dimensions.x), height: CGFloat(wall.dimensions.y), length: CGFloat(wall.dimensions.z), chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.primary.cgColor
+            if let colorsDictionary = dominantRoomColors["Wall+\(wall.identifier.uuidString)"]{
+                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
+                box.firstMaterial?.diffuse.contents = palette?.background
+            }else {
+                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            }
             let stringUUID = wall.identifier.uuidString
             let boxNode = MaterialNode(type: .wall, id: stringUUID)
             boxNode.geometry = box
@@ -140,7 +150,12 @@ private extension BuildMyRoom {
         for object in objects{
             let box = SCNBox(width: CGFloat(object.dimensions.x), height: CGFloat(object.dimensions.y), length: CGFloat(object.dimensions.z), chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            if let colorsDictionary = dominantRoomColors["Object+\(object.identifier.uuidString)"]{
+                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
+                box.firstMaterial?.diffuse.contents = palette?.primary
+            }else {
+                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            }
             let stringUUID = object.identifier.uuidString
             let boxNode = MaterialNode(type: .object, id: stringUUID)
             boxNode.geometry = box
@@ -161,7 +176,12 @@ private extension BuildMyRoom {
         for door in doors{
             let box = SCNBox(width: CGFloat(door.dimensions.x), height: CGFloat(door.dimensions.y), length: CGFloat(door.dimensions.z)+0.01, chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            if let colorsDictionary = dominantRoomColors["Door+\(door.identifier.uuidString)"]{
+                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
+                box.firstMaterial?.diffuse.contents = palette?.secondary
+            }else {
+                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            }
             let stringUUID = door.identifier.uuidString
             let boxNode = MaterialNode(type: .door, id: stringUUID)
             boxNode.geometry = box
@@ -177,7 +197,12 @@ private extension BuildMyRoom {
         for window in windows{
             let box = SCNBox(width: CGFloat(window.dimensions.x), height: CGFloat(window.dimensions.y), length: CGFloat(window.dimensions.z)+0.01, chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            if let colorsDictionary = dominantRoomColors["Window+\(window.identifier.uuidString)"]{
+                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
+                box.firstMaterial?.diffuse.contents = palette?.secondary
+            }else {
+                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            }
             let stringUUID = window.identifier.uuidString
             let boxNode = MaterialNode(type: .window, id: stringUUID)
             boxNode.geometry = box
@@ -193,7 +218,12 @@ private extension BuildMyRoom {
         for opening in openings{
             let box = SCNBox(width: CGFloat(opening.dimensions.x), height: CGFloat(opening.dimensions.y), length: CGFloat(opening.dimensions.z), chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            if let colorsDictionary = dominantRoomColors["Opening+\(opening.identifier.uuidString)"]{
+                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
+                box.firstMaterial?.diffuse.contents = palette?.primary
+            }else {
+                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            }
             let stringUUID = opening.identifier.uuidString
             let boxNode = MaterialNode(type: .opening, id: stringUUID)
             boxNode.geometry = box
@@ -216,22 +246,37 @@ extension BuildMyRoom {
             furnitureNode.highlight(with: .red, for: 0.5)
             selectedFurniture = furnitureNode
             selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            pressedOnFurniture = true
+            selectedFurnitureCanMove = true
             break;
         case .wall:
-            pressedOnFurniture = false
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         case .door:
-            pressedOnFurniture = false
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         case .opening:
-            pressedOnFurniture = false
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         case .window:
-            pressedOnFurniture = false
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         case .platForm:
-            pressedOnFurniture = false
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         }
         
@@ -240,6 +285,7 @@ extension BuildMyRoom {
     
     func handleRightPad(dPad: GCControllerDirectionPad, xAxis: Float, yAxis: Float) {
         oldFurniturePosition = selectedFurniture?.position
+        
         if xAxis == yAxis, xAxis == 0 {
             if let selectedFurniture = selectedFurniture {
                 selectedFurniture.position = selectedFurniturePosition ?? SCNVector3(x: 0, y: 0, z: 0)
@@ -250,14 +296,12 @@ extension BuildMyRoom {
             if (xAxis != 0){
                 if let selectedFurniture = selectedFurniture {
                     let movementPosition = SCNVector3(xAxis, 0, -yAxis) * furnitureSpeed
-                    if pressedOnFurniture {
+                    if selectedFurnitureCanMove {
                         selectedFurniture.position += movementPosition
                         selectedFurniturePosition = selectedFurniture.position
                     }
                 }
             }
-            
-            
         }
     }
     func leftRotation() {
@@ -266,7 +310,7 @@ extension BuildMyRoom {
         //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
-            if pressedOnFurniture {
+            if selectedFurnitureCanMove {
                 // Create an SCNAction to animate the rotation
                 let rotateAction = SCNAction.rotate(by: .pi / 4, around: SCNVector3(0, 1, 0), duration: 0.5)
                 
@@ -291,7 +335,7 @@ extension BuildMyRoom {
         //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
-            if pressedOnFurniture {
+            if selectedFurnitureCanMove {
                 // Create an SCNAction to animate the rotation
                 let rotateAction = SCNAction.rotate(by: -.pi / 4, around: SCNVector3(0, 1, 0), duration: 0.5)
                 
@@ -306,7 +350,7 @@ extension BuildMyRoom {
         //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
-            if pressedOnFurniture {
+            if selectedFurnitureCanMove {
                 // Create an SCNAction to animate the rotation
                 let rotateAction = SCNAction.rotate(by: .pi / .pi, around: SCNVector3(0, 1, 0), duration: 0.5)
                 
@@ -321,7 +365,7 @@ extension BuildMyRoom {
         //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
         
         if let selectedFurniture = selectedFurniture {
-            if pressedOnFurniture {
+            if selectedFurnitureCanMove {
                 // Create an SCNAction to animate the rotation
                 let rotateAction = SCNAction.rotate(by: -.pi / .pi, around: SCNVector3(0, 1, 0), duration: 0.5)
                 

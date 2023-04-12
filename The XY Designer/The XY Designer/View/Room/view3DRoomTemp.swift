@@ -17,6 +17,8 @@ struct view3DRoomTemp: View {
     @Environment(\.dismiss) var dismiss
     var sceneRendererDelegate = SceneRendererDelegate()
     @State var lastCameraOffset = SCNVector3()
+    @State private var selectedColor: Color = .red
+    @State private var showingCredits = false
     var superController = SuperController(elements: [GCInputRightThumbstick])
     init() {
         //        if let savedRoom = savedRoomModel.retrieveRoomToUserDefaults(){
@@ -26,11 +28,11 @@ struct view3DRoomTemp: View {
         //        }
         room = (savedRoomModel.retrieveRoomToUserDefaults()?.room)!
         self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
-        var colorsArray = dominantRoomColors.values.flatMap { $0 }.map { String($0) }
-        var uIColorArray = colorsArray.toColorArray()
-        let dominantRoomColorsUIColors = dominantRoomColors.mapValues { _ in colorsArray.toColorArray() }
-        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room))
-
+        self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
+        let dominantRoomColorsUIColors = dominantRoomColors.mapValues { colors in
+            colors.toColorArray()
+        }
+        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: dominantRoomColorsUIColors))
     }
     var body: some View {
         let drag = DragGesture()
@@ -52,33 +54,49 @@ struct view3DRoomTemp: View {
                 lastCameraOffset = SCNVector3()
             }
         ZStack(alignment: .leading) {
-           
+            
             SceneView(scene: RoomModel.scene, options: [.allowsCameraControl],delegate: sceneRendererDelegate)
                 .gesture(drag)
                 .onTapGesture { location in
                     pick(atPoint: location)
+                    if (RoomModel.userChoice == .Customize){
+                        showingCredits.toggle()
+                    }
+                    
                 }
                 .ignoresSafeArea()
             VStack (alignment: .leading){
-//                Button {
-//                    dismiss()
-//                } label: {
-//                    Image("x.circle.fill")
-//                        .font(.title3)
-//                }
-                ZStack {
-                    Circle()
-                        .stroke(Color.black, lineWidth: 5)
-                        .frame(width: 75, height: 75)
-                    Image(systemName: "arrow.up")
-                        .rotationEffect(.degrees(Double(RoomModel.cameraRotation ?? 0)))
-                        .font(.largeTitle)
-                        .colorInvert()
+                //                Button {
+                //                    dismiss()
+                //                } label: {
+                //                    Image("x.circle.fill")
+                //                        .font(.title3)
+                //                }
+                //                HStack{
+                //                    ZStack {
+                //                        Circle()
+                //                            .stroke(Color.black, lineWidth: 5)
+                //                            .frame(width: 75, height: 75)
+                //                        Image(systemName: "arrow.up")
+                //                            .rotationEffect(.degrees(Double(RoomModel.cameraRotation ?? 0)))
+                //                            .font(.largeTitle)
+                //                            .colorInvert()
+                //                    }
+                //                    .padding()
+                //                    Spacer()
+                Section(){
+                    Picker("UserChoice", selection: $RoomModel.userChoice) {
+                        ForEach(UserChoices.allCases,id: \.self) { page in
+                            Text(page.rawValue.capitalized)
+                        }
+                    }
                 }
-                .padding()
-               
+                .padding(20)
+                .pickerStyle(.segmented)
+                //                }
+                
                 Spacer()
-                if (RoomModel.pressedOnFurniture){
+                if (RoomModel.selectedFurnitureCanMove){
                     HStack(){
                         Button {
                             withAnimation {
@@ -128,6 +146,12 @@ struct view3DRoomTemp: View {
             superController.handleRightPad = RoomModel.handleRightPad
             sceneRendererDelegate.onEachFrame = RoomModel.onEachFrame
         })
+        .sheet(isPresented: $showingCredits) {
+            if let selectedFurniture = RoomModel.selectedFurniture{
+                EditNode(node: selectedFurniture, roomDominantColors: RoomModel.dominantRoomColors)
+            }
+        }
+        
         
     }
 }
@@ -136,15 +160,12 @@ struct view3DRoomTemp: View {
 
 private extension view3DRoomTemp {
     func pick(atPoint point: CGPoint) {
-        print("Pick requested for point: \(point)")
-        
         // Find closest node
         if let firstNode = findFirstTouchableNode(atPoint: point) {
             if let materialNode = firstNode as? MaterialNode  {
                 withAnimation {
                     RoomModel.pick(materialNode)
                 }
-                print("Selected Furniture is \(String(describing: RoomModel.selectedFurniture))")
             } else {
                 print("Touched node is not material:", firstNode.name ?? "<NO NAME>")
                 return

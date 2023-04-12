@@ -9,7 +9,8 @@ import SwiftUI
 import FirebaseAuth
 struct Home: View {
     @State private var showingCredits = false
-    
+    @State private var selectedColor: Color = .red
+
     let heights = stride(from: 0.1, through: 1.0, by: 0.1).map { PresentationDetent.fraction($0) }
     var body: some View {
         VStack {
@@ -24,8 +25,14 @@ struct Home: View {
                 showingCredits.toggle()
             }
             .sheet(isPresented: $showingCredits) {
-                Text("This app was brought to you by Hacking with Swift")
-//                    .presentationDetents(Set(heights))
+                ColorPicker("Steam Sama Turkey md5n", selection: $selectedColor)
+                    .labelsHidden()
+                    .padding()
+                ColorPicker(selection: $selectedColor){
+                    Label("Color Pallete", systemImage: "paintpalette")
+                        .symbolVariant(.fill)
+                        .padding(.leading, 8)
+                }
             }
             
         }
