@@ -14,6 +14,15 @@
 		AB3A2CED29C6380D00B2717A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CEC29C6380D00B2717A /* User.swift */; };
 		AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */; };
 		AB3A2CF329C64DD700B2717A /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3A2CF229C64DD700B2717A /* Validator.swift */; };
+		AB44FC5229E831AA00973891 /* Sofa.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC4E29E831AA00973891 /* Sofa.usdz */; };
+		AB44FC5329E831AA00973891 /* Wooden_Bed.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC4F29E831AA00973891 /* Wooden_Bed.usdz */; };
+		AB44FC5429E831AA00973891 /* Wooden_door.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC5029E831AA00973891 /* Wooden_door.usdz */; };
+		AB44FC5529E831AA00973891 /* Wardrobe.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC5129E831AA00973891 /* Wardrobe.usdz */; };
+		AB44FC5B29E832B400973891 /* Wardrobe.scn in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC5829E832B400973891 /* Wardrobe.scn */; };
+		AB44FC5C29E832B400973891 /* Sofa.scn in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC5929E832B400973891 /* Sofa.scn */; };
+		AB44FC5D29E832B400973891 /* Wooden_Bed.scn in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC5A29E832B400973891 /* Wooden_Bed.scn */; };
+		AB44FC5F29E832D400973891 /* Wooden_door.scn in Resources */ = {isa = PBXBuildFile; fileRef = AB44FC5E29E832D400973891 /* Wooden_door.scn */; };
+		AB44FC6329E83B7800973891 /* BuildRoom3DModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB44FC6229E83B7800973891 /* BuildRoom3DModels.swift */; };
 		AB4CCA9D29E19D39007E3864 /* SCNNode+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCA9C29E19D39007E3864 /* SCNNode+Helpers.swift */; };
 		AB4CCA9F29E19D6E007E3864 /* DebugHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */; };
 		AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA129E1A60F007E3864 /* Entity.swift */; };
@@ -27,6 +36,7 @@
 		AB5FC6DF29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */; };
 		AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */; };
 		AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */; };
+		AB91E12129E8AA20009A7F57 /* Office_Chair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB91E12029E8AA20009A7F57 /* Office_Chair.usdz */; };
 		AB9B412929CC6805007C02AA /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412829CC6805007C02AA /* AuthService.swift */; };
 		AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412A29CC7559007C02AA /* ForgetPassword.swift */; };
 		AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */; };
@@ -67,6 +77,15 @@
 		AB3A2CEC29C6380D00B2717A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		AB3A2CF029C6395400B2717A /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		AB3A2CF229C64DD700B2717A /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
+		AB44FC4E29E831AA00973891 /* Sofa.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Sofa.usdz; sourceTree = "<group>"; };
+		AB44FC4F29E831AA00973891 /* Wooden_Bed.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Wooden_Bed.usdz; sourceTree = "<group>"; };
+		AB44FC5029E831AA00973891 /* Wooden_door.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Wooden_door.usdz; sourceTree = "<group>"; };
+		AB44FC5129E831AA00973891 /* Wardrobe.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Wardrobe.usdz; sourceTree = "<group>"; };
+		AB44FC5829E832B400973891 /* Wardrobe.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Wardrobe.scn; sourceTree = "<group>"; };
+		AB44FC5929E832B400973891 /* Sofa.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Sofa.scn; sourceTree = "<group>"; };
+		AB44FC5A29E832B400973891 /* Wooden_Bed.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = Wooden_Bed.scn; path = "The XY Designer/FurnitureModels/Wooden_Bed.scn"; sourceTree = SOURCE_ROOT; };
+		AB44FC5E29E832D400973891 /* Wooden_door.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Wooden_door.scn; sourceTree = "<group>"; };
+		AB44FC6229E83B7800973891 /* BuildRoom3DModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildRoom3DModels.swift; sourceTree = "<group>"; };
 		AB4CCA9C29E19D39007E3864 /* SCNNode+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNNode+Helpers.swift"; sourceTree = "<group>"; };
 		AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugHelpers.swift; sourceTree = "<group>"; };
 		AB4CCAA129E1A60F007E3864 /* Entity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
@@ -80,6 +99,7 @@
 		AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extenstions.swift"; sourceTree = "<group>"; };
 		AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3DRoom.swift; sourceTree = "<group>"; };
 		AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRenderereDelegate.swift; sourceTree = "<group>"; };
+		AB91E12029E8AA20009A7F57 /* Office_Chair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Office_Chair.usdz; sourceTree = "<group>"; };
 		AB9B412829CC6805007C02AA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		AB9B412A29CC7559007C02AA /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
 		AB9B412C29CC7CED007C02AA /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
@@ -132,6 +152,38 @@
 			path = Extenstions;
 			sourceTree = "<group>";
 		};
+		AB44FC4D29E8314F00973891 /* FurnitureModels */ = {
+			isa = PBXGroup;
+			children = (
+				AB44FC5729E8326400973891 /* SCN */,
+				AB44FC5629E8325900973891 /* USDZ */,
+			);
+			path = FurnitureModels;
+			sourceTree = "<group>";
+		};
+		AB44FC5629E8325900973891 /* USDZ */ = {
+			isa = PBXGroup;
+			children = (
+				AB44FC5029E831AA00973891 /* Wooden_door.usdz */,
+				AB91E12029E8AA20009A7F57 /* Office_Chair.usdz */,
+				AB44FC4F29E831AA00973891 /* Wooden_Bed.usdz */,
+				AB44FC5129E831AA00973891 /* Wardrobe.usdz */,
+				AB44FC4E29E831AA00973891 /* Sofa.usdz */,
+			);
+			path = USDZ;
+			sourceTree = "<group>";
+		};
+		AB44FC5729E8326400973891 /* SCN */ = {
+			isa = PBXGroup;
+			children = (
+				AB44FC5E29E832D400973891 /* Wooden_door.scn */,
+				AB44FC5929E832B400973891 /* Sofa.scn */,
+				AB44FC5829E832B400973891 /* Wardrobe.scn */,
+				AB44FC5A29E832B400973891 /* Wooden_Bed.scn */,
+			);
+			path = SCN;
+			sourceTree = "<group>";
+		};
 		AB4CCAA629E1B3E8007E3864 /* Control */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +209,7 @@
 			children = (
 				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */,
 				ABBE27E629E61BB5003656E3 /* EditFurniture.swift */,
+				AB44FC6229E83B7800973891 /* BuildRoom3DModels.swift */,
 			);
 			path = RoomBuilder;
 			sourceTree = "<group>";
@@ -180,8 +233,6 @@
 				AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */,
 				AB4CCA9C29E19D39007E3864 /* SCNNode+Helpers.swift */,
 				AB4CCA9E29E19D6E007E3864 /* DebugHelpers.swift */,
-				AB4CCAA129E1A60F007E3864 /* Entity.swift */,
-				AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */,
 				ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */,
 			);
 			path = Scene;
@@ -204,6 +255,15 @@
 				AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */,
 			);
 			path = Hacks;
+			sourceTree = "<group>";
+		};
+		AB91E12229E8BD93009A7F57 /* Room */ = {
+			isa = PBXGroup;
+			children = (
+				AB4CCAA129E1A60F007E3864 /* Entity.swift */,
+				AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */,
+			);
+			path = Room;
 			sourceTree = "<group>";
 		};
 		AB9B44C329DDC48E00A94157 /* UIViewController */ = {
@@ -234,6 +294,7 @@
 		ABD54DCB29C49FE3000E7506 /* The XY Designer */ = {
 			isa = PBXGroup;
 			children = (
+				AB44FC4D29E8314F00973891 /* FurnitureModels */,
 				AB3A2CEB29C62C5F00B2717A /* The-XY-Designer-Info.plist */,
 				AB3A2CE929C629C400B2717A /* GoogleService-Info.plist */,
 				ABD54DDC29C4A18A000E7506 /* Model */,
@@ -282,6 +343,7 @@
 		ABD54DDC29C4A18A000E7506 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AB91E12229E8BD93009A7F57 /* Room */,
 				AB3A2CEC29C6380D00B2717A /* User.swift */,
 			);
 			path = Model;
@@ -389,8 +451,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB44FC5C29E832B400973891 /* Sofa.scn in Resources */,
 				ABD54DD429C49FE4000E7506 /* Preview Assets.xcassets in Resources */,
+				AB44FC5529E831AA00973891 /* Wardrobe.usdz in Resources */,
+				AB44FC5329E831AA00973891 /* Wooden_Bed.usdz in Resources */,
 				ABD54DD129C49FE4000E7506 /* Assets.xcassets in Resources */,
+				AB44FC5B29E832B400973891 /* Wardrobe.scn in Resources */,
+				AB44FC5429E831AA00973891 /* Wooden_door.usdz in Resources */,
+				AB91E12129E8AA20009A7F57 /* Office_Chair.usdz in Resources */,
+				AB44FC5229E831AA00973891 /* Sofa.usdz in Resources */,
+				AB44FC5F29E832D400973891 /* Wooden_door.scn in Resources */,
+				AB44FC5D29E832B400973891 /* Wooden_Bed.scn in Resources */,
 				AB3A2CEA29C629C400B2717A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -404,6 +475,7 @@
 			files = (
 				ABD54DF929C4D091000E7506 /* SecureTextField.swift in Sources */,
 				AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */,
+				AB44FC6329E83B7800973891 /* BuildRoom3DModels.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,

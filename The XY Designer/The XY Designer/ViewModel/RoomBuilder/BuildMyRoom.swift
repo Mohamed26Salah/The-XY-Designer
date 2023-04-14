@@ -10,7 +10,6 @@ import SwiftUI
 import RoomPlan
 import GameController
 import ColorKit
-
 struct FurnitureConstants {
     static let cameraHeight: Float = 15
     static let furnitureSpeed: Float = 0.05
@@ -31,6 +30,7 @@ class BuildMyRoom: ObservableObject {
     var rotationAngle: CGFloat = 0.0
     let contactDelegate = ContactDelegate()
     var cameraNode = SCNNode()
+    var wallsPositionArray = [SCNVector3]()
     @Published var selectedFurnitureCanMove: Bool = false
     @Published var cameraRotation: CGFloat?
     @Published var userChoice: UserChoices = .Movement
@@ -45,7 +45,6 @@ class BuildMyRoom: ObservableObject {
     }
     
 }
-
 
 // MARK: - Preparing Scene
 private extension BuildMyRoom {
@@ -77,6 +76,13 @@ private extension BuildMyRoom {
         spotLight.eulerAngles = SCNVector3(-Float.pi / 2, 0, 0)
         scene.rootNode.addChildNode(spotLight)
         scene.rootNode.addChildNode(defaultLightNode(mode: .ambient))
+    }
+    func prepareLight3(){
+        let lightNode = SCNNode()
+        lightNode.light = SCNLight()
+        lightNode.light?.type = .omni
+        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
+        scene.rootNode.addChildNode(lightNode)
     }
     func prepareCamera() {
         // Setup camera
@@ -110,7 +116,8 @@ private extension BuildMyRoom {
         addWindows(addWindowsTO: node)
         addObjects(addObjectsTO: node)
         addOpennings(addOpenningsTO: node)
-        createRoomPlane(addPlaneTO: node)
+//        createRoomPlane(addPlaneTO: node)
+        createRoomPlane2(addPlanTo: node)
         scene.rootNode.addChildNode(node)
         scene.background.contents = Color.DarkTheme.Violet.background.cgColor
         scene.physicsWorld.contactDelegate = contactDelegate
@@ -118,7 +125,8 @@ private extension BuildMyRoom {
         
         prepareCamera()
 //        prepareLight()
-        prepareLight2()
+//        prepareLight2()
+        prepareLight3()
     }
     
     func createRoomPlane(addPlaneTO node : SCNNode){
@@ -133,8 +141,49 @@ private extension BuildMyRoom {
         planeNode.geometry = planeGeometry
         //        let planeNode = SCNNode(geometry: planeGeometry)
         planeNode.geometry = planeGeometry
-        planeNode.position = SCNVector3(node.position.x, -1.26, node.position.y)
+        planeNode.position = SCNVector3(node.position.x, -1.3, node.position.y)
         planeNode.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
+        planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
+        node.addChildNode(planeNode)
+    }
+    func calculatePlatformSize(fromWallPositions wallPositions: [SCNVector3]) -> SCNVector3 {
+        var minX = Float.greatestFiniteMagnitude
+        var maxX = -Float.greatestFiniteMagnitude
+        var minZ = Float.greatestFiniteMagnitude
+        var maxZ = -Float.greatestFiniteMagnitude
+
+        for position in wallPositions {
+            minX = min(minX, position.x)
+            maxX = max(maxX, position.x)
+            minZ = min(minZ, position.z)
+            maxZ = max(maxZ, position.z)
+        }
+
+        let width = maxX - minX
+        let length = maxZ - minZ
+
+        return SCNVector3(width, 0.1, length)
+    }
+    func createRoomPlane2(addPlanTo node: SCNNode){
+        for wall in room.walls {
+            let transform = wall.transform
+            let position = simd_float3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
+            wallsPositionArray.append(SCNVector3(position))
+        }
+        let platFormPosition = calculatePlatformSize(fromWallPositions: wallsPositionArray)
+        let planeGeometry = SCNPlane(
+            width: CGFloat(platFormPosition.x)*1.5,
+            height: CGFloat(platFormPosition.z)*1.5)
+        planeGeometry.firstMaterial?.isDoubleSided = true
+        planeGeometry.firstMaterial?.diffuse.contents = Color.white.opacity(0.4)
+//        planeGeometry.cornerRadius = 5
+        let stringUUID = String(6338)
+        let planeNode = MaterialNode(type: .platForm, id: stringUUID)
+        planeNode.geometry = planeGeometry
+        //        let planeNode = SCNNode(geometry: planeGeometry)
+        planeNode.geometry = planeGeometry
+        planeNode.position = SCNVector3(node.position.x, -1.5, node.position.z)
+        planeNode.eulerAngles = SCNVector3Make(Float.pi / 2, 0.5 ,0)
         planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.addChildNode(planeNode)
     }
@@ -178,9 +227,18 @@ private extension BuildMyRoom {
             }
             let stringUUID = object.identifier.uuidString
             let boxNode = MaterialNode(type: .object, id: stringUUID)
-            boxNode.geometry = box
+            if (object.category == .bed){
+                BuildRoom3DModels().addBed3DModel(materialNode: boxNode, desiredDimenstions: object.dimensions, transform: object.transform)
+            } else if(object.category == .chair){
+                BuildRoom3DModels().addChair3DModel(materialNode: boxNode, desiredDimenstions: object.dimensions, transform: object.transform)
+            }
+            else
+            {
+                boxNode.geometry = box
+                boxNode.simdTransform = object.transform
+                
+            }
             //                let boxNode = SCNNode(geometry: box)
-            boxNode.simdTransform = object.transform
             boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
             boxNode.physicsBody?.mass = 0
             boxNode.physicsBody?.restitution = 1
@@ -261,44 +319,46 @@ private extension BuildMyRoom {
 // MARK: - Touch / Pick node / Controls
 extension BuildMyRoom {
     func pick(_ furnitureNode: MaterialNode) {
-        switch furnitureNode.type {
-        case .object:
-            furnitureNode.highlight(with: .red, for: 0.5)
-            selectedFurniture = furnitureNode
-            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            selectedFurnitureCanMove = true
-            break;
-        case .wall:
-            selectedFurnitureCanMove = false
-            furnitureNode.highlight(with: .red, for: 0.5)
-            selectedFurniture = furnitureNode
-            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            break;
-        case .door:
-            selectedFurnitureCanMove = false
-            furnitureNode.highlight(with: .red, for: 0.5)
-            selectedFurniture = furnitureNode
-            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            break;
-        case .opening:
-            selectedFurnitureCanMove = false
-            furnitureNode.highlight(with: .red, for: 0.5)
-            selectedFurniture = furnitureNode
-            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            break;
-        case .window:
-            selectedFurnitureCanMove = false
-            furnitureNode.highlight(with: .red, for: 0.5)
-            selectedFurniture = furnitureNode
-            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            break;
-        case .platForm:
-            selectedFurnitureCanMove = false
-            furnitureNode.highlight(with: .red, for: 0.5)
-            selectedFurniture = furnitureNode
-            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-            break;
-        }
+        print("fok")
+            switch furnitureNode.type {
+            case .object:
+                print("ta7t")
+//                furnitureNode.highlight(with: .red, for: 0.5)
+                selectedFurniture = furnitureNode
+                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+                selectedFurnitureCanMove = true
+                break;
+            case .wall:
+                selectedFurnitureCanMove = false
+//                furnitureNode.highlight(with: .red, for: 0.5)
+                selectedFurniture = furnitureNode
+                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+                break;
+            case .door:
+                selectedFurnitureCanMove = false
+//                furnitureNode.highlight(with: .red, for: 0.5)
+                selectedFurniture = furnitureNode
+                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+                break;
+            case .opening:
+                selectedFurnitureCanMove = false
+//                furnitureNode.highlight(with: .red, for: 0.5)
+                selectedFurniture = furnitureNode
+                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+                break;
+            case .window:
+                selectedFurnitureCanMove = false
+//                furnitureNode.highlight(with: .red, for: 0.5)
+                selectedFurniture = furnitureNode
+                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+                break;
+            case .platForm:
+                selectedFurnitureCanMove = false
+                //            furnitureNode.highlight(with: .red, for: 0.5)
+                //            selectedFurniture = furnitureNode
+                //            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+                break;
+            }
         
         
     }
@@ -335,8 +395,11 @@ extension BuildMyRoom {
                 let rotateAction = SCNAction.rotate(by: .pi / 4, around: SCNVector3(0, 1, 0), duration: 0.5)
                 
                 // Apply the action to the node
-                selectedFurniture.runAction(rotateAction)
-            }
+                if let nodeChild = selectedFurniture.childNodes.first{
+                    nodeChild.runAction(rotateAction)
+                }else{
+                    selectedFurniture.runAction(rotateAction)
+                }            }
         }
     }
     //    func rightRotation(){
@@ -360,7 +423,11 @@ extension BuildMyRoom {
                 let rotateAction = SCNAction.rotate(by: -.pi / 4, around: SCNVector3(0, 1, 0), duration: 0.5)
                 
                 // Apply the action to the node
-                selectedFurniture.runAction(rotateAction)
+                if let nodeChild = selectedFurniture.childNodes.first{
+                    nodeChild.runAction(rotateAction)
+                }else{
+                    selectedFurniture.runAction(rotateAction)
+                }
             }
         }
     }
@@ -368,14 +435,16 @@ extension BuildMyRoom {
         rotationAngle -= 45
         //        let rotationAngle: CGFloat = rotationAngle
         //        let rotation = SCNVector4(0, 1, 0, rotationAngle)
-        
         if let selectedFurniture = selectedFurniture {
             if selectedFurnitureCanMove {
                 // Create an SCNAction to animate the rotation
                 let rotateAction = SCNAction.rotate(by: .pi / .pi, around: SCNVector3(0, 1, 0), duration: 0.5)
-                
                 // Apply the action to the node
-                selectedFurniture.runAction(rotateAction)
+                if let nodeChild = selectedFurniture.childNodes.first{
+                    nodeChild.runAction(rotateAction)
+                }else{
+                    selectedFurniture.runAction(rotateAction)
+                }
             }
         }
     }
@@ -403,26 +472,26 @@ private extension BuildMyRoom {
     func onContactBegin(contact: SCNPhysicsContact) {
         let nodeA = contact.nodeA as! MaterialNode //wall
         let nodeB = contact.nodeB as! MaterialNode
-                if (nodeA.type == .object){
-                        DispatchQueue.main.async { [weak self] in
-                            nodeB.highlight(with: .red, for: 0.01)
-                            nodeA.highlight(with: .green, for: 0.05)
-        //                nodeA.position.x = oldPosition.x / 1.1
-        //                nodeA.position.z = oldPosition.z / 1.1
-                    }
-                    return
-
-                }
-                if(nodeB.type == .object) {
-                        DispatchQueue.main.async { [weak self] in
-                            nodeB.highlight(with: .red, for: 0.01)
-                            nodeA.highlight(with: .green, for: 0.05)
-        //                nodeB.position.x = oldPosition.x / 1.1
-        //                nodeB.position.z = oldPosition.z / 1.1
-                    }
-                    return
-                }
-        
+//                if (nodeA.type == .object){
+//                        DispatchQueue.main.async { [weak self] in
+//                            nodeB.highlight(with: .red, for: 0.01)
+//                            nodeA.highlight(with: .green, for: 0.05)
+//        //                nodeA.position.x = oldPosition.x / 1.1
+//        //                nodeA.position.z = oldPosition.z / 1.1
+//                    }
+//                    return
+//
+//                }
+//                if(nodeB.type == .object) {
+//                        DispatchQueue.main.async { [weak self] in
+//                            nodeB.highlight(with: .red, for: 0.01)
+//                            nodeA.highlight(with: .green, for: 0.05)
+//        //                nodeB.position.x = oldPosition.x / 1.1
+//        //                nodeB.position.z = oldPosition.z / 1.1
+//                    }
+//                    return
+//                }
+//
         
     }
 }

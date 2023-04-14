@@ -56,6 +56,7 @@ struct view3DRoomTemp: View {
             SceneView(scene: RoomModel.scene, options: [.allowsCameraControl],delegate: sceneRendererDelegate)
                 .gesture(drag)
                 .onTapGesture { location in
+                    print(location)
                     pick(atPoint: location)
                     if (RoomModel.userChoice == .Customize){
                         showingCredits.toggle()
@@ -159,8 +160,9 @@ struct view3DRoomTemp: View {
 private extension view3DRoomTemp {
     func pick(atPoint point: CGPoint) {
         // Find closest node
-        if let firstNode = findFirstTouchableNode(atPoint: point) {
+        if let firstNode = findParentNode(atPoint: point) {
             if let materialNode = firstNode as? MaterialNode  {
+                print("Da5l fe func point el fe View3DRoomTemp")
                 withAnimation {
                     RoomModel.pick(materialNode)
                 }
@@ -188,7 +190,24 @@ private extension view3DRoomTemp {
         
         return hitResult.node
     }
-    
+    func findParentNode(atPoint point: CGPoint) -> SCNNode? {
+        guard let sceneRenderer = sceneRendererDelegate.renderer else {
+                print("There is no SceneRenderer!")
+                return nil
+            }
+        let hitResults = sceneRenderer.hitTest(point, options: [:])
+        if hitResults.count > 0 {
+            let result = hitResults[0]
+            var node = result.node
+            while node.parent != nil && !(node is MaterialNode) {
+                node = node.parent!
+            }
+            if let materialNode = node as? MaterialNode {
+                return materialNode
+            }
+        }
+        return nil
+    }
     func findFirstTouchableNode(atPoint point: CGPoint) -> SCNNode? {
         guard let sceneRenderer = sceneRendererDelegate.renderer else {
             print("There is no SceneRenderer!")
