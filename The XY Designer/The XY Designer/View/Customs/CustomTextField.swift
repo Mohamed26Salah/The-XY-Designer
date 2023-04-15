@@ -9,6 +9,7 @@ import SwiftUI
 enum keyboardTypeEnum {
     case email
     case name
+    case num
 }
 struct CustomTextField: View {
     var customKeyboardChoice : keyboardTypeEnum
@@ -16,6 +17,8 @@ struct CustomTextField: View {
         switch customKeyboardChoice {
         case .email:
             return .emailAddress
+        case .num:
+            return .telephoneNumber
         case .name:
             return .username
         }
@@ -24,6 +27,8 @@ struct CustomTextField: View {
         switch customKeyboardChoice {
         case .email:
             return .emailAddress
+        case .num:
+            return .numberPad
         case .name:
             return .default
         }
@@ -41,6 +46,8 @@ struct CustomTextField: View {
                 .keyboardType(keyboardType)
                 .textContentType(keyboardContentType)
                 .focused($isEnabled)
+                .padding(.horizontal,10)
+                .padding(.top,10)
             
             ZStack(alignment: .leading) {
                 Rectangle()

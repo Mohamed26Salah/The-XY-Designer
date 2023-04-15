@@ -18,22 +18,14 @@ enum ButtonState: String, CaseIterable{
 struct EditNode: View {
     @State var selectedItems: [PhotosPickerItem] = []
     @State var data: Data?
-    
-    let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-    let images = ["1174", "black-brick-wall-textured-background", "rough-white-cement-plastered-wall-texture", "grunge-wall-texture"]
-    
-    
     @State private var selectedImage: String?
     @Environment(\.presentationMode) var presentationMode
     var editFurniture = EditFurniture()
-    var node: SCNNode
+    var node: MaterialNode
     var roomDominantColors: [String:[UIColor]]
     @State private var selectedColor: Color = .red
     @State private var selectedPage: ButtonState = .ExtractedColors
-    
+    @State private var selectedModel: String?
     var body: some View {
         VStack{
             Form{
@@ -74,20 +66,21 @@ struct EditNode: View {
                     }
                 }else if(selectedPage == .Textures){
                     Section(header: Text("Choose Object Texture")){
-                        VStack{
-                            ScrollView {
-                                LazyVGrid(columns: columns) {
-                                    ForEach(images, id: \.self) { image in
-                                        ClickableImage(imageName: image, isSelected: image == selectedImage) {
-                                            selectedImage = image
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        ShowTextures(selectedImage: $selectedImage)
                     }
                     
+                }else{
+                    if(node.type == .door || node.type == .window || node.type == .object){
+                        Section(header: Text("Choose 3D Model")){
+                            Show3DModels(node: node, selectedModel: $selectedModel)
+                        }
+                    }
+                    else {
+                        Text("This object cant be changed.")
+                            .bold()
+                    }
                 }
+                
                 HStack{
                     Spacer()
                     Button {
@@ -99,7 +92,13 @@ struct EditNode: View {
                             }
                         }
                         else {
-                            print("3D Object")
+                            
+                            if let dimenstion = node.dimenstions{
+                                if let selectedModel = selectedModel{
+                                    editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , transform: node.transform, extenstion: "usdz")
+                                }
+                            }
+                            
                         }
                         presentationMode.wrappedValue.dismiss()
                     } label: {
@@ -120,6 +119,8 @@ struct EditNode: View {
                 }
             }
         }
+        
+        //Image Picker
         if (selectedPage == .Textures){
             HStack{
                 Spacer()
@@ -168,36 +169,6 @@ struct EditNode: View {
     }
     
 }
-
-
-struct ClickableImage: View {
-    let imageName: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Image(imageName)
-            .resizable()
-            .scaledToFit()
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(isSelected ? Color.primary : Color.clear, lineWidth: 3)
-            )
-            .onTapGesture(perform: action)
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //

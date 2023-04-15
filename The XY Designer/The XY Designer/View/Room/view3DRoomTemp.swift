@@ -26,7 +26,7 @@ struct view3DRoomTemp: View {
         //                RoomModel = BuildMyRoom(room: room)
         //            }
         //        }
-//        let joex = (savedRoomModel.retrieveRoomToUserDefaults())!
+        //        let joex = (savedRoomModel.retrieveRoomToUserDefaults())!
         self.room = (savedRoomModel.retrieveRoomToUserDefaults()?.room)!
         self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
         let uIDominantRoomColors = dominantRoomColors.mapValues { $0.compactMap { UIColor(hexString: $0) } }
@@ -52,37 +52,22 @@ struct view3DRoomTemp: View {
                 lastCameraOffset = SCNVector3()
             }
         ZStack(alignment: .leading) {
-            
             SceneView(scene: RoomModel.scene, options: [.allowsCameraControl],delegate: sceneRendererDelegate)
                 .gesture(drag)
                 .onTapGesture { location in
                     print(location)
                     pick(atPoint: location)
                     if (RoomModel.userChoice == .Customize){
-                        showingCredits.toggle()
+                        if let selectedFurniture = RoomModel.selectedFurniture {
+                            if (selectedFurniture.type != .platForm || selectedFurniture.type != .opening){
+                                showingCredits.toggle()
+                            }
+                        }
                     }
                     
                 }
                 .ignoresSafeArea()
             VStack (alignment: .leading){
-                //                Button {
-                //                    dismiss()
-                //                } label: {
-                //                    Image("x.circle.fill")
-                //                        .font(.title3)
-                //                }
-                //                HStack{
-                //                    ZStack {
-                //                        Circle()
-                //                            .stroke(Color.black, lineWidth: 5)
-                //                            .frame(width: 75, height: 75)
-                //                        Image(systemName: "arrow.up")
-                //                            .rotationEffect(.degrees(Double(RoomModel.cameraRotation ?? 0)))
-                //                            .font(.largeTitle)
-                //                            .colorInvert()
-                //                    }
-                //                    .padding()
-                //                    Spacer()
                 Section(){
                     Picker("UserChoice", selection: $RoomModel.userChoice) {
                         ForEach(UserChoices.allCases,id: \.self) { page in
@@ -96,43 +81,52 @@ struct view3DRoomTemp: View {
                 
                 Spacer()
                 if (RoomModel.selectedFurnitureCanMove){
-                    HStack(){
-                        Button {
-                            withAnimation {
-                                RoomModel.leftRotation()
+                    VStack(alignment: .center){
+                        CustomTextField(customKeyboardChoice: .num, hint: "Degree", text: $RoomModel.angelRotation)
+                            .background(Color.black)
+                            .cornerRadius(10)
+                        HStack(){
+                            Button {
+                                withAnimation {
+                                    RoomModel.leftRotation()
+                                }
+                            } label: {
+                                Image(systemName: "rotate.left")
+                                    .font(.title3)
                             }
-                        } label: {
-                            Image(systemName: "rotate.left")
-                                .font(.title3)
-                        }
-                        .foregroundColor(.primary)
-                        .padding(.horizontal,25)
-                        .padding(.vertical)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
-                        }
-                        Button {
-                            withAnimation {
-                                RoomModel.rightRotation()
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
                             }
-                        } label: {
-                            Image(systemName: "rotate.right")
-                                .font(.title3)
+                            Button {
+                                withAnimation {
+                                    RoomModel.rightRotation()
+                                }
+                            } label: {
+                                Image(systemName: "rotate.right")
+                                    .font(.title3)
+                            }
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
+                            }
                         }
-                        .foregroundColor(.primary)
-                        .padding(.horizontal,25)
-                        .padding(.vertical)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
-                        }
+                        .background(Color.black)
+                        .cornerRadius(10)
+                        .padding(.leading,20)
                     }
-                    .background(Color.black)
-                    .cornerRadius(10)
+                    .frame(width: UIScreen.main.bounds.width / 4, height: UIScreen.main.bounds.height / 4)
+//                    .position(x: UIScreen.main.bounds.width / 4, y: UIScreen.main.bounds.height * 3 / 4)
                     .padding()
+                   
+                    
                 }
-                
             }
             
         }
@@ -158,11 +152,21 @@ struct view3DRoomTemp: View {
 // MARK: - Managing Controls View
 
 private extension view3DRoomTemp {
+    func clickedFeel(materialNode: MaterialNode){
+        let scaleDownAction = SCNAction.scale(to: 0.9, duration: 0.25)
+        let scaleUpAction = SCNAction.scale(to: 1.0, duration: 0.25)
+        let sequenceAction = SCNAction.sequence([scaleDownAction, scaleUpAction])
+        materialNode.runAction(sequenceAction)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
     func pick(atPoint point: CGPoint) {
         // Find closest node
         if let firstNode = findParentNode(atPoint: point) {
             if let materialNode = firstNode as? MaterialNode  {
-                print("Da5l fe func point el fe View3DRoomTemp")
+                if (materialNode.type == .platForm || materialNode.type == .opening){
+                    return
+                }
+               clickedFeel(materialNode: materialNode)
                 withAnimation {
                     RoomModel.pick(materialNode)
                 }
@@ -192,9 +196,9 @@ private extension view3DRoomTemp {
     }
     func findParentNode(atPoint point: CGPoint) -> SCNNode? {
         guard let sceneRenderer = sceneRendererDelegate.renderer else {
-                print("There is no SceneRenderer!")
-                return nil
-            }
+            print("There is no SceneRenderer!")
+            return nil
+        }
         let hitResults = sceneRenderer.hitTest(point, options: [:])
         if hitResults.count > 0 {
             let result = hitResults[0]

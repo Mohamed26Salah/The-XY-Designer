@@ -69,24 +69,6 @@ struct view3DRoom: View {
                 }
                 .ignoresSafeArea()
             VStack (alignment: .leading){
-                //                Button {
-                //                    dismiss()
-                //                } label: {
-                //                    Image("x.circle.fill")
-                //                        .font(.title3)
-                //                }
-                //                HStack{
-                //                    ZStack {
-                //                        Circle()
-                //                            .stroke(Color.black, lineWidth: 5)
-                //                            .frame(width: 75, height: 75)
-                //                        Image(systemName: "arrow.up")
-                //                            .rotationEffect(.degrees(Double(RoomModel.cameraRotation ?? 0)))
-                //                            .font(.largeTitle)
-                //                            .colorInvert()
-                //                    }
-                //                    .padding()
-                //                    Spacer()
                 Section(){
                     Picker("UserChoice", selection: $RoomModel.userChoice) {
                         ForEach(UserChoices.allCases,id: \.self) { page in

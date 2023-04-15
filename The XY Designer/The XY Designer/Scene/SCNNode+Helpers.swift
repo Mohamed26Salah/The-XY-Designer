@@ -41,8 +41,8 @@ extension SCNNode {
     with color: Color = Color.lightGrayFancy,
     for seconds: Double = 0.4
   ) {
-    let material = geometry!.firstMaterial!
-    
+//    let material = geometry!.firstMaterial!
+    guard let material = geometry?.firstMaterial else { return }
     SCNTransaction.begin()
     SCNTransaction.animationDuration = seconds
     

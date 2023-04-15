@@ -12,10 +12,13 @@ import SceneKit
 class MaterialNode: SCNNode {
     var type: EntityType
     var UUID: String!
+    var dimenstions: simd_float3!
     
-    init(type: EntityType, id: String? = nil) {
+    init(type: EntityType, id: String? = nil, dimenstions: simd_float3? = nil) {
         self.type = type
-        
+        if dimenstions != nil {
+            self.dimenstions = dimenstions
+        }
         if id != nil {
             self.UUID = id
         }
@@ -26,23 +29,5 @@ class MaterialNode: SCNNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    func createMaterialNode(from node: SCNNode, type: EntityType, id: String) -> MaterialNode? {
-        let materialNode = MaterialNode(type: type, id: id)
-        materialNode.position = node.position
-        materialNode.rotation = node.rotation
-        materialNode.scale = node.scale
-        materialNode.opacity = node.opacity
-        
-        // Copy over any child nodes
-        for childNode in node.childNodes {
-            if let childMaterialNode = createMaterialNode(from: childNode,type: type, id: id) {
-                materialNode.addChildNode(childMaterialNode)
-            } else {
-                materialNode.addChildNode(childNode)
-            }
-        }
-        
-        return materialNode
     }
 }
