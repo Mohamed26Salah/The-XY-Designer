@@ -38,6 +38,7 @@ class BuildMyRoom: ObservableObject {
         dominantRoomColors: [String : [UIColor]]
     ) {
         node = SCNNode()
+        node.position = SCNVector3(0,0,0)
         self.room = room
         self.dominantRoomColors = dominantRoomColors
         setupScene()
@@ -46,18 +47,8 @@ class BuildMyRoom: ObservableObject {
 }
 
 // MARK: - Preparing Scene
-private extension BuildMyRoom {
-    func prepareLight() {
-        let fieldCenter = node.position
-        let spotlight = defaultLightNode(mode: .spot)
-        spotlight.position = fieldCenter + SCNVector3(0, cameraHeight, 0)
-        spotlight.look(at: fieldCenter)
-//        spotlight.light?.shadowRadius = 5
-        //        spotlight.light?.castsShadow = false
-        scene.rootNode.addChildNode(spotlight)
-        scene.rootNode.addChildNode(defaultLightNode(mode: .ambient))
-    }
-    func prepareLight2(){
+extension BuildMyRoom {
+    func spotLight(){
         let spotLight = SCNNode()
         spotLight.light = SCNLight()
         spotLight.light?.type = SCNLight.LightType.spot
@@ -75,16 +66,24 @@ private extension BuildMyRoom {
         spotLight.light?.shadowColor = UIColor.black.withAlphaComponent(1)
         spotLight.position = SCNVector3(x: 0, y: 5, z: 0)
         spotLight.eulerAngles = SCNVector3(-Float.pi / 2, 0, 0)
+        spotLight.name = "spotLight"
         scene.rootNode.addChildNode(spotLight)
-        scene.rootNode.addChildNode(defaultLightNode(mode: .ambient))
+        let ambientLightNode = defaultLightNode(mode: .ambient)
+        ambientLightNode.name = "defaultLight"
+        scene.rootNode.addChildNode(ambientLightNode)
     }
-    func prepareLight3(){
+    func ambientLight(){
         let lightNode = SCNNode()
         lightNode.light = SCNLight()
         lightNode.light?.type = .omni
         lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
+        lightNode.name = "ambientLight"
         scene.rootNode.addChildNode(lightNode)
     }
+    
+}
+// MARK: - Building Room Private
+private extension BuildMyRoom {
     func prepareCamera() {
         // Setup camera
         cameraNode = SCNNode()
@@ -118,16 +117,16 @@ private extension BuildMyRoom {
         addObjects(addObjectsTO: node)
         addOpennings(addOpenningsTO: node)
         createRoomPlane(addPlaneTO: node)
-//        createRoomPlane2(addPlanTo: node)
+        //        createRoomPlane2(addPlanTo: node)
         scene.rootNode.addChildNode(node)
         scene.background.contents = Color.DarkTheme.Violet.background.cgColor
         scene.physicsWorld.contactDelegate = contactDelegate
         contactDelegate.onBegin = onContactBegin(contact:)
-        
+        scene.background.contents = lightSkyBox()
         prepareCamera()
-//        prepareLight()
-        prepareLight2()
-//        prepareLight3()
+        spotLight()
+//                prepareLight3()
+
     }
     
     func createRoomPlane(addPlaneTO node : SCNNode){
@@ -142,7 +141,7 @@ private extension BuildMyRoom {
         planeNode.geometry = planeGeometry
         //        let planeNode = SCNNode(geometry: planeGeometry)
         planeNode.geometry = planeGeometry
-        planeNode.position = SCNVector3(node.position.x, -1.3, node.position.y)
+        planeNode.position = SCNVector3(node.position.x, -0.95, node.position.z)
         planeNode.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
         planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.addChildNode(planeNode)
@@ -152,17 +151,17 @@ private extension BuildMyRoom {
         var maxX = -Float.greatestFiniteMagnitude
         var minZ = Float.greatestFiniteMagnitude
         var maxZ = -Float.greatestFiniteMagnitude
-
+        
         for position in wallPositions {
             minX = min(minX, position.x)
             maxX = max(maxX, position.x)
             minZ = min(minZ, position.z)
             maxZ = max(maxZ, position.z)
         }
-
+        
         let width = maxX - minX
         let length = maxZ - minZ
-
+        
         return SCNVector3(width, 0.1, length)
     }
     func createRoomPlane2(addPlanTo node: SCNNode){
@@ -177,7 +176,7 @@ private extension BuildMyRoom {
             height: CGFloat(platFormPosition.z)*1.5)
         planeGeometry.firstMaterial?.isDoubleSided = true
         planeGeometry.firstMaterial?.diffuse.contents = Color.white.opacity(0.4)
-//        planeGeometry.cornerRadius = 5
+        //        planeGeometry.cornerRadius = 5
         let stringUUID = String(6338)
         let planeNode = MaterialNode(type: .platForm, id: stringUUID)
         planeNode.geometry = planeGeometry
@@ -304,55 +303,57 @@ private extension BuildMyRoom {
     
     
     
+    
 }
 // MARK: - Touch / Pick node / Controls
 extension BuildMyRoom {
-//    func getSphereNode(from materialNode: MaterialNode) -> SCNNode? {
-//        for child in materialNode.childNodes {
-//            if let sphere = child as? MaterialNode {
-//                if (sphere.type == .sphere){
-//                    return child
-//                }
-//            }
-//        }
-//        return nil
-//    }
+    //    func getSphereNode(from materialNode: MaterialNode) -> SCNNode? {
+    //        for child in materialNode.childNodes {
+    //            if let sphere = child as? MaterialNode {
+    //                if (sphere.type == .sphere){
+    //                    return child
+    //                }
+    //            }
+    //        }
+    //        return nil
+    //    }
     func pick(_ furnitureNode: MaterialNode) {
-            switch furnitureNode.type {
-            case .object:
-                furnitureNode.highlight(with: .red, for: 0.5)
-                selectedFurniture = furnitureNode
-                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-                selectedFurnitureCanMove = true
-                break;
-            case .wall:
-                selectedFurnitureCanMove = false
-                furnitureNode.highlight(with: .red, for: 0.5)
-                selectedFurniture = furnitureNode
-                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-                break;
-            case .door:
-                selectedFurnitureCanMove = true
-                furnitureNode.highlight(with: .red, for: 0.5)
-                selectedFurniture = furnitureNode
-                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-                break;
-            case .opening:
-                selectedFurnitureCanMove = false
-                furnitureNode.highlight(with: .red, for: 0.5)
-                selectedFurniture = furnitureNode
-                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-                break;
-            case .window:
-                selectedFurnitureCanMove = true
-                furnitureNode.highlight(with: .red, for: 0.5)
-                selectedFurniture = furnitureNode
-                selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
-                break;
-            case .platForm:
-                selectedFurnitureCanMove = false
-                break;
-            }
+        switch furnitureNode.type {
+        case .object:
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+            selectedFurnitureCanMove = true
+            break;
+        case .wall:
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+            break;
+        case .door:
+            selectedFurnitureCanMove = true
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+            break;
+        case .opening:
+            selectedFurnitureCanMove = false
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+            break;
+        case .window:
+            selectedFurnitureCanMove = true
+            furnitureNode.highlight(with: .red, for: 0.5)
+            selectedFurniture = furnitureNode
+            selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
+            break;
+        case .platForm:
+            selectedFurnitureCanMove = false
+            break;
+
+        }
     }
     
     func handleRightPad(dPad: GCControllerDirectionPad, xAxis: Float, yAxis: Float) {
@@ -425,34 +426,34 @@ private extension BuildMyRoom {
         let nodeA = contact.nodeA as! MaterialNode
         let nodeB = contact.nodeB as! MaterialNode
         
-                if (nodeA.type == .object){
-                        DispatchQueue.main.async { [weak self] in
-                            if nodeA.childNodes.isEmpty {
-                                if nodeB.childNodes.isEmpty{
-                                    nodeB.highlight(with: .red, for: 0.01)
-                                    nodeA.highlight(with: .green, for: 0.05)
-                                }
-                            }
-        //                nodeA.position.x = oldPosition.x / 1.1
-        //                nodeA.position.z = oldPosition.z / 1.1
+        if (nodeA.type == .object){
+            DispatchQueue.main.async { [weak self] in
+                if nodeA.childNodes.isEmpty {
+                    if nodeB.childNodes.isEmpty{
+                        nodeB.highlight(with: .red, for: 0.01)
+                        nodeA.highlight(with: .green, for: 0.05)
                     }
-                    return
-
                 }
-                if(nodeB.type == .object) {
-                        DispatchQueue.main.async { [weak self] in
-                            if nodeA.childNodes.isEmpty {
-                                if nodeB.childNodes.isEmpty{
-                                    nodeB.highlight(with: .red, for: 0.01)
-                                    nodeA.highlight(with: .green, for: 0.05)
-                                }
-                            }
-        //                nodeB.position.x = oldPosition.x / 1.1
-        //                nodeB.position.z = oldPosition.z / 1.1
+                //                nodeA.position.x = oldPosition.x / 1.1
+                //                nodeA.position.z = oldPosition.z / 1.1
+            }
+            return
+            
+        }
+        if(nodeB.type == .object) {
+            DispatchQueue.main.async { [weak self] in
+                if nodeA.childNodes.isEmpty {
+                    if nodeB.childNodes.isEmpty{
+                        nodeB.highlight(with: .red, for: 0.01)
+                        nodeA.highlight(with: .green, for: 0.05)
                     }
-                    return
                 }
-
+                //                nodeB.position.x = oldPosition.x / 1.1
+                //                nodeB.position.z = oldPosition.z / 1.1
+            }
+            return
+        }
+        
         
     }
 }
@@ -460,7 +461,7 @@ private extension BuildMyRoom {
 
 extension BuildMyRoom {
     func onEachFrame(){
-//        print("Inside Frame")
+        //        print("Inside Frame")
         DispatchQueue.main.async { [self] in
             //Collison wa baz
             // Rotation also baz
@@ -469,9 +470,28 @@ extension BuildMyRoom {
 }
 
 
+//MARK: - Quality Of Life
 
-
-
+extension BuildMyRoom {
+    func lightSkyBox() -> [UIImage] {
+        var imageArray = [UIImage]()
+        imageArray.append(UIImage(named: "AnyConv.com__miramar_ft.png")!)
+        imageArray.append(UIImage(named: "AnyConv.com__miramar_bk.png")!)
+        imageArray.append(UIImage(named: "AnyConv.com__miramar_up.png")!)
+        imageArray.append(UIImage(named: "AnyConv.com__miramar_dn.png")!)
+        imageArray.append(UIImage(named: "AnyConv.com__miramar_rt.png")!)
+        imageArray.append(UIImage(named: "AnyConv.com__miramar_lf.png")!)
+        
+        return imageArray
+    }
+    func Model3dURL(name: String, extenstion: String) -> SCNScene{
+        let url = Bundle.main.url(forResource: name, withExtension: extenstion)!
+        guard let modelScene = try? SCNScene(url: url, options: nil) else {
+            fatalError("failed to laod scene from url")
+        }
+        return modelScene
+    }
+}
 
 
 

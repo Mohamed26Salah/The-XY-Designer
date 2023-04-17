@@ -43,6 +43,8 @@
 		AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */; };
 		AB4CCAA829E1B3F6007E3864 /* Control.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4CCAA729E1B3F6007E3864 /* Control.swift */; };
 		AB4E042A29E5E22900450517 /* EditNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E042929E5E22900450517 /* EditNode.swift */; };
+		AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E885329EC40ED003FF08A /* ArRoomView.swift */; };
+		AB4E885629EC5009003FF08A /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E885529EC5009003FF08A /* test.swift */; };
 		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */; };
 		AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D129DF65C4005FDCA8 /* Themes.swift */; };
 		AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D329DF65DD005FDCA8 /* Samples.swift */; };
@@ -122,6 +124,8 @@
 		AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialNode.swift; sourceTree = "<group>"; };
 		AB4CCAA729E1B3F6007E3864 /* Control.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Control.swift; sourceTree = "<group>"; };
 		AB4E042929E5E22900450517 /* EditNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNode.swift; sourceTree = "<group>"; };
+		AB4E885329EC40ED003FF08A /* ArRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArRoomView.swift; sourceTree = "<group>"; };
+		AB4E885529EC5009003FF08A /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom.swift; sourceTree = "<group>"; };
 		AB5FC6D129DF65C4005FDCA8 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		AB5FC6D329DF65DD005FDCA8 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
@@ -196,7 +200,6 @@
 		AB44FC5629E8325900973891 /* USDZ */ = {
 			isa = PBXGroup;
 			children = (
-				AB2B543D29E9D1320025D8E0 /* Gaming_Chair_1.usdz */,
 				AB2B542C29E9D1080025D8E0 /* Computer_Monitor_169_Low_Poly_Game_Ready.usdz */,
 				AB2B543129E9D1090025D8E0 /* Door_wood.usdz */,
 				AB2B542A29E9D1080025D8E0 /* Door.usdz */,
@@ -204,6 +207,7 @@
 				AB2B542B29E9D1080025D8E0 /* Gaming_Desktop_PC.usdz */,
 				AB2B543229E9D1090025D8E0 /* Industrial_Table.usdz */,
 				AB2B542E29E9D1090025D8E0 /* Old_wooden_window.usdz */,
+				AB2B543D29E9D1320025D8E0 /* Gaming_Chair_1.usdz */,
 				AB2B542F29E9D1090025D8E0 /* Sliding_Window.usdz */,
 				AB2B544129E9D4CA0025D8E0 /* Wooden_Door_1-2.usdz */,
 				AB2B544329E9D5790025D8E0 /* Wooden_Door_Opened1-2.usdz */,
@@ -293,6 +297,8 @@
 				AB4E042929E5E22900450517 /* EditNode.swift */,
 				ABAC685F29EAF1B10085D90D /* Show3DModels.swift */,
 				ABAC686129EB2F540085D90D /* ShowTextures.swift */,
+				AB4E885329EC40ED003FF08A /* ArRoomView.swift */,
+				AB4E885529EC5009003FF08A /* test.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -532,6 +538,7 @@
 				AB44FC6329E83B7800973891 /* BuildRoom3DModels.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
+				AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
@@ -547,6 +554,7 @@
 				ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */,
 				AB9B412929CC6805007C02AA /* AuthService.swift in Sources */,
 				AB5FC6DD29DF78E7005FDCA8 /* defaultLightNode.swift in Sources */,
+				AB4E885629EC5009003FF08A /* test.swift in Sources */,
 				AB5FC6DF29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift in Sources */,
 				AB3A2CF329C64DD700B2717A /* Validator.swift in Sources */,
 				ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */,

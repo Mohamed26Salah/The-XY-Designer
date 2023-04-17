@@ -48,6 +48,7 @@ struct CustomTextField: View {
                 .focused($isEnabled)
                 .padding(.horizontal,10)
                 .padding(.top,10)
+                
             
             ZStack(alignment: .leading) {
                 Rectangle()

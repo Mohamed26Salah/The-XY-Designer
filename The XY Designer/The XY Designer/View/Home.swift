@@ -21,20 +21,11 @@ struct Home: View {
             Text("My home")
                 .bold()
                 .scaleEffect(2)
-            Button("Show Credits") {
-                showingCredits.toggle()
-            }
-            .sheet(isPresented: $showingCredits) {
-                ColorPicker("Steam Sama Turkey md5n", selection: $selectedColor)
-                    .labelsHidden()
-                    .padding()
-                ColorPicker(selection: $selectedColor){
-                    Label("Color Pallete", systemImage: "paintpalette")
-                        .symbolVariant(.fill)
-                        .padding(.leading, 8)
-                }
-            }
-            
+                .padding()
+            Text("Still under development")
+                .bold()
+                .padding()
+                
         }
         .navigationTitle("Salah")
         .toolbar(.hidden)

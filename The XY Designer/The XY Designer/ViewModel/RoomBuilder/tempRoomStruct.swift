@@ -35,3 +35,4 @@ struct tempRoomStruct: Codable {
 //CurrentNames
 //roomToSave
 //roomToSaveColors
+//ScanToDoctor

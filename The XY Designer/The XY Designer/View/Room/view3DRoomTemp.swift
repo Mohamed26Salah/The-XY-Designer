@@ -19,6 +19,7 @@ struct view3DRoomTemp: View {
     @State var lastCameraOffset = SCNVector3()
     @State private var selectedColor: Color = .red
     @State private var showingCredits = false
+    @State private var isARPresented = false
     var superController = SuperController(elements: [GCInputRightThumbstick])
     init() {
         //        if let savedRoom = savedRoomModel.retrieveRoomToUserDefaults(){
@@ -27,6 +28,7 @@ struct view3DRoomTemp: View {
         //            }
         //        }
         //        let joex = (savedRoomModel.retrieveRoomToUserDefaults())!
+       
         self.room = (savedRoomModel.retrieveRoomToUserDefaults()?.room)!
         self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
         let uIDominantRoomColors = dominantRoomColors.mapValues { $0.compactMap { UIColor(hexString: $0) } }
@@ -63,6 +65,7 @@ struct view3DRoomTemp: View {
                                 showingCredits.toggle()
                             }
                         }
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
                     
                 }
@@ -77,8 +80,48 @@ struct view3DRoomTemp: View {
                 }
                 .padding(20)
                 .pickerStyle(.segmented)
-                //                }
-                
+                HStack{
+                    Menu("Light") {
+                        Button("Spot Light", action: {
+                            if let ambientLight = RoomModel.scene.rootNode.childNode(withName: "ambientLight", recursively: true) {
+                                ambientLight.removeFromParentNode()
+                               
+                                RoomModel.spotLight()
+                            }
+                        })
+                        Button("Ambient Light", action: {
+                            if let spotLight = RoomModel.scene.rootNode.childNode(withName: "spotLight", recursively: true) {
+                                spotLight.removeFromParentNode()
+                                if let defaultLight = RoomModel.scene.rootNode.childNode(withName: "defaultLight", recursively: true){
+                                    defaultLight.removeFromParentNode()
+                                    RoomModel.ambientLight()
+                                }
+                            }
+                        })
+                    }
+                    .bold()
+                    .foregroundColor(.primary)
+                    .padding(.horizontal,18)
+                    .padding(.vertical)
+                    .background{
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .foregroundColor(.secondary.opacity(0.3))
+                    }
+                    .padding()
+                    Spacer()
+                    Button(action: { isARPresented = true }) {
+                        Text("AR")
+                            .bold()
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
+                            }
+                    }
+                    .padding()
+                }
                 Spacer()
                 if (RoomModel.selectedFurnitureCanMove){
                     VStack(alignment: .center){
@@ -144,9 +187,13 @@ struct view3DRoomTemp: View {
                 EditNode(node: selectedFurniture, roomDominantColors: RoomModel.dominantRoomColors)
             }
         }
+        .fullScreenCover(isPresented: $isARPresented) {
+            ArRoomView(scene: RoomModel.scene, applySkyBoxAgain: RoomModel.lightSkyBox(), isARPresented: $isARPresented)
+        }
         
         
     }
+  
 }
 
 // MARK: - Managing Controls View
