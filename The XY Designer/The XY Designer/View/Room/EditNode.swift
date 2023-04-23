@@ -95,7 +95,7 @@ struct EditNode: View {
                             
                             if let dimenstion = node.dimenstions{
                                 if let selectedModel = selectedModel{
-                                    editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , transform: node.transform, extenstion: "usdz")
+                                    editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , extenstion: "usdz")
                                 }
                             }
                             

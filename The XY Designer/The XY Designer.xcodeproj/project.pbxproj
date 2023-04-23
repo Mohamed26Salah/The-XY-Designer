@@ -64,6 +64,11 @@
 		ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */; };
 		ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4329CCF85F00EB88E1 /* Home.swift */; };
 		ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */; };
+		ABB4CBFF29F50F5700D6278A /* PrepareRoomData.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CBFE29F50F5700D6278A /* PrepareRoomData.swift */; };
+		ABB4CC0129F5225E00D6278A /* UI-Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0029F5225E00D6278A /* UI-Image.swift */; };
+		ABB4CC0329F5503700D6278A /* SceneToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0229F5503700D6278A /* SceneToJson.swift */; };
+		ABB4CC0529F5504600D6278A /* testJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0429F5504600D6278A /* testJson.swift */; };
+		ABB862E929F5A0DF00C7D241 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB862E829F5A0DF00C7D241 /* UIApplication.swift */; };
 		ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE27E429E6016A003656E3 /* ColorCircle.swift */; };
 		ABBE27E729E61BB5003656E3 /* EditFurniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE27E629E61BB5003656E3 /* EditFurniture.swift */; };
 		ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */; };
@@ -145,6 +150,11 @@
 		ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDelegate.swift; sourceTree = "<group>"; };
 		ABAEBA4329CCF85F00EB88E1 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlaneApi.swift; sourceTree = "<group>"; };
+		ABB4CBFE29F50F5700D6278A /* PrepareRoomData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRoomData.swift; sourceTree = "<group>"; };
+		ABB4CC0029F5225E00D6278A /* UI-Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI-Image.swift"; sourceTree = "<group>"; };
+		ABB4CC0229F5503700D6278A /* SceneToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneToJson.swift; sourceTree = "<group>"; };
+		ABB4CC0429F5504600D6278A /* testJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testJson.swift; sourceTree = "<group>"; };
+		ABB862E829F5A0DF00C7D241 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		ABBE27E429E6016A003656E3 /* ColorCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircle.swift; sourceTree = "<group>"; };
 		ABBE27E629E61BB5003656E3 /* EditFurniture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFurniture.swift; sourceTree = "<group>"; };
 		ABD54DC929C49FE3000E7506 /* The XY Designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The XY Designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +194,8 @@
 			children = (
 				AB00AE9329E0A9410091085D /* UserDefaults.swift */,
 				ABFC200329E4DDFB003827CF /* UIColor.swift */,
+				ABB4CC0029F5225E00D6278A /* UI-Image.swift */,
+				ABB862E829F5A0DF00C7D241 /* UIApplication.swift */,
 			);
 			path = Extenstions;
 			sourceTree = "<group>";
@@ -257,6 +269,7 @@
 		AB5FC6C829DF6074005FDCA8 /* RoomBuilder */ = {
 			isa = PBXGroup;
 			children = (
+				ABB4CBFE29F50F5700D6278A /* PrepareRoomData.swift */,
 				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */,
 				AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */,
 				AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */,
@@ -318,6 +331,8 @@
 				AB4CCAA429E1A6C7007E3864 /* MaterialNode.swift */,
 				ABBE27E629E61BB5003656E3 /* EditFurniture.swift */,
 				AB44FC6229E83B7800973891 /* BuildRoom3DModels.swift */,
+				ABB4CC0229F5503700D6278A /* SceneToJson.swift */,
+				ABB4CC0429F5504600D6278A /* testJson.swift */,
 			);
 			path = Room;
 			sourceTree = "<group>";
@@ -538,8 +553,10 @@
 				AB44FC6329E83B7800973891 /* BuildRoom3DModels.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
+				ABB4CBFF29F50F5700D6278A /* PrepareRoomData.swift in Sources */,
 				AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
+				ABB862E929F5A0DF00C7D241 /* UIApplication.swift in Sources */,
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
 				ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */,
@@ -547,10 +564,13 @@
 				AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */,
 				AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */,
 				ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */,
+				ABB4CC0129F5225E00D6278A /* UI-Image.swift in Sources */,
 				ABAC686029EAF1B10085D90D /* Show3DModels.swift in Sources */,
 				AB4CCA9F29E19D6E007E3864 /* DebugHelpers.swift in Sources */,
 				AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */,
+				ABB4CC0529F5504600D6278A /* testJson.swift in Sources */,
 				ABFC200429E4DDFB003827CF /* UIColor.swift in Sources */,
+				ABB4CC0329F5503700D6278A /* SceneToJson.swift in Sources */,
 				ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */,
 				AB9B412929CC6805007C02AA /* AuthService.swift in Sources */,
 				AB5FC6DD29DF78E7005FDCA8 /* defaultLightNode.swift in Sources */,
@@ -720,7 +740,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.07756.The-XY-Designer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12248-The-XY-Designer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -751,7 +771,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.07756.The-XY-Designer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12248-The-XY-Designer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

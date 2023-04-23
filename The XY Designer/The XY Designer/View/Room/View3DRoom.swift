@@ -20,6 +20,7 @@ struct view3DRoom: View {
     @State var lastCameraOffset = SCNVector3()
     @State private var selectedColor: Color = .red
     @State private var showingCredits = false
+    @State private var isARPresented = false
     var superController = SuperController(elements: [GCInputRightThumbstick])
     init(room: CapturedRoom, dominantRoomColors: [String:[UIColor]]) {
         self.room = room
@@ -57,13 +58,18 @@ struct view3DRoom: View {
                 lastCameraOffset = SCNVector3()
             }
         ZStack(alignment: .leading) {
-            
             SceneView(scene: RoomModel.scene, options: [.allowsCameraControl],delegate: sceneRendererDelegate)
                 .gesture(drag)
                 .onTapGesture { location in
+                    print(location)
                     pick(atPoint: location)
                     if (RoomModel.userChoice == .Customize){
-                        showingCredits.toggle()
+                        if let selectedFurniture = RoomModel.selectedFurniture {
+                            if (selectedFurniture.type != .platForm || selectedFurniture.type != .opening){
+                                showingCredits.toggle()
+                            }
+                        }
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
                     }
                     
                 }
@@ -78,47 +84,96 @@ struct view3DRoom: View {
                 }
                 .padding(20)
                 .pickerStyle(.segmented)
-                //                }
-                
-                Spacer()
-                if (RoomModel.selectedFurnitureCanMove){
-                    HStack(){
-                        Button {
-                            withAnimation {
-                                RoomModel.leftRotation()
+                HStack{
+                    Menu("Light") {
+                        Button("Spot Light", action: {
+                            if let ambientLight = RoomModel.scene.rootNode.childNode(withName: "ambientLight", recursively: true) {
+                                ambientLight.removeFromParentNode()
+                               
+                                RoomModel.spotLight()
                             }
-                        } label: {
-                            Image(systemName: "rotate.left")
-                                .font(.title3)
-                        }
-                        .foregroundColor(.primary)
-                        .padding(.horizontal,25)
-                        .padding(.vertical)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
-                        }
-                        Button {
-                            withAnimation {
-                                RoomModel.rightRotation()
+                        })
+                        Button("Ambient Light", action: {
+                            if let spotLight = RoomModel.scene.rootNode.childNode(withName: "spotLight", recursively: true) {
+                                spotLight.removeFromParentNode()
+                                if let defaultLight = RoomModel.scene.rootNode.childNode(withName: "defaultLight", recursively: true){
+                                    defaultLight.removeFromParentNode()
+                                    RoomModel.ambientLight()
+                                }
                             }
-                        } label: {
-                            Image(systemName: "rotate.right")
-                                .font(.title3)
-                        }
-                        .foregroundColor(.primary)
-                        .padding(.horizontal,25)
-                        .padding(.vertical)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
-                        }
+                        })
                     }
-                    .background(Color.black)
-                    .cornerRadius(10)
+                    .bold()
+                    .foregroundColor(.primary)
+                    .padding(.horizontal,18)
+                    .padding(.vertical)
+                    .background{
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .foregroundColor(.secondary.opacity(0.3))
+                    }
+                    .padding()
+                    Spacer()
+                    Button(action: { isARPresented = true }) {
+                        Text("AR")
+                            .bold()
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
+                            }
+                    }
                     .padding()
                 }
-                
+                Spacer()
+                if (RoomModel.selectedFurnitureCanMove){
+                    VStack(alignment: .center){
+                        CustomTextField(customKeyboardChoice: .num, hint: "Degree", text: $RoomModel.angelRotation)
+                            .background(Color.black)
+                            .cornerRadius(10)
+                        HStack(){
+                            Button {
+                                withAnimation {
+                                    RoomModel.leftRotation()
+                                }
+                            } label: {
+                                Image(systemName: "rotate.left")
+                                    .font(.title3)
+                            }
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
+                            }
+                            Button {
+                                withAnimation {
+                                    RoomModel.rightRotation()
+                                }
+                            } label: {
+                                Image(systemName: "rotate.right")
+                                    .font(.title3)
+                            }
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,25)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
+                            }
+                        }
+                        .background(Color.black)
+                        .cornerRadius(10)
+                        .padding(.leading,20)
+                    }
+                    .frame(width: UIScreen.main.bounds.width / 4, height: UIScreen.main.bounds.height / 4)
+//                    .position(x: UIScreen.main.bounds.width / 4, y: UIScreen.main.bounds.height * 3 / 4)
+                    .padding()
+                   
+                    
+                }
             }
             
         }
@@ -136,18 +191,33 @@ struct view3DRoom: View {
                 EditNode(node: selectedFurniture, roomDominantColors: RoomModel.dominantRoomColors)
             }
         }
+        .fullScreenCover(isPresented: $isARPresented) {
+            ArRoomView(scene: RoomModel.scene, applySkyBoxAgain: RoomModel.lightSkyBox(), isARPresented: $isARPresented)
+        }
         
         
     }
+  
 }
 
 // MARK: - Managing Controls View
 
 private extension view3DRoom {
+    func clickedFeel(materialNode: MaterialNode){
+        let scaleDownAction = SCNAction.scale(to: 0.9, duration: 0.25)
+        let scaleUpAction = SCNAction.scale(to: 1.0, duration: 0.25)
+        let sequenceAction = SCNAction.sequence([scaleDownAction, scaleUpAction])
+        materialNode.runAction(sequenceAction)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
     func pick(atPoint point: CGPoint) {
         // Find closest node
-        if let firstNode = findFirstTouchableNode(atPoint: point) {
+        if let firstNode = findParentNode(atPoint: point) {
             if let materialNode = firstNode as? MaterialNode  {
+                if (materialNode.type == .platForm || materialNode.type == .opening){
+                    return
+                }
+               clickedFeel(materialNode: materialNode)
                 withAnimation {
                     RoomModel.pick(materialNode)
                 }
@@ -175,7 +245,24 @@ private extension view3DRoom {
         
         return hitResult.node
     }
-    
+    func findParentNode(atPoint point: CGPoint) -> SCNNode? {
+        guard let sceneRenderer = sceneRendererDelegate.renderer else {
+            print("There is no SceneRenderer!")
+            return nil
+        }
+        let hitResults = sceneRenderer.hitTest(point, options: [:])
+        if hitResults.count > 0 {
+            let result = hitResults[0]
+            var node = result.node
+            while node.parent != nil && !(node is MaterialNode) {
+                node = node.parent!
+            }
+            if let materialNode = node as? MaterialNode {
+                return materialNode
+            }
+        }
+        return nil
+    }
     func findFirstTouchableNode(atPoint point: CGPoint) -> SCNNode? {
         guard let sceneRenderer = sceneRendererDelegate.renderer else {
             print("There is no SceneRenderer!")
@@ -202,3 +289,5 @@ struct view3DRoom_Previews: PreviewProvider {
         view3DRoomTemp()
     }
 }
+
+

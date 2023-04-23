@@ -141,53 +141,11 @@ private extension BuildMyRoom {
         planeNode.geometry = planeGeometry
         //        let planeNode = SCNNode(geometry: planeGeometry)
         planeNode.geometry = planeGeometry
-        planeNode.position = SCNVector3(node.position.x, -0.95, node.position.z)
+        planeNode.position = SCNVector3(node.position.x, -1.3, node.position.z)
         planeNode.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
         planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.addChildNode(planeNode)
-    }
-    func calculatePlatformSize(fromWallPositions wallPositions: [SCNVector3]) -> SCNVector3 {
-        var minX = Float.greatestFiniteMagnitude
-        var maxX = -Float.greatestFiniteMagnitude
-        var minZ = Float.greatestFiniteMagnitude
-        var maxZ = -Float.greatestFiniteMagnitude
-        
-        for position in wallPositions {
-            minX = min(minX, position.x)
-            maxX = max(maxX, position.x)
-            minZ = min(minZ, position.z)
-            maxZ = max(maxZ, position.z)
-        }
-        
-        let width = maxX - minX
-        let length = maxZ - minZ
-        
-        return SCNVector3(width, 0.1, length)
-    }
-    func createRoomPlane2(addPlanTo node: SCNNode){
-        for wall in room.walls {
-            let transform = wall.transform
-            let position = simd_float3(transform.columns.3.x, transform.columns.3.y, transform.columns.3.z)
-            wallsPositionArray.append(SCNVector3(position))
-        }
-        let platFormPosition = calculatePlatformSize(fromWallPositions: wallsPositionArray)
-        let planeGeometry = SCNPlane(
-            width: CGFloat(platFormPosition.x)*1.5,
-            height: CGFloat(platFormPosition.z)*1.5)
-        planeGeometry.firstMaterial?.isDoubleSided = true
-        planeGeometry.firstMaterial?.diffuse.contents = Color.white.opacity(0.4)
-        //        planeGeometry.cornerRadius = 5
-        let stringUUID = String(6338)
-        let planeNode = MaterialNode(type: .platForm, id: stringUUID)
-        planeNode.geometry = planeGeometry
-        //        let planeNode = SCNNode(geometry: planeGeometry)
-        planeNode.geometry = planeGeometry
-        planeNode.position = SCNVector3(node.position.x, -1.5, node.position.z)
-        planeNode.eulerAngles = SCNVector3Make(Float.pi / 2, 0.5 ,0)
-        planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        node.addChildNode(planeNode)
-    }
-    
+    }  
     func addWalls(addWallsTO node : SCNNode){
         let walls = room.walls
         for wall in walls{
@@ -200,11 +158,10 @@ private extension BuildMyRoom {
                 box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
             }
             let stringUUID = wall.identifier.uuidString
-            let boxNode = MaterialNode(type: .wall, id: stringUUID)
+            
+            let boxNode = MaterialNode(type: .wall, id: stringUUID, dimenstions: wall.dimensions, confidence: wall.confidence, curve: wall.curve, completedEdges: wall.completedEdges)
             boxNode.geometry = box
             boxNode.simdTransform = wall.transform
-            //                let boxNode = SCNNode(geometry: box)
-            //            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
             boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
             boxNode.physicsBody?.mass = 0
             boxNode.physicsBody?.restitution = 0
@@ -227,7 +184,7 @@ private extension BuildMyRoom {
                 box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
             }
             let stringUUID = object.identifier.uuidString
-            let boxNode = MaterialNode(type: .object, id: stringUUID, dimenstions: object.dimensions)
+            let boxNode = MaterialNode(type: .object, id: stringUUID, dimenstions: object.dimensions, confidence: object.confidence, subObjectCategory: object.category)
             boxNode.geometry = box
             boxNode.simdTransform = object.transform
             boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
@@ -243,6 +200,7 @@ private extension BuildMyRoom {
     func addDoors(addDoorsTO node : SCNNode){
         let doors = room.doors
         for door in doors{
+            let category = door.category
             let box = SCNBox(width: CGFloat(door.dimensions.x), height: CGFloat(door.dimensions.y), length: CGFloat(door.dimensions.z)+0.01, chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
             if let colorsDictionary = dominantRoomColors["Door+\(door.identifier.uuidString)"]{
@@ -252,7 +210,7 @@ private extension BuildMyRoom {
                 box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
             }
             let stringUUID = door.identifier.uuidString
-            let boxNode = MaterialNode(type: .door, id: stringUUID, dimenstions: door.dimensions)
+            let boxNode = MaterialNode(type: .door, id: stringUUID, dimenstions: door.dimensions, confidence: door.confidence, subSurfaceCategory: door.category, curve: door.curve, completedEdges: door.completedEdges)
             boxNode.geometry = box
             //                let boxNode = SCNNode(geometry: box)
             boxNode.simdTransform = door.transform
@@ -272,7 +230,7 @@ private extension BuildMyRoom {
                 box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
             }
             let stringUUID = window.identifier.uuidString
-            let boxNode = MaterialNode(type: .window, id: stringUUID, dimenstions: window.dimensions)
+            let boxNode = MaterialNode(type: .window, id: stringUUID, dimenstions: window.dimensions, confidence: window.confidence, curve: window.curve, completedEdges: window.completedEdges)
             boxNode.geometry = box
             boxNode.simdTransform = window.transform
             boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
@@ -292,7 +250,7 @@ private extension BuildMyRoom {
                 box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
             }
             let stringUUID = opening.identifier.uuidString
-            let boxNode = MaterialNode(type: .opening, id: stringUUID)
+            let boxNode = MaterialNode(type: .opening, id: stringUUID, dimenstions: opening.dimensions, confidence: opening.confidence, curve: opening.curve, completedEdges: opening.completedEdges)
             boxNode.geometry = box
             boxNode.simdTransform = opening.transform
             boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
@@ -462,10 +420,10 @@ private extension BuildMyRoom {
 extension BuildMyRoom {
     func onEachFrame(){
         //        print("Inside Frame")
-        DispatchQueue.main.async { [self] in
+//        DispatchQueue.main.async { [self] in
             //Collison wa baz
             // Rotation also baz
-        }
+//        }
     }
 }
 

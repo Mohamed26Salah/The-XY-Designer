@@ -33,6 +33,7 @@ struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
     @EnvironmentObject var coordinator: Coordinator
+    let data = ["key": "value"]
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -40,7 +41,6 @@ struct ScanningView: View {
                 .navigationBarBackButtonHidden(true)
                 .navigationBarItems(leading: Button("Cancel") {
                     captureController.stopSession()
-                    
                     dismiss()
                 })
                 .navigationBarItems(trailing: Button("Done") {
@@ -51,36 +51,38 @@ struct ScanningView: View {
                     captureController.startSession()
                 }
             VStack{
-                //                                if let room = captureController.finalResult{
-//                if captureController.roomIsReady{
-//                    NavigationLink(destination: View3DRoom(room: captureController.finalResult!), label: {Text("View Room")})
-//                        .buttonStyle(.borderedProminent)
-//                        .cornerRadius(40).font(.title2)
-//                        .opacity(captureController.showExportButton ? 1 : 0)
-//                        .disabled(!captureController.roomIsReady)
+//                if let room = captureController.finalResult{
+                    if captureController.roomIsReady{
+                        Button {
+                            let wholeScene = BuildMyRoom(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
+                            let stringRoomColors = wholeScene.dominantRoomColors.mapValues { $0.map { $0.hexString } }
+                            SceneToJson().shareFile(scene: wholeScene.scene, dominantColors: stringRoomColors)
+                        } label: {
+                            Text("Save").font(.title2)
+                        }
+                        .buttonStyle(.borderedProminent).cornerRadius(40).opacity(1)
+                        .padding()
+//                        .sheet(isPresented: $captureController.showShareSheet, content:{
+//                                    ActivityViewControllerRep(items: [captureController.exportUrl!])
+//                                })
+
+                    }
 //                }
-                //                            }
             }
-            //                .fullScreenCover(isPresented: $captureController.roomIsReady) {
-            //                    View3DRoom(room: captureController.finalResult!)
-            //                }
-            
-            
+
         }
-        //HEEEEEEEEEERRR YA SAAAALH
-        .fullScreenCover(isPresented: $captureController.roomIsReady) {
-            view3DRoom(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
-        }
+
+        
+        //        Button(action: {
+        //            captureController.export()
+        //            dismiss()
+        //        }, label: {
+        //            Text("Export").font(.title2)
+        //        }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
+        //            ActivityViewControllerRep(items: [captureController.exportUrl!])
+        //        })
         
         
-        Button(action: {
-            captureController.export()
-            dismiss()
-        }, label: {
-            Text("Export").font(.title2)
-        }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
-            ActivityViewControllerRep(items: [captureController.exportUrl!])
-        })
     }
     
 }
@@ -88,18 +90,18 @@ struct ScanningView: View {
 //}
 struct RoomPlaneApi: View {
     var body: some View {
-            VStack {
-                Image(systemName: "camera.metering.matrix")
-                    .imageScale(.large)
-                    .foregroundColor(.accentColor)
-                Text("Roomscanner").font(.title)
-                Spacer().frame(height: 40)
-                Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
-                Spacer().frame(height: 40)
-//                ScanningView()
-                NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
-            }
+        VStack {
+            Image(systemName: "camera.metering.matrix")
+                .imageScale(.large)
+                .foregroundColor(.accentColor)
+            Text("Roomscanner").font(.title)
+            Spacer().frame(height: 40)
+            Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
+            Spacer().frame(height: 40)
+            //                ScanningView()
+            NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
         }
+    }
 }
 
 struct RoomPlaneApi_Previews: PreviewProvider {

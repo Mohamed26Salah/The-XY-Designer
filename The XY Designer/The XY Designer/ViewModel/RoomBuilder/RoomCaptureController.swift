@@ -127,6 +127,11 @@ class RoomCaptureController : ObservableObject, RoomCaptureViewDelegate, RoomCap
         }
         showShareSheet = true
     }
+    func saveRoomTemp(){
+        var savedRoomModel = tempRoomStruct()
+        let stringRoomColors = roomColors.mapValues { $0.map { $0.hexString } }
+        savedRoomModel.saveRoomToUserDefaults(room: finalResult!,dominantRoomColors: stringRoomColors)
+    }
     
     required init?(coder: NSCoder) {
         fatalError("Not needed.")

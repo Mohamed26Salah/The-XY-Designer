@@ -122,6 +122,26 @@ struct view3DRoomTemp: View {
                     }
                     .padding()
                 }
+                HStack{
+                   
+                    Spacer()
+                    Button(action: {
+                        let wholeScene = BuildMyRoom(room: RoomModel.room, dominantRoomColors: RoomModel.dominantRoomColors)
+                        let stringRoomColors = wholeScene.dominantRoomColors.mapValues { $0.map { $0.hexString } }
+                        SceneToJson().shareFile(scene: wholeScene.scene, dominantColors: stringRoomColors)
+                    }) {
+                        Text("Save")
+                            .bold()
+                            .foregroundColor(.primary)
+                            .padding(.horizontal,17)
+                            .padding(.vertical)
+                            .background{
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.3))
+                            }
+                    }
+                    .padding()
+                }
                 Spacer()
                 if (RoomModel.selectedFurnitureCanMove){
                     VStack(alignment: .center){
