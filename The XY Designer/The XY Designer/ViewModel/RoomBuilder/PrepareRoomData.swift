@@ -14,6 +14,7 @@ class PrepareRoomData{
     var room: CapturedRoom
     var dominantRoomColors: [String : [UIColor]]
     let node: SCNNode!
+
     init(
         room: CapturedRoom,
         dominantRoomColors: [String : [UIColor]]

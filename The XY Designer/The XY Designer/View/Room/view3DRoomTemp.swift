@@ -12,6 +12,7 @@ import RoomPlan
 struct view3DRoomTemp: View {
     var savedRoomModel = tempRoomStruct()
     @ObservedObject var RoomModel: BuildMyRoom
+    @ObservedObject var uploadScene: UploadScene = UploadScene()
     var room: CapturedRoom
     var dominantRoomColors: [String:[String]]
     @Environment(\.dismiss) var dismiss
@@ -33,6 +34,7 @@ struct view3DRoomTemp: View {
         self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
         let uIDominantRoomColors = dominantRoomColors.mapValues { $0.compactMap { UIColor(hexString: $0) } }
         self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: uIDominantRoomColors))
+//        self._uploadScene = ObservedObject(wrappedValue: UploadScene())
     }
     var body: some View {
         let drag = DragGesture()
@@ -128,7 +130,8 @@ struct view3DRoomTemp: View {
                     Button(action: {
                         let wholeScene = BuildMyRoom(room: RoomModel.room, dominantRoomColors: RoomModel.dominantRoomColors)
                         let stringRoomColors = wholeScene.dominantRoomColors.mapValues { $0.map { $0.hexString } }
-                        SceneToJson().shareFile(scene: wholeScene.scene, dominantColors: stringRoomColors)
+//                        SceneToJson().shareFile(scene: wholeScene.scene, dominantColors: stringRoomColors)
+                        SceneToJson().uploadFile(scene: wholeScene.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
                     }) {
                         Text("Save")
                             .bold()
@@ -191,7 +194,19 @@ struct view3DRoomTemp: View {
                     
                 }
             }
-            
+            .alert(uploadScene.errorMessage, isPresented: $uploadScene.showError) {
+            }
+            HStack{
+                Spacer()
+                if uploadScene.showLoading {
+                    ProgressView()
+                        .tint(.primary)
+                        .foregroundColor(.secondary)
+                        .scaleEffect(3)
+                    
+                }
+                Spacer()
+            }
         }
         .onDisappear(perform: {
             superController.disconnect()

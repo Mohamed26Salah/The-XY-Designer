@@ -9,179 +9,11 @@ import Foundation
 import RoomPlan
 import simd
 import SceneKit
-
-//class SceneToJson {
-//    var materialNodesList: [MaterialNode] = []
-//    func traverseSceneNodes(node: SCNNode) {
-//        // Check if the node has a name of "materialNode"
-//        if let materialNode = node as? MaterialNode  {
-//            // Append the node to the list
-//            materialNodesList.append(materialNode)
-//            return
-//        }
-//
-//        // Recursively call the function on all child nodes
-//        for childNode in node.childNodes {
-//            traverseSceneNodes(node: childNode)
-//        }
-//    }
-//
-//    func getTypeString(_ furnitureNode: MaterialNode) -> String {
-//        switch furnitureNode.type {
-//        case .object:
-//            return "object"
-//        case .wall:
-//            return "wall"
-//        case .door:
-//            return "door"
-//        case .opening:
-//            return "opening"
-//        case .window:
-//            return "window"
-//        case .platForm:
-//            return "platForm"
-//        }
-//
-//
-//    }
-//    func convertSceneToJson(scene: SCNScene) -> [String: Any]{
-//        traverseSceneNodes(node: scene.rootNode)
-//        var sceneDict: [String: Any] = [:]
-//        for node in materialNodesList {
-//            if (node.type == .wall || node.type == .door || node.type == .opening || node.type == .window){
-//                sceneDict[getTypeString(node)] = convertNodeSurfaceToJson(node: node)
-//            }else{
-//                sceneDict[getTypeString(node)] = convertNodeObjectToJson(node: node)
-//            }
-//        }
-//        return sceneDict
-//    }
-//
-//    func convertNodeSurfaceToJson(node: MaterialNode) -> [String: Any]{
-//        var nodeDict: [String: Any] = [:]
-//        nodeDict["ID"] = node.UUID
-//        nodeDict["position"] = convertVectorToDictionary(vector: node.position)
-//        //        if let dimenstions = node.dimenstions {
-//        //            nodeDict["dimenstions"] = convertDimenstionsToDictionary(dimenstion: dimenstions)
-//        //        }else{
-//        //            nodeDict["dimenstions"] = ""
-//        //        }
-//        //        nodeDict["transform"] = encodeSCNMatrix4(node.transform)
-//        //        if let color = node.color {
-//        //            nodeDict["color"] = color.hexString
-//        //        }else{
-//        //            nodeDict["color"] = ""
-//        //        }
-//        //        nodeDict["texture"] = node.texture
-//        ////        nodeDict["confidence"] = node.confidence
-//        //        if let curve = node.curve {
-//        //            nodeDict["curve"] = curveModelToDictionary(curve)
-//        //        }else{
-//        //            nodeDict["curve"] = ""
-//        //        }
-//        //        nodeDict["completedEdges"] = edgesModelToDictionary(node.completedEdges)
-//        //        if (node.type == .door){
-//        //            nodeDict["isOpen"] = node.subSurfaceCategory
-//        //        }
-//        return nodeDict
-//    }
-//    func convertNodeObjectToJson(node: MaterialNode) -> [String: Any]{
-//        var nodeDict: [String: Any] = [:]
-//        nodeDict["ID"] = node.UUID
-//        nodeDict["position"] = convertVectorToDictionary(vector: node.position)
-//        //        if let dimenstions = node.dimenstions {
-//        //            nodeDict["dimenstions"] = convertDimenstionsToDictionary(dimenstion: dimenstions)
-//        //        }else{
-//        //            nodeDict["dimenstions"] = ""
-//        //        }
-//        //        nodeDict["transform"] = encodeSCNMatrix4(node.transform)
-//        //        if let a3dModel = node.a3dModel {
-//        //            nodeDict["3dModel"] = a3dModel
-//        //        }else{
-//        //            nodeDict["3dModel"] = "geomtry"
-//        //        }
-//        //        if let color = node.color {
-//        //            nodeDict["color"] = color.hexString
-//        //        }else{
-//        //            nodeDict["color"] = ""
-//        //        }
-//        //        nodeDict["texture"] = node.texture
-//        //        nodeDict["confidence"] = node.confidence
-//        //        nodeDict["subObjectCategory"] = node.subObjectCategory
-//        return nodeDict
-//    }
-//    func encodeSCNMatrix4(_ matrix: SCNMatrix4) -> String? {
-//        let row1 = String(format: "%.17f", matrix.m11) + ", " + String(format: "%.17f", matrix.m12) + ", " +
-//        String(format: "%.17f", matrix.m13) + ", " + String(format: "%.17f", matrix.m14)
-//        let row2 = String(format: "%.17f", matrix.m21) + ", " + String(format: "%.17f", matrix.m22) + ", " +
-//        String(format: "%.17f", matrix.m23) + ", " + String(format: "%.17f", matrix.m24)
-//        let row3 = String(format: "%.17f", matrix.m31) + ", " + String(format: "%.17f", matrix.m32) + ", " +
-//        String(format: "%.17f", matrix.m33) + ", " + String(format: "%.17f", matrix.m34)
-//        let row4 = String(format: "%.17f", matrix.m41) + ", " + String(format: "%.17f", matrix.m42) + ", " +
-//        String(format: "%.17f", matrix.m43) + ", " + String(format: "%.17f", matrix.m44)
-//
-//        let jsonString = """
-//    "transform": [
-//        \(row1),
-//        \(row2),
-//        \(row3),
-//        \(row4)
-//    ]
-//    """
-//        return jsonString
-//    }
-//    // Convert a SceneKit vector to a dictionary
-//    func convertVectorToDictionary(vector: SCNVector3) -> [String: Any] {
-//        return [
-//            "x": vector.x,
-//            "y": vector.y,
-//            "z": vector.z
-//        ]
-//    }
-//
-//    func convertDimenstionsToDictionary(dimenstion: simd_float3) -> [String: Any] {
-//        return [
-//            "dimenstion.x": dimenstion.x,
-//            "dimenstion.y": dimenstion.y,
-//            "dimenstion.z": dimenstion.z,
-//        ]
-//    }
-//
-//    // Convert CurveModel to a dictionary
-//    func curveModelToDictionary(_ curve: CapturedRoom.Surface.Curve) -> [String: Any] {
-//        var dictionary: [String: Any] = [:]
-//        dictionary["startAngle"] = curve.startAngle
-//        dictionary["endAngle"] = curve.endAngle
-//        dictionary["radius"] = curve.radius
-//        return dictionary
-//    }
-//    // Convert EdgesModel to a dictionary
-//    func edgesModelToDictionary(_ edges: Set<CapturedRoom.Surface.Edge>) -> [String: Any] {
-//        let dictionary: [String: Any] = ["edges": edges]
-//        return dictionary
-//    }
-//    func shareFile(data: [String: Any]) {
-//        // Create the data to be saved as a JSON file
-//        let jsonData = try! JSONSerialization.data(withJSONObject: data)
-//
-//        // Save the JSON data to a file in the app's documents directory
-//        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//        let fileURL = documentsDirectory.appendingPathComponent("data.json")
-//        try! jsonData.write(to: fileURL)
-//
-//        // Present a share sheet to share the file
-//        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
-//        UIApplication.shared.keyWindow?.rootViewController?.present(activityViewController, animated: true, completion: nil)
-//    }
-//    func createJson(scene: SCNScene) {
-//        let sceneDict = convertSceneToJson(scene: scene)
-//        shareFile(data: sceneDict)
-//    }
-//}
+import FirebaseAuth
 
 // By Salah And Joex
-
 class SceneToJson {
+    var specialID: String = ""
     struct V3Model : Encodable {
         let x: Float
         let y: Float
@@ -284,6 +116,7 @@ class SceneToJson {
         let objects: [GenericObjectModel]
         let sceneCreatedModel: [GenericSceneCreatedModel]
         let dominantColors: [String : [String]]
+        let specialID: String
     }
 
     
@@ -433,7 +266,10 @@ class SceneToJson {
         }
     
         func makeGeneric(of category: String) -> GenericObjectModel {
-            GenericObjectModel(id ?? "00",
+            specialID = Auth.auth().currentUser!.uid
+            specialID += obj.UUID
+
+          return GenericObjectModel(id ?? "00",
                                category,
                                confidence,
                                scale,
@@ -470,6 +306,7 @@ class SceneToJson {
         let transform = toModel(sceneCreatedModel.transform)
     
         func makeSceneCreatedModel(of category: String) -> GenericSceneCreatedModel {
+            //Makes THe platFormID is the ID OF the scene
             GenericSceneCreatedModel(id ?? "00", category, transform)
         }
         
@@ -482,6 +319,7 @@ class SceneToJson {
     var surfaceNodesList: [MaterialNode] = []
     var objectNodesList: [MaterialNode] = []
     var sceneCreatedNodesList: [MaterialNode] = []
+   
 
      func traverseSceneNodes(node: SCNNode) {
         // Check if the node has a name of "materialNode"
@@ -507,7 +345,8 @@ class SceneToJson {
        return SceneModel(surfaces: surfaceNodesList.map(toModel),
                         objects: objectNodesList.map(toModle),
                          sceneCreatedModel: sceneCreatedNodesList.map(toModle),
-                         dominantColors: dominantColors
+                         dominantColors: dominantColors,
+                         specialID: specialID
        )
    }
 
@@ -534,6 +373,21 @@ class SceneToJson {
         // Present a share sheet to share the file
         let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         UIApplication.shared.keyWindow?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+    }
+ 
+    func uploadFile(scene: SCNScene, dominantColors : [String : [String]], uploadScene: UploadScene) {
+        
+        // Save the JSON data to a file in the app's documents directory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent("scene.json")
+        try! exportJson(to: fileURL, scene: scene, dominantColors: dominantColors)
+//        UploadScene().uploadJSONAndAppendToArray(fileData: fileURL.dataRepresentation)
+        if let fileData = try? Data(contentsOf: fileURL) {
+            uploadScene.uploadJSONAndAppendToArray(fileData: fileData, id: specialID)
+        } else {
+            print("Error reading data from file at URL: \(fileURL)")
+        }
+        
     }
 
 }

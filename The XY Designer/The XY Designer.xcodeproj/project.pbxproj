@@ -69,6 +69,8 @@
 		ABB4CC0329F5503700D6278A /* SceneToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0229F5503700D6278A /* SceneToJson.swift */; };
 		ABB4CC0529F5504600D6278A /* testJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0429F5504600D6278A /* testJson.swift */; };
 		ABB862E929F5A0DF00C7D241 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB862E829F5A0DF00C7D241 /* UIApplication.swift */; };
+		ABB862EC29F5E09F00C7D241 /* UploadScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB862EB29F5E09F00C7D241 /* UploadScene.swift */; };
+		ABB862EE29F5F0EA00C7D241 /* ManageSceneDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB862ED29F5F0EA00C7D241 /* ManageSceneDataBase.swift */; };
 		ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE27E429E6016A003656E3 /* ColorCircle.swift */; };
 		ABBE27E729E61BB5003656E3 /* EditFurniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBE27E629E61BB5003656E3 /* EditFurniture.swift */; };
 		ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */; };
@@ -155,6 +157,8 @@
 		ABB4CC0229F5503700D6278A /* SceneToJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneToJson.swift; sourceTree = "<group>"; };
 		ABB4CC0429F5504600D6278A /* testJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testJson.swift; sourceTree = "<group>"; };
 		ABB862E829F5A0DF00C7D241 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		ABB862EB29F5E09F00C7D241 /* UploadScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadScene.swift; sourceTree = "<group>"; };
+		ABB862ED29F5F0EA00C7D241 /* ManageSceneDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageSceneDataBase.swift; sourceTree = "<group>"; };
 		ABBE27E429E6016A003656E3 /* ColorCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircle.swift; sourceTree = "<group>"; };
 		ABBE27E629E61BB5003656E3 /* EditFurniture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFurniture.swift; sourceTree = "<group>"; };
 		ABD54DC929C49FE3000E7506 /* The XY Designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "The XY Designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,6 +341,14 @@
 			path = Room;
 			sourceTree = "<group>";
 		};
+		ABB862EA29F5E07F00C7D241 /* sceneDatabase */ = {
+			isa = PBXGroup;
+			children = (
+				ABB862EB29F5E09F00C7D241 /* UploadScene.swift */,
+			);
+			path = sceneDatabase;
+			sourceTree = "<group>";
+		};
 		ABD54DC029C49FE3000E7506 = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +407,7 @@
 		ABD54DDB29C4A17F000E7506 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				ABB862EA29F5E07F00C7D241 /* sceneDatabase */,
 				AB5FC6C729DF6046005FDCA8 /* Authentication */,
 				AB5FC6C829DF6074005FDCA8 /* RoomBuilder */,
 			);
@@ -406,6 +419,7 @@
 			children = (
 				AB91E12229E8BD93009A7F57 /* Room */,
 				AB3A2CEC29C6380D00B2717A /* User.swift */,
+				ABB862ED29F5F0EA00C7D241 /* ManageSceneDataBase.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -551,6 +565,7 @@
 				ABD54DF929C4D091000E7506 /* SecureTextField.swift in Sources */,
 				AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */,
 				AB44FC6329E83B7800973891 /* BuildRoom3DModels.swift in Sources */,
+				ABB862EE29F5F0EA00C7D241 /* ManageSceneDataBase.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
 				ABB4CBFF29F50F5700D6278A /* PrepareRoomData.swift in Sources */,
@@ -561,6 +576,7 @@
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
 				ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */,
 				AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */,
+				ABB862EC29F5E09F00C7D241 /* UploadScene.swift in Sources */,
 				AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */,
 				AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */,
 				ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */,
