@@ -17,7 +17,6 @@ class EditFurniture{
         //For The Json
         node.texture = nil
         node.color = UIColor(color)
-        
     }
     func applyTexture(to node: MaterialNode, imageName: String) {
         let material = SCNMaterial()
@@ -56,7 +55,8 @@ class EditFurniture{
         node.addChildNode(new3dModel)
         //For The Json
         node.a3dModel = modelName
-        
+        node.texture = nil
+        node.color = nil
         //MARK: Can be Enhanced More!
     }
     func reset3dModel(to node: MaterialNode,dimesntions: simd_float3, transform: SCNMatrix4){

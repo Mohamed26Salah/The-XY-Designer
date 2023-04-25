@@ -9,8 +9,8 @@
 import SwiftUI
 import SceneKit
 import RoomPlan
-//completed Edges
-class MaterialNode: SCNNode {
+
+class MaterialNode: SCNNode{
     var type: EntityType
     var UUID: String!
     var dimenstions: simd_float3!

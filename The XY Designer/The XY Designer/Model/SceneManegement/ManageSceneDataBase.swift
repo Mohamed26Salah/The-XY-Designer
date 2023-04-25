@@ -20,7 +20,7 @@ struct ManageSceneDataBase {
         collectionRef = db.collection("usersScenes")
         documentRef = collectionRef.document(auth.currentUser!.uid)
     }
-
+    //Serialization
     // Define your data structure
     struct JSONFile {
         let id: String
@@ -28,10 +28,9 @@ struct ManageSceneDataBase {
         let time: String
     }
 
-    func getCurrentTime() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return dateFormatter.string(from: Date())
+    func getCurrentTime() -> Timestamp {
+        let date = Date()
+        return Timestamp(date: date)
     }
 
 
@@ -58,4 +57,36 @@ struct ManageSceneDataBase {
         }
     }
 }
+struct JsonFileArrayCell: Identifiable{
+    var id: String
+    var link: String
+    var time: Date
+    init(jsonFileCell: [String: Any]){
+        self.id = jsonFileCell["id"] as! String
+        self.link = jsonFileCell["link"] as! String
+        let timeInterval = jsonFileCell["time"] as? Timestamp
+        self.time = Date(timeIntervalSince1970: TimeInterval(timeInterval?.seconds ?? 0))
 
+    }
+}
+//Deserialization
+struct FireBaseSceneBody: Identifiable {
+    var id: String
+    var jsonFiles: [[String: Any]]
+    var arrayOfJsonFiles: [JsonFileArrayCell]
+    init?(document: DocumentSnapshot) {
+        guard let data = document.data(),
+              let jsonFiles = data["jsonFiles"] as? [[String: Any]] else {
+            return nil
+        }
+        
+        self.id = document.documentID
+        self.jsonFiles = jsonFiles
+        var array = [JsonFileArrayCell]()
+        for jsonCell in jsonFiles {
+            let cell = JsonFileArrayCell(jsonFileCell: jsonCell)
+            array.append(cell)
+        }
+        self.arrayOfJsonFiles = array
+    }
+}

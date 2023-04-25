@@ -8,32 +8,75 @@
 import SwiftUI
 import FirebaseAuth
 struct Home: View {
-    @State private var showingCredits = false
-    @State private var selectedColor: Color = .red
-
-    let heights = stride(from: 0.1, through: 1.0, by: 0.1).map { PresentationDetent.fraction($0) }
+    @ObservedObject var fetchScenes = FetchScene()
+    @State private var scenes: [JsonFileArrayCell] = []
+    var jsonToScene = JsonToScene()
     var body: some View {
-        VStack {
-            Text(Auth.auth().currentUser?.uid ?? "No User")
-            Image(systemName: "house")
-                .scaleEffect(3)
-                .padding(30)
-            Text("My home")
-                .bold()
-                .scaleEffect(2)
-                .padding()
-            Text("Still under development")
-                .bold()
-                .padding()
-                
+        ZStack{
+            VStack{
+                List(scenes) { scene in
+                    NavigationLink(destination: SceneDetailView(scene: scene)) {
+                        VStack(alignment: .leading) {
+                            Text("Scene ID: \(scene.id)")
+                            Text("Time: \(scene.time)")
+                        }
+//                        .onTapGesture {
+//                            jsonToScene.getJsonFile(url: scene.link)
+//                        }
+                        
+                    }
+                }
+            }
+            if fetchScenes.showLoading {
+                ProgressView()
+                    .tint(.primary)
+                    .foregroundColor(.secondary)
+                    .scaleEffect(2)
+            }
         }
-        .navigationTitle("Salah")
-        .toolbar(.hidden)
+        
+        .onAppear {
+            fetchScenes.fetchAllScenes { scenes, error in
+                if let scenes = scenes {
+                    DispatchQueue.main.async {
+                        fetchScenes.showLoading = false
+                    }
+                    self.scenes = scenes
+                } else if let error = error {
+                    print("Error fetching scenes: \(error.localizedDescription)")
+                }
+            }
+        }
+        .alert(fetchScenes.errorMessage, isPresented: $fetchScenes.showError) {}
+        
     }
 }
+
+struct SceneDetailView: View {
+    var scene: JsonFileArrayCell
+    
+    var body: some View {
+        VStack {
+            Text("Scene ID: \(scene.id)")
+            Text("Time: \(scene.time)")
+            Text("Link: \(scene.link)")
+            
+        }
+        .padding()
+    }
+    
+    private let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        formatter.timeStyle = .short
+        return formatter
+    }()
+}
+
 
 struct Home_Previews: PreviewProvider {
     static var previews: some View {
         Home()
     }
 }
+

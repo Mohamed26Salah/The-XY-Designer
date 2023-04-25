@@ -25,7 +25,6 @@ class SceneToJson {
         let endAngle: Double
         let radius: Float
     }
-    
     typealias EdgesModel = [Bool]
     
 //    struct stringModel: Encodable {
@@ -118,8 +117,6 @@ class SceneToJson {
         let dominantColors: [String : [String]]
         let specialID: String
     }
-
-    
     func toModel(_ confidence: CapturedRoom.Confidence) -> String {
         switch confidence {
         case .high: return "high"
@@ -165,13 +162,6 @@ class SceneToJson {
         let transform = toModel(surface.transform)
         let curve = surface.curve != nil ? toModel(surface.curve!) : nil
         let edges = toModel(surface.completedEdges)
-        var color: Any {
-            if let surfaceColor = surface.color {
-                return surfaceColor.hexString
-            } else {
-                return ""// Replace with your desired UIColor
-            }
-        }
         var doorType: Bool {
             if (surface.subSurfaceCategory == .door(isOpen: true)){
                 return true
@@ -180,15 +170,25 @@ class SceneToJson {
             }
                 
         }
-        var texture: String {
+        var texture: String? {
             if let text = surface.texture {
                 return text
             }else{
-                return ""
+                return nil
+            }
+        }
+        var colorAplied: String? {
+            if let color = surface.color {
+                return color.hexString
+            }else{
+                return nil
             }
         }
         func makeGeneric(of category: String) -> GenericSurfaceModel {
-            GenericSurfaceModel(
+            specialID = Auth.auth().currentUser!.uid
+            specialID += surface.UUID
+
+           return GenericSurfaceModel(
                 category,
                 id ?? "00",
                 confidence,
@@ -197,7 +197,7 @@ class SceneToJson {
                 curve,
                 edges,
                 texture,
-                color as? String)
+                colorAplied)
         }
         
         func makeDoor(isOpen: Bool) -> DoorModel {
@@ -210,7 +210,7 @@ class SceneToJson {
                 edges,
                 texture,
                 doorType,
-                color as? String)
+                colorAplied)
         }
             switch surface.type {
         case .door:
@@ -250,33 +250,37 @@ class SceneToJson {
                 return ""// Replace with your desired UIColor
             }
         }
-        var a3dModel: String {
+        var a3dModel: String? {
             if let model = obj.a3dModel {
                 return model
             }else{
-                return "geomtry"
+                return nil
             }
         }
-        var texture: String {
+        var texture: String? {
             if let text = obj.texture {
                 return text
             }else{
-                return ""
+                return nil
+            }
+        }
+        var colorAplied: String? {
+            if let color = obj.color {
+                return color.hex
+            }else{
+                return nil
             }
         }
     
         func makeGeneric(of category: String) -> GenericObjectModel {
-            specialID = Auth.auth().currentUser!.uid
-            specialID += obj.UUID
-
-          return GenericObjectModel(id ?? "00",
+           GenericObjectModel(id ?? "00",
                                category,
                                confidence,
                                scale,
                                transform,
                                texture,
                                a3dModel,
-                               color as? String)
+                              colorAplied)
         }
         
         switch obj.subObjectCategory {
@@ -306,7 +310,6 @@ class SceneToJson {
         let transform = toModel(sceneCreatedModel.transform)
     
         func makeSceneCreatedModel(of category: String) -> GenericSceneCreatedModel {
-            //Makes THe platFormID is the ID OF the scene
             GenericSceneCreatedModel(id ?? "00", category, transform)
         }
         

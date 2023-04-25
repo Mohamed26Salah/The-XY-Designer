@@ -200,7 +200,6 @@ private extension BuildMyRoom {
     func addDoors(addDoorsTO node : SCNNode){
         let doors = room.doors
         for door in doors{
-            let category = door.category
             let box = SCNBox(width: CGFloat(door.dimensions.x), height: CGFloat(door.dimensions.y), length: CGFloat(door.dimensions.z)+0.01, chamferRadius: 0)
             box.firstMaterial?.isDoubleSided = true
             if let colorsDictionary = dominantRoomColors["Door+\(door.identifier.uuidString)"]{

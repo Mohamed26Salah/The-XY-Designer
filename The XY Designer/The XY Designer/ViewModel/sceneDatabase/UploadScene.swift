@@ -22,7 +22,7 @@ class UploadScene: ObservableObject {
                 let newJSONFile: [String: Any] = [
                     "id": id,
                     "link": downloadURL,
-                    "time": self.manageSceneDataBase.getCurrentTime()
+                    "time": self.manageSceneDataBase.getCurrentTime() as Timestamp
                 ]
                 
                 self.manageSceneDataBase.documentRef.getDocument { document, error in

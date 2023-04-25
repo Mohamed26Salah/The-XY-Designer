@@ -9,7 +9,7 @@ import SceneKit
 import SwiftUI
 import RoomPlan
 import ColorKit
-class PrepareRoomData{
+class PrepareRoomScanData{
     var scene: SCNScene = SCNScene()
     var room: CapturedRoom
     var dominantRoomColors: [String : [UIColor]]
@@ -31,7 +31,7 @@ class PrepareRoomData{
 
 // MARK: - Building Room
 
-private extension PrepareRoomData {
+private extension PrepareRoomScanData {
     func setupScene() {
         addWalls(addWallsTO: node)
         addDoors(addDoorsTO: node)
