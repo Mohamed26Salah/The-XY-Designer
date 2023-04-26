@@ -2,50 +2,58 @@
 //  BuildMyRoom.swift
 //  The XY Designer
 //
-//  Created by Mohamed Salah on 06/04/2023.
+//  Created by Mohamed Salah on 25/04/2023.
 //
 
+import Foundation
 import SceneKit
 import SwiftUI
 import RoomPlan
 import GameController
 import ColorKit
-struct FurnitureConstants {
-    static let cameraHeight: Float = 15
-    static let furnitureSpeed: Float = 0.05
-}
+import SwiftUIJoystick
 
+struct BuildMyRoomConstants{
+    static let cameraHeight: Float = 15
+    static let furnitureSpeed: Float = 0.0005
+    
+}
 class BuildMyRoom: ObservableObject {
-    var scene: SCNScene = SCNScene()
-    private let cameraHeight: Float = 15
-    var room: CapturedRoom
-    var dominantRoomColors: [String : [UIColor]]
+    var room: PrepareJsonToScene?
+    let link: String
     let node: SCNNode!
+    var scene: SCNScene = SCNScene()
     var selectedFurniture: MaterialNode?
     var selectedFurniturePosition: SCNVector3?
-    var selectedFurnitureRotation: SCNVector4?
     var oldFurniturePosition: SCNVector3?
-    var furnitureSpeed: Float = 0.05
     let contactDelegate = ContactDelegate()
     var cameraNode = SCNNode()
-    var wallsPositionArray = [SCNVector3]()
     @Published var angelRotation: String = "45"
     @Published var selectedFurnitureCanMove: Bool = false
     @Published var cameraRotation: CGFloat?
     @Published var userChoice: UserChoices = .Movement
-    init(
-        room: CapturedRoom,
-        dominantRoomColors: [String : [UIColor]]
-    ) {
+    init(link: String) {
         node = SCNNode()
+        self.link = link
         node.position = SCNVector3(0,0,0)
-        self.room = room
-        self.dominantRoomColors = dominantRoomColors
-        setupScene()
+        JsonToScene().getJsonFile(url: link) { [weak self] returnedRoom, error in
+            if let error = error {
+                print(error.localizedDescription)
+                // Handle error case, if needed
+                return
+            }
+            if let returned = returnedRoom {
+                self?.room = returned
+                if (self?.room) != nil {
+                    self?.setupScene()
+                }
+            } else {
+                    // Handle error case, if needed
+                }
+        }
     }
     
 }
-
 // MARK: - Preparing Scene
 extension BuildMyRoom {
     func spotLight(){
@@ -80,10 +88,6 @@ extension BuildMyRoom {
         lightNode.name = "ambientLight"
         scene.rootNode.addChildNode(lightNode)
     }
-    
-}
-// MARK: - Building Room Private
-private extension BuildMyRoom {
     func prepareCamera() {
         // Setup camera
         cameraNode = SCNNode()
@@ -95,7 +99,7 @@ private extension BuildMyRoom {
         
         // Place camera
         let fieldCenter = node.position
-        cameraNode.position = fieldCenter + SCNVector3(0, cameraHeight, cameraHeight / 2)
+        cameraNode.position = fieldCenter + SCNVector3(0, BuildMyRoomConstants.cameraHeight, BuildMyRoomConstants.cameraHeight / 2)
         cameraNode.look(at: fieldCenter)
         
         //    let centerConstraint = SCNLookAtConstraint(target: field.centerCell().node)
@@ -107,17 +111,11 @@ private extension BuildMyRoom {
         return node.position
     }
 }
-// MARK: - Building Room
-
 private extension BuildMyRoom {
     func setupScene() {
-        addWalls(addWallsTO: node)
-        addDoors(addDoorsTO: node)
-        addWindows(addWindowsTO: node)
-        addObjects(addObjectsTO: node)
-        addOpennings(addOpenningsTO: node)
-        createRoomPlane(addPlaneTO: node)
-        //        createRoomPlane2(addPlanTo: node)
+        addSceneCreatedModels(addTO: node)
+        addSurfaceModels(addTO: node)
+        addObjectModels(addTO: node)
         scene.rootNode.addChildNode(node)
         scene.background.contents = Color.DarkTheme.Violet.background.cgColor
         scene.physicsWorld.contactDelegate = contactDelegate
@@ -125,155 +123,41 @@ private extension BuildMyRoom {
         scene.background.contents = lightSkyBox()
         prepareCamera()
         spotLight()
-//                prepareLight3()
-
     }
-    
-    func createRoomPlane(addPlaneTO node : SCNNode){
-        let planeGeometry = SCNPlane(
-            width: 20,
-            height: 20)
-        planeGeometry.firstMaterial?.isDoubleSided = true
-        planeGeometry.firstMaterial?.diffuse.contents = Color.white.opacity(0.4)
-        planeGeometry.cornerRadius = 5
-        let stringUUID = String(6338)
-        let planeNode = MaterialNode(type: .platForm, id: stringUUID)
-        planeNode.geometry = planeGeometry
-        //        let planeNode = SCNNode(geometry: planeGeometry)
-        planeNode.geometry = planeGeometry
-        planeNode.position = SCNVector3(node.position.x, -1.3, node.position.z)
-        planeNode.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
-        planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-        node.addChildNode(planeNode)
-    }  
-    func addWalls(addWallsTO node : SCNNode){
-        let walls = room.walls
-        for wall in walls{
-            let box = SCNBox(width: CGFloat(wall.dimensions.x), height: CGFloat(wall.dimensions.y), length: CGFloat(wall.dimensions.z), chamferRadius: 0)
-            box.firstMaterial?.isDoubleSided = true
-            if let colorsDictionary = dominantRoomColors["Wall+\(wall.identifier.uuidString)"]{
-                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
-                box.firstMaterial?.diffuse.contents = palette?.background
-            }else {
-                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+    func addSceneCreatedModels(addTO node : SCNNode){
+        if let room = room {
+            for sceneCreatedModel in room.sceneCreatedModel(){
+                if (sceneCreatedModel.type == .platForm) {
+                    BuildMyRoomAssistant().addPlatform(node: node, platFormModel: sceneCreatedModel)
+                }
             }
-            let stringUUID = wall.identifier.uuidString
-            
-            let boxNode = MaterialNode(type: .wall, id: stringUUID, dimenstions: wall.dimensions, confidence: wall.confidence, curve: wall.curve, completedEdges: wall.completedEdges)
-            boxNode.geometry = box
-            boxNode.simdTransform = wall.transform
-            boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-            boxNode.physicsBody?.mass = 0
-            boxNode.physicsBody?.restitution = 0
-            boxNode.physicsBody?.categoryBitMask = EntityType.wall.rawValue
-            //            boxNode.physicsBody?.collisionBitMask = EntityType.wall.rawValue | EntityType.object.rawValue
-            //            boxNode.physicsBody?.contactTestBitMask = EntityType.wall.rawValue | EntityType.object.rawValue
-            node.addChildNode(boxNode)
-        }
-        
-    }
-    func addObjects(addObjectsTO node : SCNNode){
-        let objects = room.objects
-        for object in objects{
-            let box = SCNBox(width: CGFloat(object.dimensions.x), height: CGFloat(object.dimensions.y), length: CGFloat(object.dimensions.z), chamferRadius: 0)
-            box.firstMaterial?.isDoubleSided = true
-            if let colorsDictionary = dominantRoomColors["Object+\(object.identifier.uuidString)"]{
-                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
-                box.firstMaterial?.diffuse.contents = palette?.primary
-            }else {
-                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
-            }
-            let stringUUID = object.identifier.uuidString
-            let boxNode = MaterialNode(type: .object, id: stringUUID, dimenstions: object.dimensions, confidence: object.confidence, subObjectCategory: object.category)
-            boxNode.geometry = box
-            boxNode.simdTransform = object.transform
-            boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
-            boxNode.physicsBody?.mass = 0
-            boxNode.physicsBody?.restitution = 1
-            boxNode.physicsBody?.categoryBitMask = EntityType.object.rawValue
-            boxNode.physicsBody?.collisionBitMask = EntityType.wall.rawValue
-            boxNode.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
-            node.addChildNode(boxNode)
-        }
-        
-    }
-    func addDoors(addDoorsTO node : SCNNode){
-        let doors = room.doors
-        for door in doors{
-            let box = SCNBox(width: CGFloat(door.dimensions.x), height: CGFloat(door.dimensions.y), length: CGFloat(door.dimensions.z)+0.01, chamferRadius: 0)
-            box.firstMaterial?.isDoubleSided = true
-            if let colorsDictionary = dominantRoomColors["Door+\(door.identifier.uuidString)"]{
-                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
-                box.firstMaterial?.diffuse.contents = palette?.secondary
-            }else {
-                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
-            }
-            let stringUUID = door.identifier.uuidString
-            let boxNode = MaterialNode(type: .door, id: stringUUID, dimenstions: door.dimensions, confidence: door.confidence, subSurfaceCategory: door.category, curve: door.curve, completedEdges: door.completedEdges)
-            boxNode.geometry = box
-            //                let boxNode = SCNNode(geometry: box)
-            boxNode.simdTransform = door.transform
-            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-            node.addChildNode(boxNode)
         }
     }
-    func addWindows(addWindowsTO node : SCNNode){
-        let windows = room.windows
-        for window in windows{
-            let box = SCNBox(width: CGFloat(window.dimensions.x), height: CGFloat(window.dimensions.y), length: CGFloat(window.dimensions.z)+0.01, chamferRadius: 0)
-            box.firstMaterial?.isDoubleSided = true
-            if let colorsDictionary = dominantRoomColors["Window+\(window.identifier.uuidString)"]{
-                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
-                box.firstMaterial?.diffuse.contents = palette?.secondary
-            }else {
-                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+    func addSurfaceModels(addTO node : SCNNode){
+        if let room = room {
+            for surfaceModel in room.surfacesModel() {
+                if (surfaceModel.type == .wall){
+                    BuildMyRoomAssistant().addWalls(node: node, wallModel: surfaceModel)
+                } else if(surfaceModel.type == .window){
+                    BuildMyRoomAssistant().addWindows(node: node, windowModel: surfaceModel)
+                } else if(surfaceModel.type == .door){
+                    BuildMyRoomAssistant().addDoors(node: node, doorModle: surfaceModel)
+                } else if(surfaceModel.type == .opening) {
+                    BuildMyRoomAssistant().addOpenings(node: node, openingModle: surfaceModel)
+                }
             }
-            let stringUUID = window.identifier.uuidString
-            let boxNode = MaterialNode(type: .window, id: stringUUID, dimenstions: window.dimensions, confidence: window.confidence, curve: window.curve, completedEdges: window.completedEdges)
-            boxNode.geometry = box
-            boxNode.simdTransform = window.transform
-            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-            node.addChildNode(boxNode)
         }
-        
     }
-    func addOpennings(addOpenningsTO node : SCNNode){
-        let openings = room.openings
-        for opening in openings{
-            let box = SCNBox(width: CGFloat(opening.dimensions.x), height: CGFloat(opening.dimensions.y), length: CGFloat(opening.dimensions.z), chamferRadius: 0)
-            box.firstMaterial?.isDoubleSided = true
-            if let colorsDictionary = dominantRoomColors["Opening+\(opening.identifier.uuidString)"]{
-                let palette = ColorPalette(orderedColors: colorsDictionary, ignoreContrastRatio: true)
-                box.firstMaterial?.diffuse.contents = palette?.primary
-            }else {
-                box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+    func addObjectModels(addTO node : SCNNode){
+        if let room = room {
+            for objectModel in room.objectsModel() {
+                BuildMyRoomAssistant().addObjects(node: node, objectModel: objectModel)
             }
-            let stringUUID = opening.identifier.uuidString
-            let boxNode = MaterialNode(type: .opening, id: stringUUID, dimenstions: opening.dimensions, confidence: opening.confidence, curve: opening.curve, completedEdges: opening.completedEdges)
-            boxNode.geometry = box
-            boxNode.simdTransform = opening.transform
-            boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
-            node.addChildNode(boxNode)
         }
-        
     }
-    
-    
-    
-    
 }
 // MARK: - Touch / Pick node / Controls
 extension BuildMyRoom {
-    //    func getSphereNode(from materialNode: MaterialNode) -> SCNNode? {
-    //        for child in materialNode.childNodes {
-    //            if let sphere = child as? MaterialNode {
-    //                if (sphere.type == .sphere){
-    //                    return child
-    //                }
-    //            }
-    //        }
-    //        return nil
-    //    }
     func pick(_ furnitureNode: MaterialNode) {
         switch furnitureNode.type {
         case .object:
@@ -309,7 +193,7 @@ extension BuildMyRoom {
         case .platForm:
             selectedFurnitureCanMove = false
             break;
-
+            
         }
     }
     
@@ -325,7 +209,26 @@ extension BuildMyRoom {
         }else {
             if (xAxis != 0){
                 if let selectedFurniture = selectedFurniture {
-                    let movementPosition = SCNVector3(xAxis, 0, -yAxis) * furnitureSpeed
+                    let movementPosition = SCNVector3(xAxis, 0, -yAxis) * BuildMyRoomConstants.furnitureSpeed
+                    if selectedFurnitureCanMove {
+                        selectedFurniture.position += movementPosition
+                        selectedFurniturePosition = selectedFurniture.position
+                    }
+                }
+            }
+        }
+    }
+    func handleJoyStick(xy: CGPoint) {
+        if xy.x == xy.y, xy.x == 0 {
+            if let selectedFurniture = selectedFurniture {
+                selectedFurniture.position = selectedFurniturePosition ?? SCNVector3(x: 0, y: 0, z: 0)
+                return
+            }
+            
+        }else {
+            if (xy.x != 0){
+                if let selectedFurniture = selectedFurniture {
+                    let movementPosition = SCNVector3(xy.x, 0, xy.y) * BuildMyRoomConstants.furnitureSpeed
                     if selectedFurnitureCanMove {
                         selectedFurniture.position += movementPosition
                         selectedFurniturePosition = selectedFurniture.position
@@ -346,11 +249,8 @@ extension BuildMyRoom {
         if let selectedFurniture = selectedFurniture {
             if selectedFurnitureCanMove {
                 let rotateAction = SCNAction.rotate(by: rotationAngleRadians, around: SCNVector3(0, 1, 0), duration: 0.5)
-                if let nodeChild = selectedFurniture.childNodes.first{
-                    nodeChild.runAction(rotateAction)
-                }else{
-                    selectedFurniture.runAction(rotateAction)
-                }            }
+                selectedFurniture.runAction(rotateAction)
+            }
         }
     }
     func rightRotation() {
@@ -365,11 +265,7 @@ extension BuildMyRoom {
         if let selectedFurniture = selectedFurniture {
             if selectedFurnitureCanMove {
                 let rotateAction = SCNAction.rotate(by: -rotationAngleRadians, around: SCNVector3(0, 1, 0), duration: 0.5)
-                if let nodeChild = selectedFurniture.childNodes.first{
-                    nodeChild.runAction(rotateAction)
-                }else{
-                    selectedFurniture.runAction(rotateAction)
-                }
+                selectedFurniture.runAction(rotateAction)
             }
         }
     }
@@ -378,7 +274,6 @@ extension BuildMyRoom {
 // MARK: - SCNPhysicsContact
 
 private extension BuildMyRoom {
-    
     func onContactBegin(contact: SCNPhysicsContact) {
         let nodeA = contact.nodeA as! MaterialNode
         let nodeB = contact.nodeB as! MaterialNode
@@ -387,12 +282,14 @@ private extension BuildMyRoom {
             DispatchQueue.main.async { [weak self] in
                 if nodeA.childNodes.isEmpty {
                     if nodeB.childNodes.isEmpty{
-                        nodeB.highlight(with: .red, for: 0.01)
-                        nodeA.highlight(with: .green, for: 0.05)
+                        if (nodeA.type != .platForm){
+                            nodeA.highlight(with: .green, for: 0.05)
+                        }
+                        if (nodeB.type != .platForm){
+                            nodeB.highlight(with: .red, for: 0.01)
+                        }
                     }
                 }
-                //                nodeA.position.x = oldPosition.x / 1.1
-                //                nodeA.position.z = oldPosition.z / 1.1
             }
             return
             
@@ -401,12 +298,14 @@ private extension BuildMyRoom {
             DispatchQueue.main.async { [weak self] in
                 if nodeA.childNodes.isEmpty {
                     if nodeB.childNodes.isEmpty{
-                        nodeB.highlight(with: .red, for: 0.01)
-                        nodeA.highlight(with: .green, for: 0.05)
+                        if (nodeA.type != .platForm){
+                            nodeA.highlight(with: .green, for: 0.05)
+                        }
+                        if (nodeB.type != .platForm){
+                            nodeB.highlight(with: .red, for: 0.01)
+                        }
                     }
                 }
-                //                nodeB.position.x = oldPosition.x / 1.1
-                //                nodeB.position.z = oldPosition.z / 1.1
             }
             return
         }
@@ -419,10 +318,10 @@ private extension BuildMyRoom {
 extension BuildMyRoom {
     func onEachFrame(){
         //        print("Inside Frame")
-//        DispatchQueue.main.async { [self] in
-            //Collison wa baz
-            // Rotation also baz
-//        }
+        //        DispatchQueue.main.async { [self] in
+        //Collison wa baz
+        // Rotation also baz
+        //        }
     }
 }
 
@@ -449,6 +348,8 @@ extension BuildMyRoom {
         return modelScene
     }
 }
-
-
-
+//                if let nodeChild = selectedFurniture.childNodes.first{
+//                    nodeChild.runAction(rotateAction)
+//                }else{
+//                    selectedFurniture.runAction(rotateAction)
+//                }

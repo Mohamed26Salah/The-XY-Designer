@@ -12,7 +12,7 @@ import RoomPlan
 
 struct view3DRoom: View {
     var savedRoomModel = tempRoomStruct()
-    @ObservedObject var RoomModel: BuildMyRoom
+    @ObservedObject var RoomModel: BuildMyRoom2
     var room: CapturedRoom
     var dominantRoomColors: [String:[UIColor]]
     @Environment(\.dismiss) var dismiss
@@ -28,7 +28,7 @@ struct view3DRoom: View {
 //        let dominantRoomColorsUIColors = dominantRoomColors.mapValues { colors in
 //            colors.toColorArray()
 //        }
-        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: dominantRoomColors))
+        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom2(room: room,dominantRoomColors: dominantRoomColors))
         let stringRoomColors = dominantRoomColors.mapValues { $0.map { $0.hexString } }
 //        savedRoomModel = tempRoomStruct(room: room,dominantRoomColors: stringRoomColors)
         savedRoomModel.saveRoomToUserDefaults(room: room,dominantRoomColors: stringRoomColors)

@@ -13,21 +13,21 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.salah.12488.The-XY-Designer</string>
+	<string>com.salah.12488-The-XY-Designer</string>
 	<key>PROJECT_ID</key>
 	<string>the-xy-designer-74fa3</string>
 	<key>STORAGE_BUCKET</key>
 	<string>the-xy-designer-74fa3.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:149319891460:ios:76d730cc62298283b79351</string>
 </dict>

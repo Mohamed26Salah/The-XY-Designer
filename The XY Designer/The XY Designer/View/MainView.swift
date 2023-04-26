@@ -11,61 +11,57 @@ import FirebaseAuth
 struct MainView: View {
     @State private var tabSelected: Tab = .house
     @EnvironmentObject var coordinator: Coordinator
-
+    
     init() {
         UITabBar.appearance().isHidden = true
     }
-    let screens: [String: AnyView] = [
-        "House": AnyView(Home()),
-        "Plus": AnyView(view3DRoomTemp()),
-        "Person": AnyView(Profile()),
-    ]
-//    "Plus": AnyView(RoomPlaneApi()),
+        let screens: [String: AnyView] = [
+            "House": AnyView(Home()),
+            "Plus": AnyView(RoomPlaneApi()),
+            "Person": AnyView(Profile()),
+        ]
     var isSignedIn: Bool {
         return Auth.auth().currentUser != nil
     }
     var body: some View {
-//        Register()
-//        if goToHome {
-//            TabView {
-//                Home()
-//                    .tabItem {
-//                        Image(systemName: "house")
-//                        Text("Home")
-//                    }
-//                RoomPlaneApi()
-//                    .tabItem {
-//                        Image(systemName: "plus.circle")
-//                        Text("Add Room")
-//                    }
-//                Profile()
-//                    .tabItem {
-//                        Image(systemName: "person")
-//                        Text("Profile")
-//                    }
+//        TabView {
+//            Home()
+//                .tabItem {
+//                    Image(systemName: "house")
+//                    Text("Home")
+//                }
+//            RoomPlaneApi()
+//                .tabItem {
+//                    Image(systemName: "plus.circle")
+//                    Text("Add Room")
+//                }
+//            Profile()
+//                .tabItem {
+//                    Image(systemName: "person")
+//                    Text("Profile")
+//                }
 //
-//            }
-//            .accentColor(.primary)
 //        }
-            
-            ZStack {
-                VStack {
-                    TabView(selection: $tabSelected) {
-                        ForEach(Tab.allCases, id: \.rawValue) { tab in
-                                screens["\(tab.rawValue.capitalized)"]!.offset(y: -20)
+//        .accentColor(.primary)
+        
+        ZStack {
+            VStack {
+                TabView(selection: $tabSelected) {
+                    ForEach(Tab.allCases, id: \.rawValue) { tab in
+                        screens["\(tab.rawValue.capitalized)"]!.offset(y: -20)
                             .tag(tab)
-                        }
                     }
                 }
-                VStack {
-                    Spacer()
-                    CustomTabBar(selectedTab: $tabSelected)
-                }
-                .ignoresSafeArea(edges: [.bottom])
             }
-
+            VStack {
+                Spacer()
+                CustomTabBar(selectedTab: $tabSelected)
+            }
+            .ignoresSafeArea(edges: [.bottom])
+        }
+        
     }
-
+    
 }
 
 

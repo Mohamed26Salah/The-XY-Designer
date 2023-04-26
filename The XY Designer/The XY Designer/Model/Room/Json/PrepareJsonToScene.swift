@@ -39,7 +39,6 @@ struct PrepareJsonToScene {
                                     subObjectCategory: returnSubCategoryObjects(subCategoryObject: nodeObject.category)
             )
             checkColorTexture3DModel(node: node, color: nodeObject.color, texture: nodeObject.texture, a3dModel: nodeObject.a3DModel)
-           
             node.transform = convertToSCNMatrix4(from: nodeObject.transform) ?? createDefaultSCNMatrix4()
             arrayOfObjectsNodes.append(node)
         }
@@ -64,6 +63,7 @@ struct PrepareJsonToScene {
                     node.subSurfaceCategory = convertBoolToCategory(boolValue: doorCategory)
                 }
             }
+            node.transform = convertToSCNMatrix4(from: nodeSurface.transform) ?? createDefaultSCNMatrix4()
             arrayOfSurfacesNodes.append(node)
         }
         return arrayOfSurfacesNodes

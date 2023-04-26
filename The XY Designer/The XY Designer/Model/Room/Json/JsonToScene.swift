@@ -41,30 +41,9 @@ struct JsonToScene {
         task.resume()
     }
 }
-//class JsonToScene2 {
-//    func getJsonFile(url: String, completion: @escaping (Result<DecodeScene, Error>) -> Void) {
-//        let jsonFileURL = URL(string: url)!
-//        let session = URLSession.shared
-//        let task = session.dataTask(with: jsonFileURL) { (data, response, error) in
-//            if let error = error {
-//                print("Error: \(error.localizedDescription)")
+
+//completion: @escaping (Result<DecodeScene, Error>) -> Void)
 //                completion(.failure(error))
-//                return
-//            }
-//            guard let data = data else {
-//                print("No data received")
-//                let customError = NSError(domain: "NoDataError", code: 0, userInfo: nil)
 //                completion(.failure(customError))
-//                return
-//            }
-//            do {
-//                let decodedScene = try JSONDecoder().decode(DecodeScene.self, from: data)
 //                completion(.success(decodedScene))
-//            } catch {
-//                print("Error parsing JSON: \(error.localizedDescription)")
 //                completion(.failure(error))
-//            }
-//        }
-//        task.resume()
-//    }
-//}

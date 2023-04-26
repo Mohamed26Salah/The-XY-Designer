@@ -43,6 +43,7 @@ class EditFurniture{
         let simd_float4x4Matrix = simd_float4x4(node.transform)
         let new3dModel = BuildRoom3DModels().add3DModelReturn(materialNode: node, desiredDimenstions: dimesntions, transform: simd_float4x4Matrix, modelName: modelName, extenstion: extenstion)
         if let firstChild = node.childNodes.first {
+            print("Ba7rawy")
             getOldPosition = firstChild.position
         }
         for child in node.childNodes {

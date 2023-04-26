@@ -33,46 +33,56 @@ struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
     @EnvironmentObject var coordinator: Coordinator
+    @ObservedObject var uploadScene: UploadScene = UploadScene()
     let data = ["key": "value"]
     
     var body: some View {
-        ZStack(alignment: .bottom) {
-            RoomCaptureViewRep()
-                .navigationBarBackButtonHidden(true)
-                .navigationBarItems(leading: Button("Cancel") {
-                    captureController.stopSession()
-                    dismiss()
-                })
-                .navigationBarItems(trailing: Button("Done") {
-                    captureController.stopSession()
-                    captureController.showExportButton = true
-                }.opacity(captureController.showExportButton ? 0 : 1)).onAppear() {
-                    captureController.showExportButton = false
-                    captureController.startSession()
-                }
-            VStack{
-//                if let room = captureController.finalResult{
+            ZStack(alignment: .bottom) {
+                RoomCaptureViewRep()
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarItems(leading: Button("Cancel") {
+                        captureController.stopSession()
+                        dismiss()
+                    })
+                    .navigationBarItems(trailing: Button("Done") {
+                        captureController.stopSession()
+                        captureController.showExportButton = true
+                    }.opacity(captureController.showExportButton ? 0 : 1)).onAppear() {
+                        captureController.showExportButton = false
+                        captureController.startSession()
+                    }
+                VStack{
+                    //                if let room = captureController.finalResult{
                     if captureController.roomIsReady{
                         Button {
-                            let wholeScene = BuildMyRoom(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
-                            let stringRoomColors = wholeScene.dominantRoomColors.mapValues { $0.map { $0.hexString } }
-                            SceneToJson().shareFile(scene: wholeScene.scene, dominantColors: stringRoomColors)
+                            let prepareRoom = PrepareRoomScanData(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
+                            let stringRoomColors = prepareRoom.dominantRoomColors.mapValues { $0.map { $0.hexString } }
+                            SceneToJson().shareFile(scene: prepareRoom.scene, dominantColors: stringRoomColors)
+                            SceneToJson().uploadFile(scene: prepareRoom.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
                         } label: {
                             Text("Save").font(.title2)
                         }
                         .buttonStyle(.borderedProminent).cornerRadius(40).opacity(1)
                         .padding()
-//                        .sheet(isPresented: $captureController.showShareSheet, content:{
-//                                    ActivityViewControllerRep(items: [captureController.exportUrl!])
-//                                })
-
+                        
                     }
-//                }
+                }
+                
             }
-
+        .alert(uploadScene.errorMessage, isPresented: $uploadScene.showError) {
         }
-
-        
+        HStack{
+            Spacer()
+            if uploadScene.showLoading {
+                ProgressView()
+                    .tint(.primary)
+                    .foregroundColor(.secondary)
+                    .scaleEffect(3)
+                
+            }
+            Spacer()
+        }
+    }
         //        Button(action: {
         //            captureController.export()
         //            dismiss()
@@ -81,9 +91,7 @@ struct ScanningView: View {
         //        }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
         //            ActivityViewControllerRep(items: [captureController.exportUrl!])
         //        })
-        
-        
-    }
+//    }
     
 }
 //}

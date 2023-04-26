@@ -15,7 +15,7 @@ struct Home: View {
         ZStack{
             VStack{
                 List(scenes) { scene in
-                    NavigationLink(destination: SceneDetailView(scene: scene)) {
+                    NavigationLink(destination: View3DRoomNew(link: scene.link)) {
                         VStack(alignment: .leading) {
                             Text("Scene ID: \(scene.id)")
                             Text("Time: \(scene.time)")

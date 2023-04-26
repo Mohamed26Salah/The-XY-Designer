@@ -39,10 +39,11 @@ class SceneToJson {
         let curve: CurveModel?
         let edges: EdgesModel
         let texture: String?
+        let a3dModel: String?
         let color: String?
         init(_ category: String, _ id: String, _ confidence: String,
              _ scale: V3Model, _ transform: MatrixModel, _ curve: CurveModel?,
-             _ edges: EdgesModel, _ texture: String?, _ color: String?) {
+             _ edges: EdgesModel, _ texture: String?, _ a3dModel: String?, _ color: String?) {
             self.category = category
             self.id = id
             self.confidence = confidence
@@ -50,6 +51,7 @@ class SceneToJson {
             self.transform = transform
             self.curve = curve
             self.edges = edges
+            self.a3dModel = a3dModel
             self.texture = texture
             self.color = color
         }
@@ -60,9 +62,9 @@ class SceneToJson {
         
         init(_ id: String, _ confidence: String,
              _ scale: V3Model, _ transform: MatrixModel, _ curve: CurveModel?,
-             _ edges: EdgesModel, _ texture: String?, _ isOpen: Bool, _ color: String?) {
+             _ edges: EdgesModel, _ texture: String?, _ isOpen: Bool, _ a3dModel: String?, _ color: String?) {
             self.isOpen = isOpen
-            super.init("door", id, confidence, scale, transform, curve, edges, texture, color)
+            super.init("door", id, confidence, scale, transform, curve, edges, texture, a3dModel ,color)
         }
         
         private enum CodingKeys : String, CodingKey {
@@ -184,6 +186,13 @@ class SceneToJson {
                 return nil
             }
         }
+        var a3dModel: String? {
+            if let model = surface.a3dModel {
+                return model
+            }else{
+                return nil
+            }
+        }
         func makeGeneric(of category: String) -> GenericSurfaceModel {
             specialID = Auth.auth().currentUser!.uid
             specialID += surface.UUID
@@ -197,6 +206,7 @@ class SceneToJson {
                 curve,
                 edges,
                 texture,
+                a3dModel,
                 colorAplied)
         }
         
@@ -210,6 +220,7 @@ class SceneToJson {
                 edges,
                 texture,
                 doorType,
+                a3dModel,
                 colorAplied)
         }
             switch surface.type {
@@ -266,7 +277,7 @@ class SceneToJson {
         }
         var colorAplied: String? {
             if let color = obj.color {
-                return color.hex
+                return color.hexString
             }else{
                 return nil
             }

@@ -1,40 +1,29 @@
 //
-//  view3DRoomTemp.swift
+//  View3DRoomNew.swift
 //  The XY Designer
 //
-//  Created by Mohamed Salah on 07/04/2023.
+//  Created by Mohamed Salah on 26/04/2023.
 //
 
 import SwiftUI
 import _SceneKit_SwiftUI
 import GameController
 import RoomPlan
-struct view3DRoomTemp: View {
-    var savedRoomModel = tempRoomStruct()
+import SwiftUIJoystick
+struct View3DRoomNew: View {
     @ObservedObject var RoomModel: BuildMyRoom
     @ObservedObject var uploadScene: UploadScene = UploadScene()
-    var room: CapturedRoom
-    var dominantRoomColors: [String:[String]]
     @Environment(\.dismiss) var dismiss
     var sceneRendererDelegate = SceneRendererDelegate()
     @State var lastCameraOffset = SCNVector3()
     @State private var selectedColor: Color = .red
     @State private var showingCredits = false
     @State private var isARPresented = false
-    var superController = SuperController(elements: [GCInputRightThumbstick])
-    init() {
-        //        if let savedRoom = savedRoomModel.retrieveRoomToUserDefaults(){
-        //            if let room = savedRoom.room {
-        //                RoomModel = BuildMyRoom(room: room)
-        //            }
-        //        }
-        //        let joex = (savedRoomModel.retrieveRoomToUserDefaults())!
-       
-        self.room = (savedRoomModel.retrieveRoomToUserDefaults()?.room)!
-        self.dominantRoomColors = (savedRoomModel.retrieveRoomToUserDefaults()?.dominantRoomColors)!
-        let uIDominantRoomColors = dominantRoomColors.mapValues { $0.compactMap { UIColor(hexString: $0) } }
-        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(room: room,dominantRoomColors: uIDominantRoomColors))
-//        self._uploadScene = ObservedObject(wrappedValue: UploadScene())
+    var moniter = JoystickMonitor()
+    private let draggableDiameter: CGFloat = 150
+//    var superController = SuperController(elements: [GCInputRightThumbstick])
+    init(link: String) {
+        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(link: link))
     }
     var body: some View {
         let drag = DragGesture()
@@ -59,7 +48,7 @@ struct view3DRoomTemp: View {
             SceneView(scene: RoomModel.scene, options: [.allowsCameraControl],delegate: sceneRendererDelegate)
                 .gesture(drag)
                 .onTapGesture { location in
-                    print(location)
+//                    print(location)
                     pick(atPoint: location)
                     if (RoomModel.userChoice == .Customize){
                         if let selectedFurniture = RoomModel.selectedFurniture {
@@ -128,10 +117,11 @@ struct view3DRoomTemp: View {
                    
                     Spacer()
                     Button(action: {
-//                        let wholeScene = BuildMyRoom(room: RoomModel.room, dominantRoomColors: RoomModel.dominantRoomColors)
-                        let stringRoomColors = RoomModel.dominantRoomColors.mapValues { $0.map { $0.hexString } }
-                        SceneToJson().shareFile(scene: RoomModel.scene, dominantColors: stringRoomColors)
-                        SceneToJson().uploadFile(scene: RoomModel.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
+                        if let room = RoomModel.room {
+                            let stringRoomColors = room.dominantColors().mapValues { $0.map { $0.hexString } }
+                            SceneToJson().shareFile(scene: RoomModel.scene, dominantColors: stringRoomColors)
+                            SceneToJson().uploadFile(scene: RoomModel.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
+                        }
                     }) {
                         Text("Save")
                             .bold()
@@ -147,6 +137,7 @@ struct view3DRoomTemp: View {
                 }
                 Spacer()
                 if (RoomModel.selectedFurnitureCanMove){
+                HStack{
                     VStack(alignment: .center){
                         CustomTextField(customKeyboardChoice: .num, hint: "Degree", text: $RoomModel.angelRotation)
                             .background(Color.black)
@@ -188,9 +179,27 @@ struct view3DRoomTemp: View {
                         .padding(.leading,20)
                     }
                     .frame(width: UIScreen.main.bounds.width / 4, height: UIScreen.main.bounds.height / 4)
-//                    .position(x: UIScreen.main.bounds.width / 4, y: UIScreen.main.bounds.height * 3 / 4)
-                    .padding()
-                   
+                    //                    .position(x: UIScreen.main.bounds.width / 4, y: UIScreen.main.bounds.height * 3 / 4)
+                    .padding(.horizontal,30)
+                    Spacer()
+                    JoystickBuilder(
+                        monitor: self.moniter,
+                        width: self.draggableDiameter,
+                        shape: .circle,
+                        background: {
+                            // Example Background
+                            RoundedRectangle(cornerRadius: 75).fill(Color.white.opacity(0.5))
+                        },
+                        foreground: {
+                            // Example Thumb
+                            Circle().fill(Color.black)
+                        },
+                        locksInPlace: false
+                    )
+                    .onReceive(moniter.$xyPoint) { _ in
+                        RoomModel.handleJoyStick(xy: moniter.xyPoint)
+                    }
+                }
                     
                 }
             }
@@ -208,32 +217,34 @@ struct view3DRoomTemp: View {
                 Spacer()
             }
         }
-        .onDisappear(perform: {
-            superController.disconnect()
-            sceneRendererDelegate.onEachFrame = nil
-        })
-        .onAppear(perform: {
-            superController.connect()
-            superController.handleRightPad = RoomModel.handleRightPad
-            sceneRendererDelegate.onEachFrame = RoomModel.onEachFrame
-        })
         .sheet(isPresented: $showingCredits) {
             if let selectedFurniture = RoomModel.selectedFurniture{
-                EditNode(node: selectedFurniture, roomDominantColors: RoomModel.dominantRoomColors)
+                if let selectedRoom = RoomModel.room {
+                    EditNode(node: selectedFurniture, roomDominantColors: selectedRoom.dominantColors())
+                }
             }
         }
         .fullScreenCover(isPresented: $isARPresented) {
             ArRoomView(scene: RoomModel.scene, applySkyBoxAgain: RoomModel.lightSkyBox(), isARPresented: $isARPresented)
         }
-        
-        
+        .onAppear(perform: {
+//            superController.connect()
+//            superController.handleRightPad = RoomModel.handleRightPad
+            sceneRendererDelegate.onEachFrame = RoomModel.onEachFrame
+        })
+        .onDisappear(perform: {
+//            superController.disconnect()
+            sceneRendererDelegate.onEachFrame = nil
+        })
+
     }
+    
   
 }
 
 // MARK: - Managing Controls View
 
-private extension view3DRoomTemp {
+private extension View3DRoomNew {
     func clickedFeel(materialNode: MaterialNode){
         let scaleDownAction = SCNAction.scale(to: 0.9, duration: 0.25)
         let scaleUpAction = SCNAction.scale(to: 1.0, duration: 0.25)
@@ -246,6 +257,7 @@ private extension view3DRoomTemp {
         if let firstNode = findParentNode(atPoint: point) {
             if let materialNode = firstNode as? MaterialNode  {
                 if (materialNode.type == .platForm || materialNode.type == .opening){
+                    print("Fuck")
                     return
                 }
                clickedFeel(materialNode: materialNode)
@@ -315,8 +327,9 @@ private extension view3DRoomTemp {
     }
     
 }
-struct view3DRoomTemp_Previews: PreviewProvider {
-    static var previews: some View {
-        view3DRoomTemp()
-    }
-}
+
+//struct View3DRoomNew_Previews: PreviewProvider {
+//    static var previews: some View {
+//        View3DRoomNew()
+//    }
+//}

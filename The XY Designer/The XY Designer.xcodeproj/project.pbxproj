@@ -45,7 +45,7 @@
 		AB4E042A29E5E22900450517 /* EditNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E042929E5E22900450517 /* EditNode.swift */; };
 		AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E885329EC40ED003FF08A /* ArRoomView.swift */; };
 		AB4E885629EC5009003FF08A /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E885529EC5009003FF08A /* test.swift */; };
-		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */; };
+		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */; };
 		AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D129DF65C4005FDCA8 /* Themes.swift */; };
 		AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D329DF65DD005FDCA8 /* Samples.swift */; };
 		AB5FC6DD29DF78E7005FDCA8 /* defaultLightNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6DC29DF78E7005FDCA8 /* defaultLightNode.swift */; };
@@ -58,6 +58,9 @@
 		AB8E166929F760B6003CC472 /* DecodeScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166829F760B6003CC472 /* DecodeScene.swift */; };
 		AB8E166F29F76908003CC472 /* PrepareRoomScanData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166E29F76908003CC472 /* PrepareRoomScanData.swift */; };
 		AB8E167429F77C4E003CC472 /* PrepareJsonToScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E167329F77C4E003CC472 /* PrepareJsonToScene.swift */; };
+		AB8E167629F863B9003CC472 /* BuildMyRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E167529F863B9003CC472 /* BuildMyRoom.swift */; };
+		AB8E167829F876BA003CC472 /* BuildMyRoomAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E167729F876BA003CC472 /* BuildMyRoomAssistant.swift */; };
+		AB8E167A29F89F58003CC472 /* View3DRoomNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E167929F89F58003CC472 /* View3DRoomNew.swift */; };
 		AB91E12129E8AA20009A7F57 /* Office_Chair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB91E12029E8AA20009A7F57 /* Office_Chair.usdz */; };
 		AB9B412929CC6805007C02AA /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412829CC6805007C02AA /* AuthService.swift */; };
 		AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9B412A29CC7559007C02AA /* ForgetPassword.swift */; };
@@ -70,6 +73,7 @@
 		ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */; };
 		ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4329CCF85F00EB88E1 /* Home.swift */; };
 		ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */; };
+		ABB1465529F9C4F300CC9EBD /* SwiftUIJoystick in Frameworks */ = {isa = PBXBuildFile; productRef = ABB1465429F9C4F300CC9EBD /* SwiftUIJoystick */; };
 		ABB4CC0129F5225E00D6278A /* UI-Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0029F5225E00D6278A /* UI-Image.swift */; };
 		ABB4CC0329F5503700D6278A /* SceneToJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0229F5503700D6278A /* SceneToJson.swift */; };
 		ABB4CC0529F5504600D6278A /* testJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4CC0429F5504600D6278A /* testJson.swift */; };
@@ -138,7 +142,7 @@
 		AB4E042929E5E22900450517 /* EditNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNode.swift; sourceTree = "<group>"; };
 		AB4E885329EC40ED003FF08A /* ArRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArRoomView.swift; sourceTree = "<group>"; };
 		AB4E885529EC5009003FF08A /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
-		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom.swift; sourceTree = "<group>"; };
+		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom2.swift; sourceTree = "<group>"; };
 		AB5FC6D129DF65C4005FDCA8 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		AB5FC6D329DF65DD005FDCA8 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
 		AB5FC6DC29DF78E7005FDCA8 /* defaultLightNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = defaultLightNode.swift; sourceTree = "<group>"; };
@@ -151,6 +155,9 @@
 		AB8E166829F760B6003CC472 /* DecodeScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeScene.swift; sourceTree = "<group>"; };
 		AB8E166E29F76908003CC472 /* PrepareRoomScanData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareRoomScanData.swift; sourceTree = "<group>"; };
 		AB8E167329F77C4E003CC472 /* PrepareJsonToScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareJsonToScene.swift; sourceTree = "<group>"; };
+		AB8E167529F863B9003CC472 /* BuildMyRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom.swift; sourceTree = "<group>"; };
+		AB8E167729F876BA003CC472 /* BuildMyRoomAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoomAssistant.swift; sourceTree = "<group>"; };
+		AB8E167929F89F58003CC472 /* View3DRoomNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3DRoomNew.swift; sourceTree = "<group>"; };
 		AB91E12029E8AA20009A7F57 /* Office_Chair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Office_Chair.usdz; sourceTree = "<group>"; };
 		AB9B412829CC6805007C02AA /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		AB9B412A29CC7559007C02AA /* ForgetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPassword.swift; sourceTree = "<group>"; };
@@ -192,6 +199,7 @@
 			files = (
 				ABD54DF029C4C439000E7506 /* GoogleSignIn in Frameworks */,
 				ABD54DE729C4C30C000E7506 /* FirebaseAuth in Frameworks */,
+				ABB1465529F9C4F300CC9EBD /* SwiftUIJoystick in Frameworks */,
 				ABD54DED29C4C30C000E7506 /* FirebaseStorage in Frameworks */,
 				ABD54DF229C4C439000E7506 /* GoogleSignInSwift in Frameworks */,
 				ABD54DE929C4C30C000E7506 /* FirebaseFirestore in Frameworks */,
@@ -284,9 +292,9 @@
 			isa = PBXGroup;
 			children = (
 				AB8E166E29F76908003CC472 /* PrepareRoomScanData.swift */,
-				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom.swift */,
+				AB8E167529F863B9003CC472 /* BuildMyRoom.swift */,
+				AB8E167729F876BA003CC472 /* BuildMyRoomAssistant.swift */,
 				AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */,
-				AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */,
 			);
 			path = RoomBuilder;
 			sourceTree = "<group>";
@@ -319,8 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */,
-				AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */,
-				AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */,
+				AB8E167929F89F58003CC472 /* View3DRoomNew.swift */,
 				AB4E042929E5E22900450517 /* EditNode.swift */,
 				ABAC685F29EAF1B10085D90D /* Show3DModels.swift */,
 				ABAC686129EB2F540085D90D /* ShowTextures.swift */,
@@ -353,7 +360,6 @@
 				AB8E166529F76093003CC472 /* JsonToScene.swift */,
 				AB8E166829F760B6003CC472 /* DecodeScene.swift */,
 				AB8E167329F77C4E003CC472 /* PrepareJsonToScene.swift */,
-				ABB4CC0429F5504600D6278A /* testJson.swift */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -368,6 +374,18 @@
 				AB8E167229F77BFF003CC472 /* Json */,
 			);
 			path = Room;
+			sourceTree = "<group>";
+		};
+		ABB1464929F9A9BE00CC9EBD /* Trash */ = {
+			isa = PBXGroup;
+			children = (
+				ABB4CC0429F5504600D6278A /* testJson.swift */,
+				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */,
+				AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */,
+				AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */,
+				AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */,
+			);
+			path = Trash;
 			sourceTree = "<group>";
 		};
 		ABB862EA29F5E07F00C7D241 /* sceneDatabase */ = {
@@ -398,6 +416,7 @@
 		ABD54DCB29C49FE3000E7506 /* The XY Designer */ = {
 			isa = PBXGroup;
 			children = (
+				ABB1464929F9A9BE00CC9EBD /* Trash */,
 				AB44FC4D29E8314F00973891 /* FurnitureModels */,
 				AB3A2CEB29C62C5F00B2717A /* The-XY-Designer-Info.plist */,
 				AB3A2CE929C629C400B2717A /* GoogleService-Info.plist */,
@@ -509,6 +528,7 @@
 				ABD54DEF29C4C439000E7506 /* GoogleSignIn */,
 				ABD54DF129C4C439000E7506 /* GoogleSignInSwift */,
 				ABFC200129E4D54D003827CF /* ColorKit */,
+				ABB1465429F9C4F300CC9EBD /* SwiftUIJoystick */,
 			);
 			productName = "The XY Designer";
 			productReference = ABD54DC929C49FE3000E7506 /* The XY Designer.app */;
@@ -542,6 +562,7 @@
 				ABD54DE529C4C30C000E7506 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				ABD54DEE29C4C439000E7506 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				ABFC200029E4D54D003827CF /* XCRemoteSwiftPackageReference "ColorKit" */,
+				ABB1465329F9C4F300CC9EBD /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */,
 			);
 			productRefGroup = ABD54DCA29C49FE3000E7506 /* Products */;
 			projectDirPath = "";
@@ -599,6 +620,7 @@
 				ABB862EE29F5F0EA00C7D241 /* ManageSceneDataBase.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
+				AB8E167A29F89F58003CC472 /* View3DRoomNew.swift in Sources */,
 				AB8E166F29F76908003CC472 /* PrepareRoomScanData.swift in Sources */,
 				AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
@@ -626,7 +648,7 @@
 				AB5FC6DF29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift in Sources */,
 				AB3A2CF329C64DD700B2717A /* Validator.swift in Sources */,
 				ABD54DCD29C49FE3000E7506 /* The_XY_DesignerApp.swift in Sources */,
-				AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom.swift in Sources */,
+				AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom2.swift in Sources */,
 				AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */,
 				ABBE27E729E61BB5003656E3 /* EditFurniture.swift in Sources */,
 				AB8E166229F738E4003CC472 /* FetchScene.swift in Sources */,
@@ -637,6 +659,8 @@
 				AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */,
 				AB00AE9429E0A9410091085D /* UserDefaults.swift in Sources */,
 				AB3A2CED29C6380D00B2717A /* User.swift in Sources */,
+				AB8E167829F876BA003CC472 /* BuildMyRoomAssistant.swift in Sources */,
+				AB8E167629F863B9003CC472 /* BuildMyRoom.swift in Sources */,
 				AB4CCAA829E1B3F6007E3864 /* Control.swift in Sources */,
 				AB9B412D29CC7CED007C02AA /* ForgetPasswordViewModel.swift in Sources */,
 				AB9B44C529DDC4B000A94157 /* RoomCaptureController.swift in Sources */,
@@ -787,12 +811,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12248-The-XY-Designer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12488-The-XY-Designer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -818,12 +843,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12248-The-XY-Designer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12488-The-XY-Designer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -855,6 +881,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		ABB1465329F9C4F300CC9EBD /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/michael94ellis/SwiftUIJoystick";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		ABD54DE529C4C30C000E7506 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -882,6 +916,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		ABB1465429F9C4F300CC9EBD /* SwiftUIJoystick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ABB1465329F9C4F300CC9EBD /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */;
+			productName = SwiftUIJoystick;
+		};
 		ABD54DE629C4C30C000E7506 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ABD54DE529C4C30C000E7506 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
