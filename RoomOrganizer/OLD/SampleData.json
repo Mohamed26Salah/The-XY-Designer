@@ -1,0 +1,15 @@
+{
+    "Furniture" :{
+    "Dimensions" :[ [10,20],[10, 10] ] ,
+    "keywords" :["bed", "chair" ] 
+    } ,
+    "RoomDimensions" :[90,90] ,
+    "Windows" :{
+    "windowsDimensions" :[15,2], 
+    "Windows Positions":[ [50, 0] ] 
+    } ,
+    "Doors" :{
+    "DoorsDimensions" :[2,10], 
+    "DoorsPositions":[ [0,10] ]
+    }
+    }
