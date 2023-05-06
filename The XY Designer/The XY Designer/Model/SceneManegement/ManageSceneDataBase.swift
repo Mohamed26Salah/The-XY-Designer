@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
-struct ManageSceneDataBase {
+class ManageSceneDataBase {
     let db = Firestore.firestore()
     let storage = Storage.storage()
     let auth = Auth.auth()
@@ -18,22 +18,27 @@ struct ManageSceneDataBase {
     let collectionRef: CollectionReference
     init(){
         collectionRef = db.collection("usersScenes")
-        documentRef = collectionRef.document(auth.currentUser!.uid)
-    }
+        if let currentUser = auth.currentUser {
+            documentRef = collectionRef.document(currentUser.uid)
+        } else {
+            // If there is no current user, use a placeholder document reference
+            documentRef = collectionRef.document("no-user")
+        }    }
     //Serialization
     // Define your data structure
     struct JSONFile {
+        let BeingOptimized: Bool
         let id: String
         let link: String
         let time: String
     }
-
+    
     func getCurrentTime() -> Timestamp {
         let date = Date()
         return Timestamp(date: date)
     }
-
-
+    
+    
     // Function to upload JSON file to Firebase Storage
     func uploadJSONFile(fileData: Data, id: String, completion: @escaping (String?, Error?) -> Void) {
         let fileName = "Scenes/file\(id).json" // Generate a unique file name
@@ -58,15 +63,17 @@ struct ManageSceneDataBase {
     }
 }
 struct JsonFileArrayCell: Identifiable{
+    var BeingOptimized: Bool
     var id: String
     var link: String
     var time: Date
     init(jsonFileCell: [String: Any]){
+        self.BeingOptimized = jsonFileCell["BeingOptimized"] as! Bool
         self.id = jsonFileCell["id"] as! String
         self.link = jsonFileCell["link"] as! String
         let timeInterval = jsonFileCell["time"] as? Timestamp
         self.time = Date(timeIntervalSince1970: TimeInterval(timeInterval?.seconds ?? 0))
-
+        
     }
 }
 //Deserialization

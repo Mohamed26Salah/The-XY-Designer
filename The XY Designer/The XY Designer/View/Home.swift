@@ -14,17 +14,18 @@ struct Home: View {
     var body: some View {
         ZStack{
             VStack{
+                Text("Scenes")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top)
                 List(scenes) { scene in
                     NavigationLink(destination: View3DRoomNew(link: scene.link)) {
                         VStack(alignment: .leading) {
                             Text("Scene ID: \(scene.id)")
                             Text("Time: \(scene.time)")
                         }
-//                        .onTapGesture {
-//                            jsonToScene.getJsonFile(url: scene.link)
-//                        }
-                        
                     }
+                    .disabled(scene.BeingOptimized)
                 }
             }
             if fetchScenes.showLoading {
@@ -34,7 +35,6 @@ struct Home: View {
                     .scaleEffect(2)
             }
         }
-        
         .onAppear {
             fetchScenes.fetchAllScenes { scenes, error in
                 if let scenes = scenes {

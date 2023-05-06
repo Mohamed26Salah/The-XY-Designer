@@ -48,8 +48,8 @@ class BuildMyRoom: ObservableObject {
                     self?.setupScene()
                 }
             } else {
-                    // Handle error case, if needed
-                }
+                // Handle error case, if needed
+            }
         }
     }
     
@@ -110,6 +110,33 @@ extension BuildMyRoom {
     func center() -> SCNVector3 {
         return node.position
     }
+    func checkAllLight() -> Bool {
+        let ambientLight = scene.rootNode.childNode(withName: "ambientLight", recursively: true)
+        let spotLight = scene.rootNode.childNode(withName: "spotLight", recursively: true)
+        let defaultLight = scene.rootNode.childNode(withName: "defaultLight", recursively: true)
+        
+        if ambientLight == nil, spotLight == nil, defaultLight == nil {
+            // All three lights are missing, return true
+            return true
+        } else {
+            // At least one of the lights exist, return false
+            return false
+        }
+    }
+//    func checkForAmbientLight(scene: SCNScene){
+//        if let ambientLight = scene.rootNode.childNode(withName: "ambientLight", recursively: true) {
+//            ambientLight.removeFromParentNode()
+//        }
+//    }
+//    func checkForSpotLight(scene: SCNScene){
+//        if let spotLight = scene.rootNode.childNode(withName: "spotLight", recursively: true) {
+//            spotLight.removeFromParentNode()
+//            if let defaultLight = scene.rootNode.childNode(withName: "defaultLight", recursively: true){
+//                defaultLight.removeFromParentNode()
+//            }
+//        }
+//    }
+//
 }
 private extension BuildMyRoom {
     func setupScene() {
@@ -122,7 +149,7 @@ private extension BuildMyRoom {
         contactDelegate.onBegin = onContactBegin(contact:)
         scene.background.contents = lightSkyBox()
         prepareCamera()
-        spotLight()
+        //        spotLight()
     }
     func addSceneCreatedModels(addTO node : SCNNode){
         if let room = room {
@@ -269,6 +296,30 @@ extension BuildMyRoom {
             }
         }
     }
+    func moveUp(){
+        if let selectedFurniture = selectedFurniture {
+            if selectedFurnitureCanMove {
+                SCNTransaction.begin()
+                SCNTransaction.animationDuration = 0.3 // Set the animation duration to 0.5 seconds
+                selectedFurniture.position.y = selectedFurniture.position.y + 0.1
+                SCNTransaction.commit()
+                objectWillChange.send()
+            }
+            
+        }
+    }
+    func moveDown(){
+        if let selectedFurniture = selectedFurniture {
+            if selectedFurnitureCanMove {
+                SCNTransaction.begin()
+                SCNTransaction.animationDuration = 0.3 // Set the animation duration to 0.5 seconds
+                selectedFurniture.position.y = selectedFurniture.position.y - 0.1
+                SCNTransaction.commit()
+                objectWillChange.send()
+            }
+            
+        }
+    }
     
 }
 // MARK: - SCNPhysicsContact
@@ -317,11 +368,6 @@ private extension BuildMyRoom {
 
 extension BuildMyRoom {
     func onEachFrame(){
-        //        print("Inside Frame")
-        //        DispatchQueue.main.async { [self] in
-        //Collison wa baz
-        // Rotation also baz
-        //        }
     }
 }
 
@@ -347,6 +393,7 @@ extension BuildMyRoom {
         }
         return modelScene
     }
+
 }
 //                if let nodeChild = selectedFurniture.childNodes.first{
 //                    nodeChild.runAction(rotateAction)

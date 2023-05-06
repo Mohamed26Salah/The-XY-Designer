@@ -1,4 +1,5 @@
 import SwiftUI
+import SceneKit
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
@@ -7,9 +8,35 @@ class UploadScene: ObservableObject {
     @Published var showLoading: Bool = false
     @Published var errorMessage: String = ""
     @Published var showError: Bool = false
+    @Published var sceneName: String = ""
     let manageSceneDataBase = ManageSceneDataBase()
-
-    func uploadJSONAndAppendToArray(fileData: Data, id: String) {
+    func uploadFile(scene: SCNScene, getSceneID: String = "" , dominantColors : [String : [String]], withOptimization: Bool) {
+        
+        // Save the JSON data to a file in the app's documents directory
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let fileURL = documentsDirectory.appendingPathComponent("scene.json")
+        if (getSceneID != ""){
+            sceneName = getSceneID
+        } else {
+            if !Validator.isValidUsername(for: sceneName) {
+                DispatchQueue.main.async {
+                    self.errorMessage = "Name is invalid"
+                    self.showError.toggle()
+                    self.showLoading = false
+                }
+                return
+            }
+            sceneName = Auth.auth().currentUser!.uid + sceneName.trimmingCharacters(in: .whitespacesAndNewlines)
+        }
+        try! SceneToJson().exportJson(to: fileURL, scene: scene, specialID: sceneName, dominantColors: dominantColors)
+        if let fileData = try? Data(contentsOf: fileURL) {
+            uploadJSONAndAppendToArray(fileData: fileData, id: sceneName, withOptimization: withOptimization)
+        } else {
+            print("Error reading data from file at URL: \(fileURL)")
+        }
+        
+    }
+    func uploadJSONAndAppendToArray(fileData: Data, id: String, withOptimization: Bool) {
         showLoading = true
         manageSceneDataBase.uploadJSONFile(fileData: fileData, id: id) { downloadURL, error in
             if let error = error {
@@ -20,6 +47,7 @@ class UploadScene: ObservableObject {
                 }
             } else if let downloadURL = downloadURL {
                 let newJSONFile: [String: Any] = [
+                    "BeingOptimized": withOptimization,
                     "id": id,
                     "link": downloadURL,
                     "time": self.manageSceneDataBase.getCurrentTime() as Timestamp
@@ -34,17 +62,17 @@ class UploadScene: ObservableObject {
                         }
                     } else if let document = document, document.exists {
                         // Scene already exists, update the JSONFiles array
-                        self.updateJSONFilesArray(document: document, newJSONFile: newJSONFile)
+                        self.updateJSONFilesArray(document: document, newJSONFile: newJSONFile, withOptimization: withOptimization, fileData: fileData)
                     } else {
                         // Scene does not exist, create a new document
-                        self.createSceneDocument(id: id, newJSONFile: newJSONFile)
+                        self.createSceneDocument(id: id, newJSONFile: newJSONFile, withOptimization: withOptimization, fileData: fileData)
                     }
                 }
             }
         }
     }
     
-    func updateJSONFilesArray(document: DocumentSnapshot, newJSONFile: [String: Any]) {
+    func updateJSONFilesArray(document: DocumentSnapshot, newJSONFile: [String: Any], withOptimization: Bool, fileData: Data) {
         if let jsonFiles = document.data()?["jsonFiles"] as? [[String: Any]] {
             var updatedJsonFiles = jsonFiles // Create a mutable copy of jsonFiles
             var jsonFileUpdated = false
@@ -74,16 +102,18 @@ class UploadScene: ObservableObject {
                         self.errorMessage = "Error updating document: \(error.localizedDescription)"
                     }
                 } else {
+                    if (withOptimization){
+                        SceneOptimization().sendToServer(sceneJson: fileData)
+                    }
                     DispatchQueue.main.async {
                         self.showLoading = false
                     }
-//                    print("JSON file updated and appended to array successfully!")
                 }
             }
         }
     }
     
-    func createSceneDocument(id: String, newJSONFile: [String: Any]) {
+    func createSceneDocument(id: String, newJSONFile: [String: Any], withOptimization: Bool, fileData: Data) {
         let data: [String: Any] = [
             "jsonFiles": [
                 newJSONFile
@@ -97,10 +127,12 @@ class UploadScene: ObservableObject {
                     self.errorMessage = "Error creating document: \(error.localizedDescription)"
                 }
             } else {
+                if (withOptimization){
+                    SceneOptimization().sendToServer(sceneJson: fileData)
+                }
                 DispatchQueue.main.async {
                     self.showLoading = false
                 }
-//                print("Document created successfully!")
             }
         }
     }

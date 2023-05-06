@@ -22,6 +22,7 @@ struct BuildMyRoomAssistant {
         planeGeometry.cornerRadius = 5
         platFormModel.geometry = planeGeometry
         platFormModel.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
+        platFormModel.position = SCNVector3(node.position.x, -2, node.position.z)
         platFormModel.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.addChildNode(platFormModel)
     }
@@ -49,7 +50,7 @@ struct BuildMyRoomAssistant {
         if let color = windowModel.color {
             box.firstMaterial?.diffuse.contents = color
         }else{
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            box.firstMaterial?.diffuse.contents = Color.lightBlue
         }
         windowModel.geometry = box
         windowModel.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
@@ -67,7 +68,7 @@ struct BuildMyRoomAssistant {
         if let color = doorModle.color {
             box.firstMaterial?.diffuse.contents = color
         }else{
-            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+            box.firstMaterial?.diffuse.contents = Color.lightGrayFancy
         }
         doorModle.geometry = box
         doorModle.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
@@ -143,6 +144,45 @@ struct BuildMyRoomAssistant {
         new3dModel.position = getOldPosition
         new3dModel.eulerAngles.y = getOldRotation
         node.addChildNode(new3dModel)
+    }
+    func addNewFurniture(addObjectsTO node : SCNNode, newFurniture: MaterialNode){
+        let box = SCNBox(width: CGFloat(newFurniture.dimenstions.x), height: CGFloat(newFurniture.dimenstions.y), length: CGFloat(newFurniture.dimenstions.z), chamferRadius: 0)
+        box.firstMaterial?.isDoubleSided = true
+        if let color = newFurniture.color {
+            box.firstMaterial?.diffuse.contents = color
+        }else{
+            box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+        }
+        let stringUUID = newFurniture.UUID
+        let boxNode = MaterialNode(type: newFurniture.type, id: stringUUID, dimenstions: newFurniture.dimenstions, confidence: newFurniture.confidence, subObjectCategory: newFurniture.subObjectCategory)
+        boxNode.geometry = box
+//        boxNode.simdTransform = object.transform
+        boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
+        boxNode.physicsBody?.mass = 0
+        boxNode.physicsBody?.restitution = 1
+        boxNode.physicsBody?.categoryBitMask = EntityType.object.rawValue
+        boxNode.physicsBody?.collisionBitMask = EntityType.wall.rawValue
+        boxNode.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
+        if boxNode.texture != nil {
+//           addTextures(node: objectModel)
+            clickedFeel(materialNode: boxNode)
+        }
+        if boxNode.a3dModel != nil{
+//            set3dModel(node: objectModel)
+            clickedFeel(materialNode: boxNode)
+        }
+        DispatchQueue.main.async {
+            boxNode.highlight(with: .red, for: 5)
+        }
+        boxNode.simdPosition.y = node.childNodes.last?.simdPosition.y ?? 0
+        node.addChildNode(boxNode)
+    }
+    func clickedFeel(materialNode: MaterialNode){
+        let scaleDownAction = SCNAction.scale(to: 0.9, duration: 0.25)
+        let scaleUpAction = SCNAction.scale(to: 1.0, duration: 0.25)
+        let sequenceAction = SCNAction.sequence([scaleDownAction, scaleUpAction])
+        materialNode.runAction(sequenceAction)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
 
 }

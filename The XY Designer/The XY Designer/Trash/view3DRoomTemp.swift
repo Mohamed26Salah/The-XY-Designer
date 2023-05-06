@@ -131,7 +131,7 @@ struct view3DRoomTemp: View {
 //                        let wholeScene = BuildMyRoom2(room: RoomModel.room, dominantRoomColors: RoomModel.dominantRoomColors)
                         let stringRoomColors = RoomModel.dominantRoomColors.mapValues { $0.map { $0.hexString } }
                         SceneToJson().shareFile(scene: RoomModel.scene, dominantColors: stringRoomColors)
-                        SceneToJson().uploadFile(scene: RoomModel.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
+//                        SceneToJson().uploadFile(scene: RoomModel.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
                     }) {
                         Text("Save")
                             .bold()

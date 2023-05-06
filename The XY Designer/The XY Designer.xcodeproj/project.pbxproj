@@ -10,6 +10,10 @@
 		AB00AE9129E0A8E90091085D /* tempRoomStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */; };
 		AB00AE9429E0A9410091085D /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB00AE9329E0A9410091085D /* UserDefaults.swift */; };
 		AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */; };
+		AB1D53342A03E91800C1BA8F /* AddFurniture.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1D53332A03E91800C1BA8F /* AddFurniture.swift */; };
+		AB1D53362A03E99D00C1BA8F /* AddFurnitureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1D53352A03E99D00C1BA8F /* AddFurnitureViewModel.swift */; };
+		AB1D533A2A040B6A00C1BA8F /* CustomTextFieldCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1D53392A040B6A00C1BA8F /* CustomTextFieldCenter.swift */; };
+		AB1D533C2A05679000C1BA8F /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1D533B2A05679000C1BA8F /* Controls.swift */; };
 		AB2B543329E9D1090025D8E0 /* Television.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB2B542929E9D1080025D8E0 /* Television.usdz */; };
 		AB2B543429E9D1090025D8E0 /* Door.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB2B542A29E9D1080025D8E0 /* Door.usdz */; };
 		AB2B543529E9D1090025D8E0 /* Gaming_Desktop_PC.usdz in Resources */ = {isa = PBXBuildFile; fileRef = AB2B542B29E9D1080025D8E0 /* Gaming_Desktop_PC.usdz */; };
@@ -45,6 +49,7 @@
 		AB4E042A29E5E22900450517 /* EditNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E042929E5E22900450517 /* EditNode.swift */; };
 		AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E885329EC40ED003FF08A /* ArRoomView.swift */; };
 		AB4E885629EC5009003FF08A /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4E885529EC5009003FF08A /* test.swift */; };
+		AB59CD2629FC468900B40EA2 /* SceneOptimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB59CD2529FC468900B40EA2 /* SceneOptimization.swift */; };
 		AB5FC6CC29DF6334005FDCA8 /* BuildMyRoom2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */; };
 		AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D129DF65C4005FDCA8 /* Themes.swift */; };
 		AB5FC6D429DF65DD005FDCA8 /* Samples.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6D329DF65DD005FDCA8 /* Samples.swift */; };
@@ -52,6 +57,7 @@
 		AB5FC6DF29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */; };
 		AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */; };
 		AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */; };
+		AB61581429FAA35B00F7119A /* SaveScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61581329FAA35B00F7119A /* SaveScene.swift */; };
 		AB8E166229F738E4003CC472 /* FetchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166129F738E4003CC472 /* FetchScene.swift */; };
 		AB8E166429F75A19003CC472 /* ThingsToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166329F75A19003CC472 /* ThingsToDo.swift */; };
 		AB8E166629F76093003CC472 /* JsonToScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166529F76093003CC472 /* JsonToScene.swift */; };
@@ -106,6 +112,10 @@
 		AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tempRoomStruct.swift; sourceTree = "<group>"; };
 		AB00AE9329E0A9410091085D /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		AB00AE9729E0ACF60091085D /* view3DRoomTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = view3DRoomTemp.swift; sourceTree = "<group>"; };
+		AB1D53332A03E91800C1BA8F /* AddFurniture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFurniture.swift; sourceTree = "<group>"; };
+		AB1D53352A03E99D00C1BA8F /* AddFurnitureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFurnitureViewModel.swift; sourceTree = "<group>"; };
+		AB1D53392A040B6A00C1BA8F /* CustomTextFieldCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldCenter.swift; sourceTree = "<group>"; };
+		AB1D533B2A05679000C1BA8F /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		AB2B542929E9D1080025D8E0 /* Television.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Television.usdz; sourceTree = "<group>"; };
 		AB2B542A29E9D1080025D8E0 /* Door.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Door.usdz; sourceTree = "<group>"; };
 		AB2B542B29E9D1080025D8E0 /* Gaming_Desktop_PC.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Gaming_Desktop_PC.usdz; sourceTree = "<group>"; };
@@ -142,6 +152,7 @@
 		AB4E042929E5E22900450517 /* EditNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNode.swift; sourceTree = "<group>"; };
 		AB4E885329EC40ED003FF08A /* ArRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArRoomView.swift; sourceTree = "<group>"; };
 		AB4E885529EC5009003FF08A /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		AB59CD2529FC468900B40EA2 /* SceneOptimization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneOptimization.swift; sourceTree = "<group>"; };
 		AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildMyRoom2.swift; sourceTree = "<group>"; };
 		AB5FC6D129DF65C4005FDCA8 /* Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Themes.swift; sourceTree = "<group>"; };
 		AB5FC6D329DF65DD005FDCA8 /* Samples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Samples.swift; sourceTree = "<group>"; };
@@ -149,6 +160,7 @@
 		AB5FC6DE29DF79EF005FDCA8 /* SCNVector3+Extenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SCNVector3+Extenstions.swift"; sourceTree = "<group>"; };
 		AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3DRoom.swift; sourceTree = "<group>"; };
 		AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRenderereDelegate.swift; sourceTree = "<group>"; };
+		AB61581329FAA35B00F7119A /* SaveScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveScene.swift; sourceTree = "<group>"; };
 		AB8E166129F738E4003CC472 /* FetchScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchScene.swift; sourceTree = "<group>"; };
 		AB8E166329F75A19003CC472 /* ThingsToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingsToDo.swift; sourceTree = "<group>"; };
 		AB8E166529F76093003CC472 /* JsonToScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonToScene.swift; sourceTree = "<group>"; };
@@ -295,6 +307,7 @@
 				AB8E167529F863B9003CC472 /* BuildMyRoom.swift */,
 				AB8E167729F876BA003CC472 /* BuildMyRoomAssistant.swift */,
 				AB9B44C429DDC4B000A94157 /* RoomCaptureController.swift */,
+				AB1D53352A03E99D00C1BA8F /* AddFurnitureViewModel.swift */,
 			);
 			path = RoomBuilder;
 			sourceTree = "<group>";
@@ -327,11 +340,14 @@
 			isa = PBXGroup;
 			children = (
 				ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */,
+				AB61581329FAA35B00F7119A /* SaveScene.swift */,
 				AB8E167929F89F58003CC472 /* View3DRoomNew.swift */,
+				AB1D533B2A05679000C1BA8F /* Controls.swift */,
 				AB4E042929E5E22900450517 /* EditNode.swift */,
 				ABAC685F29EAF1B10085D90D /* Show3DModels.swift */,
 				ABAC686129EB2F540085D90D /* ShowTextures.swift */,
 				AB4E885329EC40ED003FF08A /* ArRoomView.swift */,
+				AB1D53332A03E91800C1BA8F /* AddFurniture.swift */,
 				AB4E885529EC5009003FF08A /* test.swift */,
 			);
 			path = Room;
@@ -349,6 +365,7 @@
 			isa = PBXGroup;
 			children = (
 				ABB862ED29F5F0EA00C7D241 /* ManageSceneDataBase.swift */,
+				AB59CD2529FC468900B40EA2 /* SceneOptimization.swift */,
 			);
 			path = SceneManegement;
 			sourceTree = "<group>";
@@ -497,6 +514,7 @@
 			isa = PBXGroup;
 			children = (
 				ABD54DF429C4CA17000E7506 /* CustomTextField.swift */,
+				AB1D53392A040B6A00C1BA8F /* CustomTextFieldCenter.swift */,
 				ABD54DF829C4D091000E7506 /* SecureTextField.swift */,
 				AB3A2CF229C64DD700B2717A /* Validator.swift */,
 				ABBE27E429E6016A003656E3 /* ColorCircle.swift */,
@@ -626,18 +644,22 @@
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
 				ABB862E929F5A0DF00C7D241 /* UIApplication.swift in Sources */,
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
+				AB1D53362A03E99D00C1BA8F /* AddFurnitureViewModel.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
 				ABBE27E529E6016A003656E3 /* ColorCircle.swift in Sources */,
 				AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */,
 				ABB862EC29F5E09F00C7D241 /* UploadScene.swift in Sources */,
 				AB8E166429F75A19003CC472 /* ThingsToDo.swift in Sources */,
 				AB4CCAA529E1A6C7007E3864 /* MaterialNode.swift in Sources */,
+				AB1D53342A03E91800C1BA8F /* AddFurniture.swift in Sources */,
 				AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */,
 				ABD54DF529C4CA17000E7506 /* CustomTextField.swift in Sources */,
 				ABB4CC0129F5225E00D6278A /* UI-Image.swift in Sources */,
 				ABAC686029EAF1B10085D90D /* Show3DModels.swift in Sources */,
+				AB59CD2629FC468900B40EA2 /* SceneOptimization.swift in Sources */,
 				AB4CCA9F29E19D6E007E3864 /* DebugHelpers.swift in Sources */,
 				AB9B412B29CC7559007C02AA /* ForgetPassword.swift in Sources */,
+				AB1D533A2A040B6A00C1BA8F /* CustomTextFieldCenter.swift in Sources */,
 				ABB4CC0529F5504600D6278A /* testJson.swift in Sources */,
 				ABFC200429E4DDFB003827CF /* UIColor.swift in Sources */,
 				ABB4CC0329F5503700D6278A /* SceneToJson.swift in Sources */,
@@ -653,6 +675,7 @@
 				ABBE27E729E61BB5003656E3 /* EditFurniture.swift in Sources */,
 				AB8E166229F738E4003CC472 /* FetchScene.swift in Sources */,
 				AB8E167429F77C4E003CC472 /* PrepareJsonToScene.swift in Sources */,
+				AB61581429FAA35B00F7119A /* SaveScene.swift in Sources */,
 				AB4E042A29E5E22900450517 /* EditNode.swift in Sources */,
 				AB9B413129CC861C007C02AA /* Profile.swift in Sources */,
 				AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */,
@@ -671,6 +694,7 @@
 				AB8E166929F760B6003CC472 /* DecodeScene.swift in Sources */,
 				AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */,
 				AB8E166629F76093003CC472 /* JsonToScene.swift in Sources */,
+				AB1D533C2A05679000C1BA8F /* Controls.swift in Sources */,
 				ABD54DF729C4CCA3000E7506 /* LoginViewModel.swift in Sources */,
 				AB00AE9129E0A8E90091085D /* tempRoomStruct.swift in Sources */,
 			);

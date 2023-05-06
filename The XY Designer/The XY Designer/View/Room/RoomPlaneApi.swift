@@ -34,10 +34,10 @@ struct ScanningView: View {
     @StateObject var captureController = RoomCaptureController.instance
     @EnvironmentObject var coordinator: Coordinator
     @ObservedObject var uploadScene: UploadScene = UploadScene()
-    let data = ["key": "value"]
+    @State private var showingCredits = false
     
     var body: some View {
-            ZStack(alignment: .bottom) {
+            ZStack {
                 RoomCaptureViewRep()
                     .navigationBarBackButtonHidden(true)
                     .navigationBarItems(leading: Button("Cancel") {
@@ -53,49 +53,51 @@ struct ScanningView: View {
                     }
                 VStack{
                     //                if let room = captureController.finalResult{
+                    Spacer()
                     if captureController.roomIsReady{
-                        Button {
-                            let prepareRoom = PrepareRoomScanData(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
-                            let stringRoomColors = prepareRoom.dominantRoomColors.mapValues { $0.map { $0.hexString } }
-                            SceneToJson().shareFile(scene: prepareRoom.scene, dominantColors: stringRoomColors)
-                            SceneToJson().uploadFile(scene: prepareRoom.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
-                        } label: {
-                            Text("Save").font(.title2)
+                        HStack{
+                            Button {
+                                showingCredits.toggle()
+                            } label: {
+                                Text("Save")
+                                    .font(.title2)
+                                    .padding(.horizontal, 2)
+                            }
+                            .buttonStyle(.borderedProminent).cornerRadius(40).opacity(1)
+                            .padding()
+                            Button(action: {
+                                captureController.export()
+//                                dismiss()
+                            }, label: {
+                                Text("Share").font(.title2)
+                            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
+                                ActivityViewControllerRep(items: [captureController.exportUrl!])
+                            })
                         }
-                        .buttonStyle(.borderedProminent).cornerRadius(40).opacity(1)
-                        .padding()
-                        
                     }
                 }
-                
+                .alert(uploadScene.errorMessage, isPresented: $uploadScene.showError) {
+                }
+                HStack{
+                    Spacer()
+                    if uploadScene.showLoading {
+                        ProgressView()
+                            .tint(.primary)
+                            .foregroundColor(.secondary)
+                            .scaleEffect(3)
+                        
+                    }
+                    Spacer()
+                }
             }
-        .alert(uploadScene.errorMessage, isPresented: $uploadScene.showError) {
-        }
-        HStack{
-            Spacer()
-            if uploadScene.showLoading {
-                ProgressView()
-                    .tint(.primary)
-                    .foregroundColor(.secondary)
-                    .scaleEffect(3)
-                
+            .sheet(isPresented: $showingCredits) {
+                SaveScene(uploadScene: uploadScene, captureController: captureController)
             }
-            Spacer()
-        }
     }
-        //        Button(action: {
-        //            captureController.export()
-        //            dismiss()
-        //        }, label: {
-        //            Text("Export").font(.title2)
-        //        }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
-        //            ActivityViewControllerRep(items: [captureController.exportUrl!])
-        //        })
-//    }
+               
     
 }
-//}
-//}
+
 struct RoomPlaneApi: View {
     var body: some View {
         VStack {
@@ -108,6 +110,16 @@ struct RoomPlaneApi: View {
             Spacer().frame(height: 40)
             //                ScanningView()
             NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+        }
+    }
+}
+struct DismissButton: View {
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "x.circle")
+                .font(.system(size: 26))
         }
     }
 }

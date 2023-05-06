@@ -59,6 +59,8 @@ struct MainView: View {
             }
             .ignoresSafeArea(edges: [.bottom])
         }
+        .navigationBarHidden(true)
+        
         
     }
     

@@ -13,7 +13,6 @@ import FirebaseAuth
 
 // By Salah And Joex
 class SceneToJson {
-    var specialID: String = ""
     struct V3Model : Encodable {
         let x: Float
         let y: Float
@@ -194,9 +193,6 @@ class SceneToJson {
             }
         }
         func makeGeneric(of category: String) -> GenericSurfaceModel {
-            specialID = Auth.auth().currentUser!.uid
-            specialID += surface.UUID
-
            return GenericSurfaceModel(
                 category,
                 id ?? "00",
@@ -354,7 +350,7 @@ class SceneToJson {
             traverseSceneNodes(node: childNode)
         }
     }
-    func toModel(_ scene: SCNScene, dominantColors : [String : [String]]) -> SceneModel {
+    func toModel(_ scene: SCNScene, specialID: String, dominantColors : [String : [String]]) -> SceneModel {
         traverseSceneNodes(node: scene.rootNode)
        return SceneModel(surfaces: surfaceNodesList.map(toModel),
                         objects: objectNodesList.map(toModle),
@@ -364,40 +360,40 @@ class SceneToJson {
        )
    }
 
-     func encodeToJson(scene: SCNScene, dominantColors : [String : [String]]) -> Data? {
+     func encodeToJson(scene: SCNScene, specialID: String, dominantColors : [String : [String]]) -> Data? {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
 
-        let model = toModel(scene, dominantColors: dominantColors)
+         let model = toModel(scene, specialID: specialID, dominantColors: dominantColors)
 
         return try? encoder.encode(model)
     }
-    func exportJson(to url: URL, scene: SCNScene, dominantColors : [String : [String]]) throws {
-        if let json = self.encodeToJson(scene: scene, dominantColors: dominantColors) {
+    func exportJson(to url: URL, scene: SCNScene, specialID: String, dominantColors : [String : [String]]) throws {
+        if let json = self.encodeToJson(scene: scene, specialID: specialID, dominantColors: dominantColors) {
          try json.write(to: url)
         }
     }
-    func shareFile(scene: SCNScene, dominantColors : [String : [String]]) {
+    func shareFile(scene: SCNScene, specialID: String = "", dominantColors : [String : [String]]) {
         
         // Save the JSON data to a file in the app's documents directory
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent("scene.json")
-        try! exportJson(to: fileURL, scene: scene, dominantColors: dominantColors)
+        try! exportJson(to: fileURL, scene: scene, specialID: specialID, dominantColors: dominantColors)
         
         // Present a share sheet to share the file
         let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
         UIApplication.shared.keyWindow?.rootViewController?.present(activityViewController, animated: true, completion: nil)
     }
  
-    func uploadFile(scene: SCNScene, dominantColors : [String : [String]], uploadScene: UploadScene) {
+    func uploadFile(scene: SCNScene, specialID: String, dominantColors : [String : [String]], uploadScene: UploadScene) {
         
         // Save the JSON data to a file in the app's documents directory
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent("scene.json")
-        try! exportJson(to: fileURL, scene: scene, dominantColors: dominantColors)
+        try! exportJson(to: fileURL, scene: scene, specialID: specialID, dominantColors: dominantColors)
 //        UploadScene().uploadJSONAndAppendToArray(fileData: fileURL.dataRepresentation)
         if let fileData = try? Data(contentsOf: fileURL) {
-            uploadScene.uploadJSONAndAppendToArray(fileData: fileData, id: specialID)
+            uploadScene.uploadJSONAndAppendToArray(fileData: fileData, id: specialID, withOptimization: false)
         } else {
             print("Error reading data from file at URL: \(fileURL)")
         }
