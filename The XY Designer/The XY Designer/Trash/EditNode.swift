@@ -46,23 +46,24 @@ struct EditNode: View {
                         }
                     }
                     Section(header: Text("Choose From Room Extracted Colors")){
-                        List {
-                            ForEach(roomDominantColors.keys.sorted(), id: \.self) { room in
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack {
-                                        let parts = room.components(separatedBy: "+")
-                                        Text(parts.first ?? "Furniture")
-                                            .font(.headline)
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                        Spacer()
-                                        
-                                        ForEach(roomDominantColors[room]!, id: \.self) { color in
-                                            ColorCircle(color: Color(color),choosedColor: $selectedColor)
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        ShowDominantColors(roomDominantColors: roomDominantColors, selectedColor: $selectedColor)
+//                        List {
+//                            ForEach(roomDominantColors.keys.sorted(), id: \.self) { room in
+//                                ScrollView(.horizontal, showsIndicators: false) {
+//                                    HStack {
+//                                        let parts = room.components(separatedBy: "+")
+//                                        Text(parts.first ?? "Furniture")
+//                                            .font(.headline)
+//                                            .frame(maxWidth: .infinity, alignment: .leading)
+//                                        Spacer()
+//
+//                                        ForEach(roomDominantColors[room]!, id: \.self) { color in
+//                                            ColorCircle(color: Color(color),choosedColor: $selectedColor)
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        }
                     }
                 }else if(selectedPage == .Textures){
                     Section(header: Text("Choose Object Texture")){
@@ -72,7 +73,7 @@ struct EditNode: View {
                 }else{
                     if(node.type == .door || node.type == .window || node.type == .object){
                         Section(header: Text("Choose 3D Model")){
-                            Show3DModels(node: node, selectedModel: $selectedModel)
+                            Show3DModels(node: node,selectedModel: $selectedModel)
                         }
                     }
                     else {

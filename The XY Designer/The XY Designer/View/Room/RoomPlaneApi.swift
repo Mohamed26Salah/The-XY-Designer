@@ -118,7 +118,7 @@ struct DismissButton: View {
     
     var body: some View {
         Button(action: action) {
-            Image(systemName: "x.circle")
+            Image(systemName: "xmark")
                 .font(.system(size: 26))
         }
     }

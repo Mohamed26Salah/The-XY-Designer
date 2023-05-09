@@ -17,6 +17,8 @@ struct CustomTextFieldCenter: View {
             return .telephoneNumber
         case .name:
             return .username
+        case .scale:
+            return .telephoneNumber
         }
     }
     private var keyboardType: UIKeyboardType {
@@ -25,6 +27,8 @@ struct CustomTextFieldCenter: View {
             return .emailAddress
         case .num:
             return .numberPad
+        case .scale:
+            return .decimalPad
         case .name:
             return .default
         }

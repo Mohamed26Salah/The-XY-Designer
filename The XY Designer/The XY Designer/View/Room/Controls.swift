@@ -38,6 +38,14 @@ struct Controls: View {
                     if (typeOfMovement){
                         CustomTextFieldCenter(customKeyboardChoice: .num, hint: "Degree", text: $RoomModel.angelRotation)
                             .background(Color.black)
+                            .background(
+                                Color(UIColor { traitCollection in
+                                    return traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.systemBackground
+                                })
+                            )
+                            .foregroundColor(Color(UIColor { traitCollection in
+                                return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
+                            }))
                             .cornerRadius(10)
                         HStack(){
                             Button {

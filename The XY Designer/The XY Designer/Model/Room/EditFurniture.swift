@@ -43,7 +43,6 @@ class EditFurniture{
         let simd_float4x4Matrix = simd_float4x4(node.transform)
         let new3dModel = BuildRoom3DModels().add3DModelReturn(materialNode: node, desiredDimenstions: dimesntions, transform: simd_float4x4Matrix, modelName: modelName, extenstion: extenstion)
         if let firstChild = node.childNodes.first {
-            print("Ba7rawy")
             getOldPosition = firstChild.position
         }
         for child in node.childNodes {
@@ -66,7 +65,7 @@ class EditFurniture{
         }
         let box = SCNBox(width: CGFloat(dimesntions.x), height: CGFloat(dimesntions.y), length: CGFloat(dimesntions.z)+0.01, chamferRadius: 0)
         box.firstMaterial?.isDoubleSided = true
-        box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+        box.firstMaterial?.diffuse.contents = Color.white
         node.geometry = box
         //For The Json
         node.a3dModel = nil

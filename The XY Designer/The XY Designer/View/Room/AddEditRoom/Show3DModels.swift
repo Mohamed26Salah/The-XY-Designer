@@ -10,38 +10,37 @@ import SceneKit
 import Combine
 import _SceneKit_SwiftUI
 
-
 struct Show3DModels: View {
     @State private var models: [String] = []
     var node: MaterialNode
     @Binding var selectedModel: String?
     @Environment(\.presentationMode) var presentationMode
-    //Filter 3D Object depending on the selected Furniture
+
     var body: some View {
         VStack{
-           HStack{
-               Spacer()
-               Button {
-                   EditFurniture().reset3dModel(to: node, dimesntions: node.dimenstions, transform: node.transform)
-                   presentationMode.wrappedValue.dismiss()
-               } label: {
-                   HStack(spacing: 15){
-                       Text("Reset 3D Model")
-                           .fontWeight(.semibold)
-                           .contentTransition(.identity)
-                   }
-               }
-               .foregroundColor(.primary)
-               .padding(.horizontal,25)
-               .padding(.vertical)
-               .background{
-                   RoundedRectangle(cornerRadius: 10, style: .continuous)
-                       .foregroundColor(.secondary.opacity(0.3))
-               }
-               Spacer()
-           }
+            HStack{
+                Spacer()
+                Button {
+                    EditFurniture().reset3dModel(to: node, dimesntions: node.dimenstions, transform: node.transform)
+//                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    HStack(spacing: 15){
+                        Text("Reset 3D Model")
+                            .fontWeight(.semibold)
+                            .contentTransition(.identity)
+                    }
+                }
+                .foregroundColor(.primary)
+                .padding(.horizontal,25)
+                .padding(.vertical)
+                .background{
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .foregroundColor(.secondary.opacity(0.3))
+                }
+                Spacer()
+            }
             ScrollView (showsIndicators: true){
-                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())]) {
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 30) {
                     ForEach(models, id: \.self) { model in
                         ModelView(modelName: model,isSelected: model == selectedModel){
                             selectedModel = model
@@ -50,10 +49,11 @@ struct Show3DModels: View {
                 }
             }
             .frame(height: 800)
+            .border(Color.black, width: 2)
             .onAppear(perform: loadModels)
         }
     }
-    
+
     private func loadModels() {
         DispatchQueue.global(qos: .userInitiated).async {
             let fileManager = FileManager.default
@@ -62,13 +62,14 @@ struct Show3DModels: View {
                                                                  includingPropertiesForKeys: nil,
                                                                  options: .skipsHiddenFiles)
             let modelNames = assetURLs.filter { $0.pathExtension == "usdz" }.map { $0.lastPathComponent }
-            
+
             DispatchQueue.main.async {
                 self.models = modelNames
             }
         }
     }
 }
+
 struct ModelView: View {
     let modelName: String
     var isSelected: Bool
@@ -88,7 +89,6 @@ struct ModelView: View {
         .onTapGesture(perform: action)
     }
 }
-
 //struct Show3DModels_Previews: PreviewProvider {
 //    static var previews: some View {
 //        Show3DModels()

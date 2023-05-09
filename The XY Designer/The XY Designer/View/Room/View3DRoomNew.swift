@@ -119,7 +119,7 @@ struct View3DRoomNew: View {
                         .padding(.vertical)
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
+                                .foregroundColor(.secondary.opacity(0.6))
                         }
                         .padding()
                         Spacer()
@@ -131,7 +131,7 @@ struct View3DRoomNew: View {
                                 .padding(.vertical)
                                 .background{
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .foregroundColor(.secondary.opacity(0.3))
+                                        .foregroundColor(.secondary.opacity(0.6))
                                 }
                         }
                         .padding()
@@ -151,7 +151,7 @@ struct View3DRoomNew: View {
                                 .padding(.vertical)
                                 .background{
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .foregroundColor(.secondary.opacity(0.3))
+                                        .foregroundColor(.secondary.opacity(0.6))
                                 }
                         }
                         .padding()
@@ -171,7 +171,7 @@ struct View3DRoomNew: View {
                                 .padding(.vertical)
                                 .background{
                                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .foregroundColor(.secondary.opacity(0.3))
+                                        .foregroundColor(.secondary.opacity(0.6))
                                 }
                         }
                         .padding()
@@ -198,7 +198,8 @@ struct View3DRoomNew: View {
             .sheet(isPresented: $showingCredits) {
                 if let selectedFurniture = RoomModel.selectedFurniture{
                     if let selectedRoom = RoomModel.room {
-                        EditNode(node: selectedFurniture, roomDominantColors: selectedRoom.dominantColors())
+//                        EditNode(node: selectedFurniture, roomDominantColors: selectedRoom.dominantColors())
+                        EditNodeNew(nodeToBeEdited: selectedFurniture, dominantColors: selectedRoom.dominantColors())
                     }
                 }
             }
@@ -247,7 +248,6 @@ private extension View3DRoomNew {
         if let firstNode = findParentNode(atPoint: point) {
             if let materialNode = firstNode as? MaterialNode  {
                 if (materialNode.type == .platForm || materialNode.type == .opening){
-                    print("Fuck")
                     return
                 }
                 BuildMyRoomAssistant().clickedFeel(materialNode: materialNode)

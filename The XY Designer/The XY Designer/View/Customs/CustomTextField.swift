@@ -10,6 +10,7 @@ enum keyboardTypeEnum {
     case email
     case name
     case num
+    case scale
 }
 struct CustomTextField: View {
     var customKeyboardChoice : keyboardTypeEnum
@@ -21,7 +22,10 @@ struct CustomTextField: View {
             return .telephoneNumber
         case .name:
             return .username
+        case .scale:
+            return .telephoneNumber
         }
+        
     }
     private var keyboardType: UIKeyboardType {
         switch customKeyboardChoice {
@@ -29,6 +33,8 @@ struct CustomTextField: View {
             return .emailAddress
         case .num:
             return .numberPad
+        case .scale:
+            return .decimalPad
         case .name:
             return .default
         }
