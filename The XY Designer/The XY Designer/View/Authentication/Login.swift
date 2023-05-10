@@ -71,8 +71,6 @@ struct Login: View {
                             .background{
                                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                                     .foregroundColor(.secondary.opacity(0.3))
-                                
-                                
                             }
                             Spacer()
                             NavigationLink(destination: Register(userisNotSignedIn: $userisNotSignedIn)) {
@@ -88,13 +86,21 @@ struct Login: View {
                             .background{
                                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                                     .foregroundColor(.secondary.opacity(0.3))
-
-
                             }
-
                         }
-                        
-                        
+                        HStack {
+                            Spacer()
+                            NavigationLink(destination: ForgetPassword()) {
+                                Text("Forgot Password?")
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                    .padding()
+                                    .background(
+                                        Color.clear
+                                    )
+                            }
+                            Spacer()
+                        }
                         
                     }
                     .padding(.horizontal,30)

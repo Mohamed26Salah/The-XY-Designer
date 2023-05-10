@@ -32,8 +32,11 @@ struct Profile: View {
                         
                         //MARK: Stopped Here
                         HStack {
-                            //                        Spacer()
-                            Button(action: ProfileModel.changePassword) {
+                            Button {
+                                ProfileModel.changePassword {
+                                    isSignedIn.toggle()
+                                }
+                            } label: {
                                 HStack(spacing: 15){
                                     Text("Change Password")
                                         .fontWeight(.semibold)
@@ -51,6 +54,25 @@ struct Profile: View {
                                         .foregroundColor(.secondary.opacity(0.3))
                                 }
                             }
+
+//                            Button(action: ProfileModel.changePassword ) {
+//                                HStack(spacing: 15){
+//                                    Text("Change Password")
+//                                        .fontWeight(.semibold)
+//                                        .contentTransition(.identity)
+//
+//                                    Image(systemName: "pencil")
+//                                        .font(.title3)
+//                                    //                                .rotationEffect(.init(degrees: 45))
+//                                }
+//                                .foregroundColor(.primary)
+//                                .padding(.horizontal,25)
+//                                .padding(.vertical)
+//                                .background{
+//                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+//                                        .foregroundColor(.secondary.opacity(0.3))
+//                                }
+//                            }
                             Spacer()
                             
                         }
@@ -68,8 +90,9 @@ struct Profile: View {
                         .scaleEffect(3)
                 }
             }
-//            .fullScreenCover(isPresented: $logOut) {
-//                Login()
+//            .onAppear{
+//                ProfileModel.newPassword = ""
+//                ProfileModel.confirmNewPassword = ""
 //            }
             .toolbar {
                 Button("Log Out") {ProfileModel.logOutUser()}

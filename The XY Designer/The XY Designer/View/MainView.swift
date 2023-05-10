@@ -44,7 +44,7 @@ struct MainView: View {
                     .overlay(
                         Button("Log Out") {
                             ProfileModel.logOutUser()
-                            isSignedIn = false
+                            isSignedIn.toggle()
                         }
                             .padding()
                             .foregroundColor(.white)

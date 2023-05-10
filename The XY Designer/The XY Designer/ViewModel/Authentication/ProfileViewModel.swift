@@ -13,7 +13,8 @@ class ProfileViewModel: AuthService {
     @Published var newPassword: String = ""
     @Published var confirmNewPassword: String = ""
     
-    func changePassword() {
+    func changePassword(completion: @escaping ()->Void) {
+        self.showLoading = true
         if !passwordConfirmation(first: newPassword, secound: confirmNewPassword) {
             return
         }
@@ -27,8 +28,8 @@ class ProfileViewModel: AuthService {
                 }
                 return
             }
-            
-            //MARK: Return to Login
+            self.showLoading = false
+            completion()
            
         }
     }
