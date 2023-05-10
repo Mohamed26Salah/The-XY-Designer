@@ -11,10 +11,9 @@ import FirebaseAuth
 struct Login: View {
     @StateObject var loginModel: LoginViewModel = .init()
     @State var goToRegister = false
-    @EnvironmentObject var coordinator: Coordinator
-//    @State private var readyToNavigate : Bool = false
+    @Binding var userisNotSignedIn: Bool
     var body: some View {
-//        NavigationStack{
+        NavigationStack{
             ZStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 15) {
@@ -47,14 +46,12 @@ struct Login: View {
                             Button {
                                 if (loginModel.showVerify) {
                                     loginModel.isUserVerified { result in
-                                        coordinator.path.append(.mainView)
-//                                            readyToNavigate = true
+                                        userisNotSignedIn = false
                                     }
                                 } else {
                                     loginModel.SignIn {
-                                        coordinator.path.append(.mainView)
-//                                            readyToNavigate = true
-                                            
+                                        userisNotSignedIn = false
+                                        
                                     }
                                 }
                             } label: {
@@ -77,30 +74,8 @@ struct Login: View {
                                 
                                 
                             }
-//                            .navigationDestination(isPresented: $readyToNavigate) {
-//                                MainView()
-//                            }
                             Spacer()
-//                            NavigationLink(destination: Register()) {
-//                                HStack(spacing: 15){
-//                                    Text("Sign Up ?")
-//                                        .fontWeight(.semibold)
-//                                        .contentTransition(.identity)
-//                                }
-//                            }
-//                            .foregroundColor(.primary)
-//                            .padding(.horizontal,25)
-//                            .padding(.vertical)
-//                            .background{
-//                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-//                                    .foregroundColor(.secondary.opacity(0.3))
-//
-//
-//                            }
-                            Button {
-                                coordinator.path.append(.register)
-
-                            } label: {
+                            NavigationLink(destination: Register(userisNotSignedIn: $userisNotSignedIn)) {
                                 HStack(spacing: 15){
                                     Text("Sign Up ?")
                                         .fontWeight(.semibold)
@@ -116,6 +91,7 @@ struct Login: View {
 
 
                             }
+
                         }
                         
                         
@@ -137,20 +113,12 @@ struct Login: View {
                 
                 
             }
-//            .navigationDestination(isPresented: $readyToNavigate) {
-//                MainView()
-//            }
             .navigationBarHidden(true)
             .onAppear {
                 loginModel.showLoading = false
             }
         }
         
-//    }
-}
-
-struct Login_Previews: PreviewProvider {
-    static var previews: some View {
-        Login()
     }
 }
+

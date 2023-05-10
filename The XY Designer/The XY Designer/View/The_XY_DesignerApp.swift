@@ -9,56 +9,29 @@ import SwiftUI
 import FirebaseCore
 import FirebaseAuth
 
-enum Route: Hashable {
-    case login
-    case register
-    case mainView
-}
-var isSignedIn: Bool {
-    return Auth.auth().currentUser != nil
-}
-class Coordinator: ObservableObject {
-    @Published var path = [Route]()
-    func reset(){
-        path = [Route]()
-    }
-}
-@ViewBuilder
-func userFirstView() -> some View{
-    if (isSignedIn) {
-        AnyView(MainView())
-    }else {
-        AnyView(Login())
+var isLoggedIn: Bool {
+    if(Auth.auth().currentUser != nil){
+        return false
+    }else{
+        return true
     }
 }
 @main
 struct The_XY_DesignerApp: App {
-    // register app delegate for Firebase setup
+    @StateObject var router = Router()
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @ObservedObject var coordinator = Coordinator()
     var body: some Scene {
         WindowGroup {
-            NavigationStack (path: $coordinator.path){
-//               AnyView(isSignedIn ? AnyView(MainView()) : AnyView(Login()))
-                // MARK: problem here isSignedIn 2 times
-                userFirstView()
-                .navigationDestination(for: Route.self) { route in
-                    switch route {
-                    case .login:
-                        Login()
-                    case .register:
-                        Register()
-                    case .mainView:
-                        MainView()
-                    }
-                }
-
-                
-            }.environmentObject(coordinator)
-            
+            MainView(isSignedIn: isLoggedIn)
+                .environmentObject(router)
+            //                    }
         }
+        
+        
     }
+    
 }
+
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {

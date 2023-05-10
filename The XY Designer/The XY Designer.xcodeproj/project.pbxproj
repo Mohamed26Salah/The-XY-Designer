@@ -58,6 +58,8 @@
 		AB5FC6E229DF7CFB005FDCA8 /* View3DRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */; };
 		AB5FC6E529DF8C47005FDCA8 /* SceneRenderereDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */; };
 		AB61581429FAA35B00F7119A /* SaveScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB61581329FAA35B00F7119A /* SaveScene.swift */; };
+		AB7D1AB12A0B71290057AD09 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7D1AB02A0B71290057AD09 /* Router.swift */; };
+		AB7D1AB32A0B71BC0057AD09 /* Test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7D1AB22A0B71BC0057AD09 /* Test3.swift */; };
 		AB8E166229F738E4003CC472 /* FetchScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166129F738E4003CC472 /* FetchScene.swift */; };
 		AB8E166429F75A19003CC472 /* ThingsToDo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166329F75A19003CC472 /* ThingsToDo.swift */; };
 		AB8E166629F76093003CC472 /* JsonToScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8E166529F76093003CC472 /* JsonToScene.swift */; };
@@ -166,6 +168,8 @@
 		AB5FC6E129DF7CFB005FDCA8 /* View3DRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View3DRoom.swift; sourceTree = "<group>"; };
 		AB5FC6E429DF8C47005FDCA8 /* SceneRenderereDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRenderereDelegate.swift; sourceTree = "<group>"; };
 		AB61581329FAA35B00F7119A /* SaveScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveScene.swift; sourceTree = "<group>"; };
+		AB7D1AB02A0B71290057AD09 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		AB7D1AB22A0B71BC0057AD09 /* Test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test3.swift; sourceTree = "<group>"; };
 		AB8E166129F738E4003CC472 /* FetchScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchScene.swift; sourceTree = "<group>"; };
 		AB8E166329F75A19003CC472 /* ThingsToDo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThingsToDo.swift; sourceTree = "<group>"; };
 		AB8E166529F76093003CC472 /* JsonToScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonToScene.swift; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 		ABB1464929F9A9BE00CC9EBD /* Trash */ = {
 			isa = PBXGroup;
 			children = (
+				AB8E166329F75A19003CC472 /* ThingsToDo.swift */,
 				ABB4CC0429F5504600D6278A /* testJson.swift */,
 				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */,
 				AB00AE9029E0A8E90091085D /* tempRoomStruct.swift */,
@@ -476,7 +481,8 @@
 				ABAEBA4329CCF85F00EB88E1 /* Home.swift */,
 				ABD54DCE29C49FE3000E7506 /* MainView.swift */,
 				ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */,
-				AB8E166329F75A19003CC472 /* ThingsToDo.swift */,
+				AB7D1AB02A0B71290057AD09 /* Router.swift */,
+				AB7D1AB22A0B71BC0057AD09 /* Test3.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -662,7 +668,9 @@
 				ABB862EE29F5F0EA00C7D241 /* ManageSceneDataBase.swift in Sources */,
 				ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */,
 				ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */,
+				AB7D1AB12A0B71290057AD09 /* Router.swift in Sources */,
 				AB8E167A29F89F58003CC472 /* View3DRoomNew.swift in Sources */,
+				AB7D1AB32A0B71BC0057AD09 /* Test3.swift in Sources */,
 				AB8E166F29F76908003CC472 /* PrepareRoomScanData.swift in Sources */,
 				AB4E885429EC40ED003FF08A /* ArRoomView.swift in Sources */,
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,

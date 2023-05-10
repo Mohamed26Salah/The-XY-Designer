@@ -10,65 +10,68 @@ import FirebaseAuth
 
 struct MainView: View {
     @State private var tabSelected: Tab = .house
-    @EnvironmentObject var coordinator: Coordinator
+    @EnvironmentObject var router: Router
+    @State var isSignedIn: Bool
+    @State private var selectedTab = 0
+    @StateObject var ProfileModel: ProfileViewModel = .init()
     
-    init() {
-        UITabBar.appearance().isHidden = true
-    }
-        let screens: [String: AnyView] = [
-            "House": AnyView(Home()),
-            "Plus": AnyView(RoomPlaneApi()),
-            "Person": AnyView(Profile()),
-        ]
-    var isSignedIn: Bool {
-        return Auth.auth().currentUser != nil
-    }
     var body: some View {
-//        TabView {
-//            Home()
-//                .tabItem {
-//                    Image(systemName: "house")
-//                    Text("Home")
-//                }
-//            RoomPlaneApi()
-//                .tabItem {
-//                    Image(systemName: "plus.circle")
-//                    Text("Add Room")
-//                }
-//            Profile()
-//                .tabItem {
-//                    Image(systemName: "person")
-//                    Text("Profile")
-//                }
-//
-//        }
-//        .accentColor(.primary)
-        
-        ZStack {
-            VStack {
-                TabView(selection: $tabSelected) {
-                    ForEach(Tab.allCases, id: \.rawValue) { tab in
-                        screens["\(tab.rawValue.capitalized)"]!.offset(y: -20)
-                            .tag(tab)
+        NavigationStack (path: $router.path) {
+            
+            TabView(selection: $selectedTab) {
+                Home()
+                    .tabItem {
+                        Image(systemName: "house")
+                        Text("Home")
                     }
-                }
+                    .bold()
+                    .tag(0)
+                
+                RoomPlaneApi()
+                    .tabItem {
+                        Image(systemName: "plus.circle")
+                        Text("Add Room")
+                    }
+                    .bold()
+                    .tag(1)
+                Profile(isSignedIn: $isSignedIn)
+                    .tabItem {
+                        Image(systemName: "gear")
+                        Text("Profile")
+                    }
+                    .bold()
+                    .tag(2)
+                    .overlay(
+                        Button("Log Out") {
+                            ProfileModel.logOutUser()
+                            isSignedIn = false
+                        }
+                            .padding()
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(16),
+                        alignment: .topTrailing
+                    )
+                
             }
-            VStack {
-                Spacer()
-                CustomTabBar(selectedTab: $tabSelected)
-            }
-            .ignoresSafeArea(edges: [.bottom])
+//            .tint(Gradient(colors: [.lightGrayFancy, .lightGrayFancy, .lightGrayFancy]))
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
-        
-        
+//        .onAppear{
+//           UITabBar.appearance().isHidden = false
+//        }
+        .fullScreenCover(isPresented: $isSignedIn) {
+            Login(userisNotSignedIn: $isSignedIn)
+        }
     }
+    
     
 }
 
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView()
+        MainView(isSignedIn: true)
+            .environmentObject(Router())
     }
 }

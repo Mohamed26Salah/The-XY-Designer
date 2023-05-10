@@ -9,8 +9,7 @@ import SwiftUI
 
 struct Register: View {
     @StateObject var RegisterModel: RegisterViewModel = .init()
-    @EnvironmentObject var coordinator: Coordinator
-//    @State private var readyToNavigate : Bool = false
+    @Binding var userisNotSignedIn: Bool
     var body: some View {
         ZStack {
             ScrollView(.vertical, showsIndicators: false) {
@@ -53,8 +52,9 @@ struct Register: View {
                         Button {
                             if (RegisterModel.showVerify) {
                                 RegisterModel.isUserVerified { result in
-                                    coordinator.path.append(.mainView)
+//                                    coordinator.path.append(.mainView)
 //                                    readyToNavigate = true
+                                    userisNotSignedIn = false
                                 }
                             } else {
                                 RegisterModel.signUp()
@@ -77,30 +77,8 @@ struct Register: View {
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
                         }
-//                        .navigationDestination(isPresented: $readyToNavigate) {
-//                            MainView()
-//                        }
                         Spacer()
-                        Button {
-                            coordinator.path.removeLast()
-                        } label: {
-                            HStack(spacing: 15){
-                                Text("Sign In")
-                                    .fontWeight(.semibold)
-                                    .contentTransition(.identity)
-                                
-                                Image(systemName: "line.diagonal.arrow")
-                                    .font(.title3)
-                                    .rotationEffect(.init(degrees: 0))
-                            }
-                        }
-                        .foregroundColor(.primary)
-                        .padding(.horizontal,25)
-                        .padding(.vertical)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
-                        }
+
                     }
                     
                 }
@@ -123,9 +101,9 @@ struct Register: View {
 }
 
 
-
-struct Register_Previews: PreviewProvider {
-    static var previews: some View {
-        Register()
-    }
-}
+//
+//struct Register_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Register(userisNotSignedIn: true)
+//    }
+//}

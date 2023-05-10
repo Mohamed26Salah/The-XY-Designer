@@ -32,7 +32,7 @@ struct ActivityViewControllerRep: UIViewControllerRepresentable {
 struct ScanningView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject var captureController = RoomCaptureController.instance
-    @EnvironmentObject var coordinator: Coordinator
+//    @EnvironmentObject var coordinator: Coordinator
     @ObservedObject var uploadScene: UploadScene = UploadScene()
     @State private var showingCredits = false
     

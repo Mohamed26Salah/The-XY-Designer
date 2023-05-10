@@ -9,8 +9,7 @@ import SwiftUI
 
 struct Profile: View {
     @StateObject var ProfileModel: ProfileViewModel = .init()
-    @EnvironmentObject var coordinator: Coordinator
-//    @State var logOut: Bool = false
+    @Binding var isSignedIn: Bool
     var body: some View {
             ZStack {
                 ScrollView(.vertical, showsIndicators: false) {
@@ -53,12 +52,6 @@ struct Profile: View {
                                 }
                             }
                             Spacer()
-                            Button("LogOut") {
-                                ProfileModel.logOutUser()
-//                                logOut = true
-                                coordinator.path = [.login]
-//                                coordinator.reset()
-                            }
                             
                         }
                         
@@ -89,8 +82,8 @@ struct Profile: View {
         }
 }
 
-struct Profile_Previews: PreviewProvider {
-    static var previews: some View {
-        Profile()
-    }
-}
+//struct Profile_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Profile()
+//    }
+//}
