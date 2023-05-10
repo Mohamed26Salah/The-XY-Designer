@@ -8,39 +8,110 @@
 import SwiftUI
 import SceneKit
 import RoomPlan
+enum AddState: String, CaseIterable{
+    case Scale
+    case Colors
+    case Textures
+}
 
 struct AddFurniture: View {
     var mainN: SCNNode
+    var roomDominantColors: [String:[UIColor]]
+    var editFurniture = EditFurniture()
     @ObservedObject var newFurniture = AddFurnitureViewModel()
     @State var selectedCategory: String?
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
-    init(mainNode: SCNNode) {
+    @State private var selectedPage: AddState = .Scale
+    @State private var selectedColor: Color = .red
+    @State private var selectedImage: String?
+    @State private var selectedModel: String?
+    init(mainNode: SCNNode, dominantColors: [String:[UIColor]]) {
         mainN = mainNode
-        //        self._newFurniture = ObservedObject(wrappedValue: AddFurnitureViewModel(mainN: mainNode))
+        self.roomDominantColors = dominantColors
     }
     var body: some View {
+        let node = newFurniture.returnNewFurniture()
         GeometryReader { geometry in
             VStack {
-//                Spacer()
-                HStack{
-                    Spacer()
-                    DismissButton {
-                        presentationMode.wrappedValue.dismiss()
+                Text("Add New Furniture")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .padding(.vertical, 15)
+                Picker("Pages", selection: $selectedPage) {
+                    ForEach(AddState.allCases,id: \.self) { page in
+                        Text(page.rawValue.capitalized)
                     }
-                    .padding()
                 }
-                sceneOfNewFurniture(newFurniture: newFurniture)
-                    .frame(width: geometry.size.width, height: geometry.size.height / 2)
-                    .background(Color(UIColor.white)) // Add background modifier here
-                
-                Spacer()
-                ShowDimenstions(furniture: newFurniture)
-                SaveChangesButton(newFurniture: newFurniture, mainNode: mainN)
+                .pickerStyle(.segmented)
+                .padding(.top, -10)
+                .padding(.horizontal, 15)
+                Form{
+                    sceneOfNewFurniture(newFurniture: newFurniture)
+                        .frame(height: geometry.size.height / 3)
+                        .background(Color(UIColor.white))
+                    if (selectedPage == .Scale) {
+                        Section(header: Text("Change Object Dimenstions")){
+                            ShowDimenstions(furniture: newFurniture, disabled: false)
+                            
+                        }
+                        //                        }
+                    }else if (selectedPage == .Colors){
+                        Section(header: Text("Choose Object Color")){
+                            ColorPicker(selection: $selectedColor){
+                                Label("Color Pallete", systemImage: "paintpalette")
+                                    .symbolVariant(.fill)
+                                    .padding(.leading, 8)
+                            }
+                            .onChange(of: selectedColor) { newColor in
+                                //                                let node = editFurnitureVM.returnNewFurniture()
+                                editFurniture.applyColor(to: node, color: selectedColor)
+                            }
+                        }
+                        Section(header: Text("Choose From Room Extracted Colors")){
+                            ShowDominantColors(roomDominantColors: roomDominantColors, selectedColor: $selectedColor)
+                        }
+                    }else if(selectedPage == .Textures){
+                        //                        let node = editFurnitureVM.returnNewFurniture()
+                        Section(header: Text("Choose Texture From Your Own Gallery")){
+                            ShowGallery(nodeToBeEdited: node)
+                        }
+                        Section(header: Text("Choose Object Texture")){
+                            ShowTextures(selectedImage: $selectedImage)
+                                .onChange(of: selectedImage) { newTexture in
+                                    editFurniture.applyTexture(to: node, imageName: newTexture ?? "XY_V02")
+                                }
+                        }
+                    }
+                    //                    else{
+                    //                            Section(header: Text("Choose 3D Model")){
+                    //                                Show3DModels(node: node, selectedModel: $selectedModel)
+                    //                                    .onChange(of: selectedModel) { new3dModel in
+                    ////                                        if let dimenstion = node.dimenstions{
+                    //                                            if let selectedModel = new3dModel{
+                    ////                                                editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , extenstion: "usdz")
+                    //                                                node.a3dModel = selectedModel
+                    //                                                BuildMyRoomAssistant().set3dModel(node: node)
+                    //                                            }
+                    //                                        }
+                    ////                                    }
+                    //
+                    //                            }
+                    //                    }
+                    //                }
+                }
+             SaveChangesButton(newFurniture: newFurniture, mainNode: mainN)
             }
-            .background(Color(UIColor.white))
-            .ignoresSafeArea()
+            .background(
+                Color(UIColor { traitCollection in
+                    return traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.systemBackground
+                })
+            )
+            .foregroundColor(Color(UIColor { traitCollection in
+                return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
+            }))
         }
+
         
     }
 }
@@ -84,7 +155,8 @@ struct sceneOfNewFurniture: View {
 
 struct AddFurniture_Previews: PreviewProvider {
     static var node = SCNNode()
+    static var roomDominantColors = ["Me": [UIColor.red, UIColor.blue]]
     static var previews: some View {
-        AddFurniture(mainNode: node)
+        AddFurniture(mainNode: node, dominantColors: roomDominantColors)
     }
 }

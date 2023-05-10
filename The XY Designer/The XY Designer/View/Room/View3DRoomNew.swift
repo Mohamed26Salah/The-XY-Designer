@@ -204,7 +204,9 @@ struct View3DRoomNew: View {
                 }
             }
             .sheet(isPresented: $showingAddFurniture) {
-                AddFurniture(mainNode: RoomModel.node)
+                if let selectedRoom = RoomModel.room {
+                    AddFurniture(mainNode: RoomModel.node, dominantColors: selectedRoom.dominantColors())
+                }
             }
             .fullScreenCover(isPresented: $isARPresented) {
                 ArRoomView(scene: RoomModel.scene, applySkyBoxAgain: RoomModel.lightSkyBox(), isARPresented: $isARPresented)

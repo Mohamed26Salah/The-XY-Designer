@@ -58,17 +58,24 @@ struct EditNodeNew: View {
                         .background(Color(UIColor.white))
                     if (selectedPage == .Scale) {
                         Section(header: Text("Change Object Dimenstions")){
-                            if let node = editFurnitureVM.node.childNodes.first as? MaterialNode{
-                                if let a3DModel = node.a3dModel {
-                                    Text("You Need To Reset the Object, To Default, To change Dimenstions")
-                                        .foregroundColor(.red)
-                                        .bold()
-                                        .font(.system(.title3))
-                                }else {
-                                    ShowDimenstions(furniture: editFurnitureVM)
-                                }
+//                            if let node = editFurnitureVM.node.childNodes.first as? MaterialNode{
+//                                if (node.type != .object) {
+//                                    Text("This Object dimenstions Can't Be Edited")
+//                                        .foregroundColor(.red)
+//                                        .bold()
+//                                        .font(.system(.title3))
+//                                } else if ((node.a3dModel) != nil) {
+//                                    Text("You Need To Reset the Object, To Default, To change Dimenstions")
+//                                        .foregroundColor(.red)
+//                                        .bold()
+//                                        .font(.system(.title3))
+//                                }else {
+//                                    ShowDimenstions(furniture: editFurnitureVM, disabled: true)
+//                                }
+                                ShowDimenstions(furniture: editFurnitureVM, disabled: true)
+
                             }
-                        }
+//                        }
                     }else if (selectedPage == .Colors){
                         Section(header: Text("Choose Object Color")){
                             ColorPicker(selection: $selectedColor){
@@ -119,8 +126,14 @@ struct EditNodeNew: View {
                 HStack{
                     Spacer()
                     Button {
-                        //Scale
+        
                         if let editableNode = editFurnitureVM.node.childNodes.first as? MaterialNode {
+//                            if (nodeToBeEdited.dimenstions != editableNode.dimenstions){
+////                                    editFurnitureVM.applyScale(to: nodeToBeEdited, desiredDimenstions: editableNode.dimenstions)
+//                                let scale = editFurnitureVM.scaleWithoutA3dModel(node: nodeToBeEdited, x: editableNode.dimenstions.x, y: editableNode.dimenstions.y, z: editableNode.dimenstions.z)
+//                                nodeToBeEdited.scale = scale
+//                                nodeToBeEdited.dimenstions = editableNode.dimenstions
+//                            }
                             if let isReseted = editableNode.a3dModel {
                                 if let dimenstion = nodeToBeEdited.dimenstions{
 //                                    if let selectedModel = selectedModel{
@@ -135,9 +148,6 @@ struct EditNodeNew: View {
                             }
                             if let selectedImage = selectedImage {
                                 editFurniture.applyTexture(to: nodeToBeEdited, imageName: selectedImage)
-                            }
-                            if (nodeToBeEdited.dimenstions != editableNode.dimenstions){
-//                                editFurnitureVM.applyScale(to: nodeToBeEdited, desiredDimenstions: editableNode.dimenstions)
                             }
                         }
                         presentationMode.wrappedValue.dismiss()

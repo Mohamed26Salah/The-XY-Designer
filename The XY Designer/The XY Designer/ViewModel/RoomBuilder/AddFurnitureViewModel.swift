@@ -20,7 +20,7 @@ class AddFurnitureViewModel: AddEditMaster {
     func setupScene() {
         furnitureNode(addTO: node)
         scene.rootNode.addChildNode(node)
-        scene.background.contents = Color.white.opacity(0.3)
+        scene.background.contents = Color.DarkTheme.Violet.background.cgColor
         prepareCamera()
     }
     func furnitureNode(addTO node : SCNNode){

@@ -13,6 +13,7 @@ struct ShowDimenstions: View {
     @State var selectedCategory: String?
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
+    var disabled: Bool
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
@@ -21,6 +22,8 @@ struct ShowDimenstions: View {
                     SelectCategory(newFurniture: newFurniture, selectedCategory: $selectedCategory)
                 }
                 EditFurnitureScale(xDimenstion: $furniture.xDimension, yDimenstion: $furniture.yDimension, zDimenstion: $furniture.zDimension)
+                    .opacity(disabled ? 0.5 : 1.0)
+                    .disabled(disabled)
             }
         }
 //        .padding(.top, 100)

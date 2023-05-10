@@ -163,13 +163,15 @@ struct BuildMyRoomAssistant {
         boxNode.physicsBody?.categoryBitMask = EntityType.object.rawValue
         boxNode.physicsBody?.collisionBitMask = EntityType.wall.rawValue
         boxNode.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
-        if boxNode.texture != nil {
-//           addTextures(node: objectModel)
-            clickedFeel(materialNode: boxNode)
+        if newFurniture.texture != nil {
+            boxNode.texture = newFurniture.texture
+            addTextures(node: boxNode)
+//            clickedFeel(materialNode: boxNode)
         }
-        if boxNode.a3dModel != nil{
-//            set3dModel(node: objectModel)
-            clickedFeel(materialNode: boxNode)
+        if newFurniture.a3dModel != nil{
+            boxNode.a3dModel = newFurniture.a3dModel
+            set3dModel(node: boxNode)
+//            clickedFeel(materialNode: boxNode)
         }
         DispatchQueue.main.async {
             boxNode.highlight(with: .red, for: 5)

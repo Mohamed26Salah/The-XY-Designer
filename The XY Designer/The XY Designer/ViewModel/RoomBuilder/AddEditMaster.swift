@@ -81,10 +81,18 @@ class AddEditMaster: ObservableObject {
         
         SCNTransaction.begin()
         SCNTransaction.animationDuration = 0.5  // Set the animation duration to 0.5 seconds
-        getTheMaterialNodeInTheScene(node: node)
-        if let cubeNode = foundNode {
+//        getTheMaterialNodeInTheScene(node: node)
+//        if let cubeNode = node.childNodes.first as? MaterialNode {
+//            cubeNode.scale = scaleWithoutA3dModel(node: cubeNode , x: x, y: y, z: z)
+//            cubeNode.dimenstions = simd_float3(x, y, z)
+//        }
+//        if let cubeNode = foundNode {
+////            applyScale(to: cubeNode, desiredDimenstions: simd_float3(x, y, z))
+//
+//        }
+        if let cubeNode = node.childNodes.first as? MaterialNode{
             cubeNode.dimenstions = simd_float3(x, y, z)
-            applyScale(to: cubeNode, desiredDimenstions: cubeNode.dimenstions)
+            cubeNode.scale = SCNVector3(x, y, z)
         }
         SCNTransaction.commit()
         // Notify SwiftUI that the object has changed
@@ -212,22 +220,32 @@ class AddEditMaster: ObservableObject {
     }
     func applyScale(to node: MaterialNode, desiredDimenstions: simd_float3) {
         if(BuildRoom3DModels().checkIfXZAreSwapped(node: node)){
-            let scale = BuildRoom3DModels().nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
-            if let child3dModel = node.childNodes.first {
-                child3dModel.scale = SCNVector3(scale.x,scale.y,scale.z)
-            }else {
+//            let scale = BuildRoom3DModels().nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
+//            if let child3dModel = node.childNodes.first {
+//                child3dModel.scale = SCNVector3(scale.x,scale.y,scale.z)
+//            }else {
                node.scale = BuildRoom3DModels().nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
-            }
+//            }
             
         }else{
-            let scale = BuildRoom3DModels().nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
-            if let child3dModel = node.childNodes.first {
-                child3dModel.scale = SCNVector3(scale.x,scale.y,scale.z)
-            }else {
+//            let scale = BuildRoom3DModels().nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
+//            if let child3dModel = node.childNodes.first {
+//                child3dModel.scale = SCNVector3(scale.x,scale.y,scale.z)
+//            }else {
                 node.scale = BuildRoom3DModels().nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
-            }
+//            }
 
         }
+    }
+    func scaleWithoutA3dModel(node: MaterialNode, x:Float, y: Float, z: Float) -> SCNVector3{
+        let originalDimensions = node.boundingBox.max - node.boundingBox.min // Original dimensions
+        let newDimensions = SCNVector3(x: x, y: y, z: z) // New dimensions
+
+        let scale = SCNVector3(newDimensions.x / originalDimensions.x,
+                               newDimensions.y / originalDimensions.y,
+                               newDimensions.z / originalDimensions.z)
+
+        return scale
     }
     
 
