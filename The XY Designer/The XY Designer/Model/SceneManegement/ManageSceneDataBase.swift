@@ -23,16 +23,18 @@ class ManageSceneDataBase {
         } else {
             // If there is no current user, use a placeholder document reference
             documentRef = collectionRef.document("no-user")
-        }    }
+        }
+        
+    }
     //Serialization
     // Define your data structure
-    struct JSONFile {
-        let BeingOptimized: Bool
-        let id: String
-        let link: String
-        let time: String
-    }
-    
+//    struct JSONFile {
+//        let BeingOptimized: Bool
+//        let id: String
+//        let link: String
+//        let time: String
+//    }
+//
     func getCurrentTime() -> Timestamp {
         let date = Date()
         return Timestamp(date: date)
@@ -73,8 +75,8 @@ struct JsonFileArrayCell: Identifiable{
         self.link = jsonFileCell["link"] as! String
         let timeInterval = jsonFileCell["time"] as? Timestamp
         self.time = Date(timeIntervalSince1970: TimeInterval(timeInterval?.seconds ?? 0))
-        
     }
+    
 }
 //Deserialization
 struct FireBaseSceneBody: Identifiable {

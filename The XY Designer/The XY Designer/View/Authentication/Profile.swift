@@ -54,25 +54,6 @@ struct Profile: View {
                                         .foregroundColor(.secondary.opacity(0.3))
                                 }
                             }
-
-//                            Button(action: ProfileModel.changePassword ) {
-//                                HStack(spacing: 15){
-//                                    Text("Change Password")
-//                                        .fontWeight(.semibold)
-//                                        .contentTransition(.identity)
-//
-//                                    Image(systemName: "pencil")
-//                                        .font(.title3)
-//                                    //                                .rotationEffect(.init(degrees: 45))
-//                                }
-//                                .foregroundColor(.primary)
-//                                .padding(.horizontal,25)
-//                                .padding(.vertical)
-//                                .background{
-//                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-//                                        .foregroundColor(.secondary.opacity(0.3))
-//                                }
-//                            }
                             Spacer()
                             
                         }
@@ -83,6 +64,10 @@ struct Profile: View {
                 }
                 .alert(ProfileModel.errorMessage, isPresented: $ProfileModel.showError) {
                 }
+                .onTapGesture {
+                    // Resign first responder status to close the keyboard
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 if ProfileModel.showLoading {
                     ProgressView()
                         .tint(.primary)
@@ -90,10 +75,6 @@ struct Profile: View {
                         .scaleEffect(3)
                 }
             }
-//            .onAppear{
-//                ProfileModel.newPassword = ""
-//                ProfileModel.confirmNewPassword = ""
-//            }
             .toolbar {
                 Button("Log Out") {ProfileModel.logOutUser()}
                     .bold()

@@ -15,10 +15,10 @@ class FetchScene: ObservableObject{
     @Published var errorMessage: String = ""
     @Published var showError: Bool = false
    
-    let manageSceneDataBase = ManageSceneDataBase()
+//    let manageSceneDataBase = ManageSceneDataBase()
     func fetchAllScenes(completion: @escaping ([JsonFileArrayCell]?, Error?) -> Void) {
         showLoading = true
-        manageSceneDataBase.documentRef.getDocument { snapshot, error in
+        ManageSceneDataBase().documentRef.getDocument { snapshot, error in
             if let error = error {
                 DispatchQueue.main.async {
                     self.showLoading = false

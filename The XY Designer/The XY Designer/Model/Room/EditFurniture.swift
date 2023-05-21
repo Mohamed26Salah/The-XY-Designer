@@ -33,6 +33,7 @@ class EditFurniture{
         //For The Json
         if let imageLocation = imageName.retrieveImageFileURL() {
             node.texture = imageLocation.toString()
+//            print(node.texture)
             node.color = nil
         }
         

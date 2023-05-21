@@ -109,6 +109,10 @@ struct Login: View {
                 }
                 .alert(loginModel.errorMessage, isPresented: $loginModel.showError) {
                 }
+                .onTapGesture {
+                    // Resign first responder status to close the keyboard
+                    UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                }
                 if loginModel.showLoading {
                     ProgressView()
                         .tint(.primary)

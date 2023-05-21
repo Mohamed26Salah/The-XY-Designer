@@ -29,6 +29,7 @@ struct EditNodeNew: View {
     @State private var selectedColor: Color = .red
     @State private var selectedImage: String?
     @State private var selectedModel: String?
+    @State private var uiImage: UIImage?
     //    @State var data: Data?
     //    @State var selectedItems: [PhotosPickerItem] = []
     init(nodeToBeEdited: MaterialNode, dominantColors: [String:[UIColor]]) {
@@ -94,7 +95,9 @@ struct EditNodeNew: View {
                     }else if(selectedPage == .Textures){
 //                        let node = editFurnitureVM.returnNewFurniture()
                         Section(header: Text("Choose Texture From Your Own Gallery")){
-                            ShowGallery(nodeToBeEdited: node)
+//                            ShowGallery(nodeToBeEdited: node, uiImage: $uiImage)
+                            ShowGallery(nodeToBeEdited: node, uiImageGallery: $uiImage)
+                            
                         }
                         Section(header: Text("Choose Object Texture")){
                             ShowTextures(selectedImage: $selectedImage)
@@ -148,6 +151,9 @@ struct EditNodeNew: View {
                             }
                             if let selectedImage = selectedImage {
                                 editFurniture.applyTexture(to: nodeToBeEdited, imageName: selectedImage)
+                            }
+                            if let imageFromGallery = uiImage {
+                                editFurniture.applyTextureFromGallery(to: nodeToBeEdited, imageName: imageFromGallery)
                             }
                         }
                         presentationMode.wrappedValue.dismiss()

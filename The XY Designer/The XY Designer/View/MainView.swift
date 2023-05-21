@@ -19,13 +19,35 @@ struct MainView: View {
         NavigationStack (path: $router.path) {
             
             TabView(selection: $selectedTab) {
-                Home()
+                Home(isSignedIn: $isSignedIn)
                     .tabItem {
                         Image(systemName: "house")
                         Text("Home")
                     }
                     .bold()
                     .tag(0)
+                    .overlay (
+                        EditButton()
+                            .font(.system(.title2))
+                            .padding()
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(16),
+                        alignment: .topTrailing
+                    )
+                    .overlay(
+                        VStack {
+                            Text("Scenes")
+                                .font(.title)
+                                .foregroundColor(.white)
+                                .padding()
+                            
+                            Spacer()
+                        }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                            .padding(),
+                        alignment: .topLeading
+                    )
                 
                 RoomPlaneApi()
                     .tabItem {
@@ -54,12 +76,12 @@ struct MainView: View {
                     )
                 
             }
-//            .tint(Gradient(colors: [.lightGrayFancy, .lightGrayFancy, .lightGrayFancy]))
+            //            .tint(Gradient(colors: [.lightGrayFancy, .lightGrayFancy, .lightGrayFancy]))
             .navigationBarHidden(true)
         }
-//        .onAppear{
-//           UITabBar.appearance().isHidden = false
-//        }
+        //        .onAppear{
+        //           UITabBar.appearance().isHidden = false
+        //        }
         .fullScreenCover(isPresented: $isSignedIn) {
             Login(userisNotSignedIn: $isSignedIn)
         }

@@ -27,7 +27,7 @@ class AddFurnitureViewModel: AddEditMaster {
         let dimenstions = convertStringToFloat()
         let box = SCNBox(width: CGFloat(dimenstions.x), height: CGFloat(dimenstions.y), length: CGFloat(dimenstions.z), chamferRadius: 0)
         box.firstMaterial?.isDoubleSided = true
-        box.firstMaterial?.diffuse.contents = Color.DarkTheme.Violet.fieldColor.cgColor
+        box.firstMaterial?.diffuse.contents = Color.white
         let stringUUID = UUID().uuidString
         let boxNode = MaterialNode(type: category, id: stringUUID, dimenstions: dimenstions, confidence: .high, subObjectCategory: subObjectCategory)
         boxNode.geometry = box

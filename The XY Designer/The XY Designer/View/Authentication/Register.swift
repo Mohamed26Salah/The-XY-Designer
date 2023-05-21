@@ -87,6 +87,10 @@ struct Register: View {
             }
             .alert(RegisterModel.errorMessage, isPresented: $RegisterModel.showError) {
             }
+            .onTapGesture {
+                // Resign first responder status to close the keyboard
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
             if RegisterModel.showLoading {
                 ProgressView()
                     .tint(.primary)

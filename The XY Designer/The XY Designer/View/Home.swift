@@ -10,23 +10,31 @@ import FirebaseAuth
 struct Home: View {
     @ObservedObject var fetchScenes = FetchScene()
     @State private var scenes: [JsonFileArrayCell] = []
+    @Binding var isSignedIn: Bool
     var jsonToScene = JsonToScene()
     var body: some View {
         ZStack{
             VStack{
-                Text("Scenes")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .padding(.top)
-                List(scenes) { scene in
-                    NavigationLink(destination: View3DRoomNew(link: scene.link)) {
-                        VStack(alignment: .leading) {
-                            Text("Scene ID: \(scene.id)")
-                            Text("Time: \(scene.time)")
-                        }
+                List {
+                    ForEach(scenes) { scene in
+                        Row(link: scene.link, id: scene.id, time: scene.time)
+                            .disabled(scene.BeingOptimized)
                     }
-                    .disabled(scene.BeingOptimized)
+                    .onDelete(perform: { indexSet in
+                        for index in indexSet {
+                            if let userId = Auth.auth().currentUser?.uid {
+                                deletescene().deleteScene(userId: userId, sceneId: scenes[index].id) {_ in
+//                                    print(error as Any)
+                                }
+                                scenes.remove(at: index)
+                            }
+                        }
+                    })
                 }
+                .listStyle(PlainListStyle()) // or InsetGroupedListStyle()
+                .background(Color.clear) // Set the background color to clear
+                .padding(.top,70)
+                
             }
             if fetchScenes.showLoading {
                 ProgressView()
@@ -48,7 +56,23 @@ struct Home: View {
             }
         }
         .alert(fetchScenes.errorMessage, isPresented: $fetchScenes.showError) {}
+        .onChange(of: isSignedIn) { newValue in
+            fetchScenesOne()
+        }
         
+        
+    }
+    func fetchScenesOne() {
+        fetchScenes.fetchAllScenes { scenes, error in
+            if let scenes = scenes {
+                DispatchQueue.main.async {
+                    fetchScenes.showLoading = false
+                }
+                self.scenes = scenes
+            } else if let error = error {
+                print("Error fetching scenes: \(error.localizedDescription)")
+            }
+        }
     }
 }
 
@@ -74,9 +98,9 @@ struct SceneDetailView: View {
 }
 
 
-struct Home_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-    }
-}
+//struct Home_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Home(isSignedIn: true)
+//    }
+//}
 

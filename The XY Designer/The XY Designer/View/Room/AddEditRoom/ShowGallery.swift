@@ -13,6 +13,7 @@ struct ShowGallery: View {
     var editFurniture = EditFurniture()
     @State var data: Data?
     @State var selectedItems: [PhotosPickerItem] = []
+    @Binding var uiImageGallery: UIImage?
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
         HStack{
@@ -45,6 +46,7 @@ struct ShowGallery: View {
                             if let uiImage = UIImage(data: data){
                                 DispatchQueue.main.async {
                                     editFurniture.applyTextureFromGallery(to: nodeToBeEdited, imageName: uiImage)
+                                    uiImageGallery = uiImage
                                 }
 //                                presentationMode.wrappedValue.dismiss()
                                 

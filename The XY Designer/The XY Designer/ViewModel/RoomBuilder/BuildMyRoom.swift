@@ -200,7 +200,7 @@ extension BuildMyRoom {
             selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         case .door:
-            selectedFurnitureCanMove = false
+            selectedFurnitureCanMove = true
             furnitureNode.highlight(with: .red, for: 0.5)
             selectedFurniture = furnitureNode
             selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
@@ -212,7 +212,7 @@ extension BuildMyRoom {
             selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)
             break;
         case .window:
-            selectedFurnitureCanMove = false
+            selectedFurnitureCanMove = true
             furnitureNode.highlight(with: .red, for: 0.5)
             selectedFurniture = furnitureNode
             selectedFurniturePosition = selectedFurniture?.position ?? SCNVector3(x: 0, y: 0, z: 0)

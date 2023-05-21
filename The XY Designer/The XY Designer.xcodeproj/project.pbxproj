@@ -113,6 +113,8 @@
 		ABEE93492A09FF0B0023DFFF /* ShowGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEE93482A09FF0B0023DFFF /* ShowGallery.swift */; };
 		ABFC200229E4D54D003827CF /* ColorKit in Frameworks */ = {isa = PBXBuildFile; productRef = ABFC200129E4D54D003827CF /* ColorKit */; };
 		ABFC200429E4DDFB003827CF /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFC200329E4DDFB003827CF /* UIColor.swift */; };
+		ABFD29DD2A193FB7002FC8E0 /* Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD29DC2A193FB7002FC8E0 /* Row.swift */; };
+		ABFD29DF2A195970002FC8E0 /* deleteScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFD29DE2A195970002FC8E0 /* deleteScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -216,6 +218,8 @@
 		ABEE93452A09F3CC0023DFFF /* ShowDimenstions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDimenstions.swift; sourceTree = "<group>"; };
 		ABEE93482A09FF0B0023DFFF /* ShowGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowGallery.swift; sourceTree = "<group>"; };
 		ABFC200329E4DDFB003827CF /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		ABFD29DC2A193FB7002FC8E0 /* Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Row.swift; sourceTree = "<group>"; };
+		ABFD29DE2A195970002FC8E0 /* deleteScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deleteScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,6 +429,7 @@
 			children = (
 				ABB862EB29F5E09F00C7D241 /* UploadScene.swift */,
 				AB8E166129F738E4003CC472 /* FetchScene.swift */,
+				ABFD29DE2A195970002FC8E0 /* deleteScene.swift */,
 			);
 			path = sceneDatabase;
 			sourceTree = "<group>";
@@ -478,6 +483,7 @@
 				ABD54DDD29C4A1AB000E7506 /* CustomTabBar */,
 				ABD54DE029C4BDD9000E7506 /* Authentication */,
 				AB5FC6E029DF7CAC005FDCA8 /* Room */,
+				ABFD29DC2A193FB7002FC8E0 /* Row.swift */,
 				ABAEBA4329CCF85F00EB88E1 /* Home.swift */,
 				ABD54DCE29C49FE3000E7506 /* MainView.swift */,
 				ABD54DCC29C49FE3000E7506 /* The_XY_DesignerApp.swift */,
@@ -678,6 +684,7 @@
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
 				AB1D53362A03E99D00C1BA8F /* AddFurnitureViewModel.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
+				ABFD29DF2A195970002FC8E0 /* deleteScene.swift in Sources */,
 				ABEE93462A09F3CD0023DFFF /* ShowDimenstions.swift in Sources */,
 				AB5FC6D229DF65C4005FDCA8 /* Themes.swift in Sources */,
 				ABB862EC29F5E09F00C7D241 /* UploadScene.swift in Sources */,
@@ -713,6 +720,7 @@
 				AB9B413129CC861C007C02AA /* Profile.swift in Sources */,
 				AB9B412F29CC84C8007C02AA /* ProfileViewModel.swift in Sources */,
 				AB00AE9829E0ACF60091085D /* view3DRoomTemp.swift in Sources */,
+				ABFD29DD2A193FB7002FC8E0 /* Row.swift in Sources */,
 				AB00AE9429E0A9410091085D /* UserDefaults.swift in Sources */,
 				ABEE93492A09FF0B0023DFFF /* ShowGallery.swift in Sources */,
 				AB3A2CED29C6380D00B2717A /* User.swift in Sources */,
@@ -877,7 +885,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12488-The-XY-Designer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12488.The-XY-Designer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -909,7 +917,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12488-The-XY-Designer";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.salah.12488.The-XY-Designer";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

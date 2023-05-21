@@ -26,6 +26,7 @@ struct AddFurniture: View {
     @State private var selectedColor: Color = .red
     @State private var selectedImage: String?
     @State private var selectedModel: String?
+    @State private var uiImage: UIImage?
     init(mainNode: SCNNode, dominantColors: [String:[UIColor]]) {
         mainN = mainNode
         self.roomDominantColors = dominantColors
@@ -74,7 +75,7 @@ struct AddFurniture: View {
                     }else if(selectedPage == .Textures){
                         //                        let node = editFurnitureVM.returnNewFurniture()
                         Section(header: Text("Choose Texture From Your Own Gallery")){
-                            ShowGallery(nodeToBeEdited: node)
+                            ShowGallery(nodeToBeEdited: node, uiImageGallery: $uiImage)
                         }
                         Section(header: Text("Choose Object Texture")){
                             ShowTextures(selectedImage: $selectedImage)
