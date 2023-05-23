@@ -21,37 +21,44 @@ struct View3DRoomNew: View {
     @State private var showingAddFurniture = false
     @State private var isARPresented = false
     @State private var typeOfMovement = true
+//    @State private var rotationAngel: Float = 0.0
     var moniter = JoystickMonitor()
     private let draggableDiameter: CGFloat = 150
     @Environment(\.presentationMode) var presentationMode
     //    var superController = SuperController(elements: [GCInputRightThumbstick])
     init(link: String) {
-        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(link: link))
+        self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(link: link, sceneRD: sceneRendererDelegate))
     }
     var body: some View {
-        //        let drag = DragGesture()
-        //            .onChanged({ gesture in
-        //                if let camera = sceneRendererDelegate.renderer?.pointOfView {
-        //                    let translation = gesture.translation
-        //                    let translationVector = SCNVector3(translation.width * 0.05,
-        //                                                       0,
-        //                                                       translation.height * 0.05)
-        //                    let dVector = lastCameraOffset - translationVector
-        //
-        //                    let action = SCNAction.move(by: dVector, duration: 0.1)
-        //                    camera.runAction(action)
-        //
-        //                    lastCameraOffset = translationVector
-        //                }
-        //            })
-        //            .onEnded { gesture in
-        //                lastCameraOffset = SCNVector3()
-        //            }
+//                let drag = DragGesture()
+//                    .onChanged({ gesture in
+////                        if let camera = sceneRendererDelegate.renderer?.pointOfView {
+////                            let translation = gesture.translation
+////                            let translationVector = SCNVector3(translation.width * 0.05,
+////                                                               0,
+////                                                               translation.height * 0.05)
+////                            let dVector = lastCameraOffset - translationVector
+////
+////                            let action = SCNAction.move(by: dVector, duration: 0.1)
+////                            camera.runAction(action)
+////
+////                            lastCameraOffset = translationVector
+////                        }
+////                        if let camera = sceneRendererDelegate.renderer?.pointOfView {
+////                            let rotationAngle = camera.eulerAngles.y
+////                            print("rotationAngleOutside \(rotationAngle)")
+////                            rotationAngel = rotationAngle
+////                            // Use rotationAngle to adjust joystick input
+////                        }
+//                    })
+//                    .onEnded { gesture in
+//                        lastCameraOffset = SCNVector3()
+//                    }
         GeometryReader { geometry in
             
             ZStack(alignment: .leading) {
                 SceneView(scene: RoomModel.scene, options: [.allowsCameraControl,.autoenablesDefaultLighting],delegate: sceneRendererDelegate)
-                //                .gesture(drag)
+//                                .gesture(drag)
                     .onTapGesture { location in
                         //                    print(location)
                         pick(atPoint: location)
@@ -178,7 +185,7 @@ struct View3DRoomNew: View {
                     }
                     Spacer()
                     if (RoomModel.selectedFurnitureCanMove){
-                            Controls(typeOfMovement: $typeOfMovement, RoomModel: RoomModel, moniter: moniter, draggableDiameter: draggableDiameter, geometry: geometry)
+                        Controls(typeOfMovement: $typeOfMovement, RoomModel: RoomModel, moniter: moniter, draggableDiameter: draggableDiameter, geometry: geometry)
                     }
                 }
                 .alert(uploadScene.errorMessage, isPresented: $uploadScene.showError) {

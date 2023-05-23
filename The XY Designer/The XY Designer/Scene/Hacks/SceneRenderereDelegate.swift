@@ -19,7 +19,7 @@ class SceneRendererDelegate: NSObject, SCNSceneRendererDelegate {
       self.renderer = renderer
       let type = type(of: renderer)
 
-      print("HAHA GOT 'EM STUPID MACHINE! We got SceneRenderer: \(type)")
+//      print("HAHA GOT 'EM STUPID MACHINE! We got SceneRenderer: \(type)")
     }
 
     onEachFrame?()

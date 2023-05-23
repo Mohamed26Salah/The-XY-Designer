@@ -27,13 +27,16 @@ class BuildMyRoom: ObservableObject {
     var selectedFurniturePosition: SCNVector3?
     var oldFurniturePosition: SCNVector3?
     let contactDelegate = ContactDelegate()
+    let sceneRendererDelegate: SceneRendererDelegate
     var cameraNode = SCNNode()
     @Published var angelRotation: String = "45"
     @Published var selectedFurnitureCanMove: Bool = false
     @Published var cameraRotation: CGFloat?
     @Published var userChoice: UserChoices = .Movement
-    init(link: String) {
+    @Published var rotationAngle: Float = 0.0
+    init(link: String, sceneRD: SceneRendererDelegate) {
         node = SCNNode()
+        sceneRendererDelegate = sceneRD
         self.link = link
         node.position = SCNVector3(0,0,0)
         JsonToScene().getJsonFile(url: link) { [weak self] returnedRoom, error in
@@ -246,16 +249,16 @@ extension BuildMyRoom {
         }
     }
     func handleJoyStick(xy: CGPoint) {
-        if xy.x == xy.y, xy.x == 0 {
+        let XY = adjustedJoystickInput(joystickInput: xy, rotationAngle: CGFloat(rotationAngle))
+        if XY.x == XY.y, XY.x == 0 {
             if let selectedFurniture = selectedFurniture {
                 selectedFurniture.position = selectedFurniturePosition ?? SCNVector3(x: 0, y: 0, z: 0)
                 return
             }
-            
         }else {
-            if (xy.x != 0){
+            if (XY.x != 0){
                 if let selectedFurniture = selectedFurniture {
-                    let movementPosition = SCNVector3(xy.x, 0, xy.y) * BuildMyRoomConstants.furnitureSpeed
+                    let movementPosition = SCNVector3(XY.x, 0, XY.y) * BuildMyRoomConstants.furnitureSpeed
                     if selectedFurnitureCanMove {
                         selectedFurniture.position += movementPosition
                         selectedFurniturePosition = selectedFurniture.position
@@ -263,6 +266,11 @@ extension BuildMyRoom {
                 }
             }
         }
+    }
+    func adjustedJoystickInput(joystickInput: CGPoint, rotationAngle: CGFloat) -> CGPoint {
+        let x = joystickInput.x * cos(rotationAngle) - joystickInput.y * sin(rotationAngle)
+        let y = joystickInput.x * sin(rotationAngle) + joystickInput.y * cos(rotationAngle)
+        return CGPoint(x: x, y: y)
     }
     func leftRotation() {
         var rotation = 0.0
@@ -367,7 +375,15 @@ private extension BuildMyRoom {
 //MARK: - Update On Each Frame
 
 extension BuildMyRoom {
-    func onEachFrame(){
+    func onEachFrame() {
+        if let camera = sceneRendererDelegate.renderer?.pointOfView {
+            let transform = camera.simdTransform
+            let rotationAngle = atan2(transform[1][0], transform[0][0])
+            DispatchQueue.main.async {
+                self.rotationAngle = rotationAngle
+            }
+
+        }
     }
 }
 
