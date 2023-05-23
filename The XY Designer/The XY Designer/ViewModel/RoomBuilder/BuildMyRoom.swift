@@ -15,7 +15,7 @@ import SwiftUIJoystick
 
 struct BuildMyRoomConstants{
     static let cameraHeight: Float = 15
-    static let furnitureSpeed: Float = 0.0005
+    static let furnitureSpeed: Float = 0.0003
     
 }
 class BuildMyRoom: ObservableObject {
@@ -29,6 +29,7 @@ class BuildMyRoom: ObservableObject {
     let contactDelegate = ContactDelegate()
     let sceneRendererDelegate: SceneRendererDelegate
     var cameraNode = SCNNode()
+    let buildMyRoomAssistant = BuildMyRoomAssistant()
     @Published var angelRotation: String = "45"
     @Published var selectedFurnitureCanMove: Bool = false
     @Published var cameraRotation: CGFloat?
@@ -143,7 +144,7 @@ extension BuildMyRoom {
 }
 private extension BuildMyRoom {
     func setupScene() {
-        addSceneCreatedModels(addTO: node)
+//        addSceneCreatedModels(addTO: node)
         addSurfaceModels(addTO: node)
         addObjectModels(addTO: node)
         scene.rootNode.addChildNode(node)
@@ -154,34 +155,40 @@ private extension BuildMyRoom {
         prepareCamera()
         //        spotLight()
     }
-    func addSceneCreatedModels(addTO node : SCNNode){
+    func addSceneCreatedModels(addTO node : SCNNode, wall: MaterialNode){
         if let room = room {
             for sceneCreatedModel in room.sceneCreatedModel(){
                 if (sceneCreatedModel.type == .platForm) {
-                    BuildMyRoomAssistant().addPlatform(node: node, platFormModel: sceneCreatedModel)
+                    buildMyRoomAssistant.addPlatform(node: node, platFormModel: sceneCreatedModel, wall: wall)
                 }
             }
         }
     }
     func addSurfaceModels(addTO node : SCNNode){
+        var walls = [MaterialNode]()
         if let room = room {
             for surfaceModel in room.surfacesModel() {
                 if (surfaceModel.type == .wall){
-                    BuildMyRoomAssistant().addWalls(node: node, wallModel: surfaceModel)
+                  let wall = buildMyRoomAssistant.addWalls(node: node, wallModel: surfaceModel)
+                    walls.append(wall)
                 } else if(surfaceModel.type == .window){
-                    BuildMyRoomAssistant().addWindows(node: node, windowModel: surfaceModel)
+                    buildMyRoomAssistant.addWindows(node: node, windowModel: surfaceModel)
                 } else if(surfaceModel.type == .door){
-                    BuildMyRoomAssistant().addDoors(node: node, doorModle: surfaceModel)
+                    buildMyRoomAssistant.addDoors(node: node, doorModle: surfaceModel)
                 } else if(surfaceModel.type == .opening) {
-                    BuildMyRoomAssistant().addOpenings(node: node, openingModle: surfaceModel)
+                    buildMyRoomAssistant.addOpenings(node: node, openingModle: surfaceModel)
                 }
             }
+            if let wall = walls.first {
+                addSceneCreatedModels(addTO: node, wall: wall)
+            }
+            buildMyRoomAssistant.addFloor(node: node, walls: walls)
         }
     }
     func addObjectModels(addTO node : SCNNode){
         if let room = room {
             for objectModel in room.objectsModel() {
-                BuildMyRoomAssistant().addObjects(node: node, objectModel: objectModel)
+                buildMyRoomAssistant.addObjects(node: node, objectModel: objectModel)
             }
         }
     }
@@ -378,11 +385,11 @@ extension BuildMyRoom {
     func onEachFrame() {
         if let camera = sceneRendererDelegate.renderer?.pointOfView {
             let transform = camera.simdTransform
+            // Calculate the rotation angle around the vertical axis
             let rotationAngle = atan2(transform[1][0], transform[0][0])
             DispatchQueue.main.async {
                 self.rotationAngle = rotationAngle
             }
-
         }
     }
 }

@@ -13,20 +13,22 @@ import GameController
 import ColorKit
 
 struct BuildMyRoomAssistant {
-    func addPlatform(node: SCNNode, platFormModel: MaterialNode){
+    func addPlatform(node: SCNNode, platFormModel: MaterialNode, wall: MaterialNode){
         let planeGeometry = SCNPlane(
-            width: 20,
-            height: 20)
+            width: 50,
+            height: 50)
         planeGeometry.firstMaterial?.isDoubleSided = true
-        planeGeometry.firstMaterial?.diffuse.contents = Color.white.opacity(0.4)
+        planeGeometry.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.4)
         planeGeometry.cornerRadius = 5
         platFormModel.geometry = planeGeometry
         platFormModel.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
+        let wallHeight = wall.dimenstions.y
         platFormModel.position = SCNVector3(node.position.x, -2, node.position.z)
         platFormModel.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.addChildNode(platFormModel)
     }
-    func addWalls(node: SCNNode, wallModel: MaterialNode){
+    
+    func addWalls(node: SCNNode, wallModel: MaterialNode) -> MaterialNode{
         let box = SCNBox(width: CGFloat(wallModel.dimenstions.x), height: CGFloat(wallModel.dimenstions.y), length: CGFloat(wallModel.dimenstions.z), chamferRadius: 0)
         box.firstMaterial?.isDoubleSided = true
         if let color = wallModel.color {
@@ -43,7 +45,12 @@ struct BuildMyRoomAssistant {
             addTextures(node: wallModel)
         }
         node.addChildNode(wallModel)
+        return wallModel
     }
+    func addFloor(node: SCNNode, walls: [MaterialNode], color: UIColor = .white, cornerRadius: CGFloat = 0.0){
+      
+    }
+
     func addWindows(node: SCNNode, windowModel: MaterialNode){
         let box = SCNBox(width: CGFloat(windowModel.dimenstions.x), height: CGFloat(windowModel.dimenstions.y), length: CGFloat(windowModel.dimenstions.z)+0.01, chamferRadius: 0)
         box.firstMaterial?.isDoubleSided = true
@@ -156,7 +163,7 @@ struct BuildMyRoomAssistant {
         let stringUUID = newFurniture.UUID
         let boxNode = MaterialNode(type: newFurniture.type, id: stringUUID, dimenstions: newFurniture.dimenstions, confidence: newFurniture.confidence, subObjectCategory: newFurniture.subObjectCategory)
         boxNode.geometry = box
-//        boxNode.simdTransform = object.transform
+        //        boxNode.simdTransform = object.transform
         boxNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: nil)
         boxNode.physicsBody?.mass = 0
         boxNode.physicsBody?.restitution = 1
@@ -166,12 +173,12 @@ struct BuildMyRoomAssistant {
         if newFurniture.texture != nil {
             boxNode.texture = newFurniture.texture
             addTextures(node: boxNode)
-//            clickedFeel(materialNode: boxNode)
+            //            clickedFeel(materialNode: boxNode)
         }
         if newFurniture.a3dModel != nil{
             boxNode.a3dModel = newFurniture.a3dModel
             set3dModel(node: boxNode)
-//            clickedFeel(materialNode: boxNode)
+            //            clickedFeel(materialNode: boxNode)
         }
         DispatchQueue.main.async {
             boxNode.highlight(with: .red, for: 5)
@@ -186,5 +193,5 @@ struct BuildMyRoomAssistant {
         materialNode.runAction(sequenceAction)
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
     }
-
+    
 }
