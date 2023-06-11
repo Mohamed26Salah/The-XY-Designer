@@ -4,26 +4,62 @@
 //
 //  Created by Mohamed Salah on 15/04/2023.
 //
+//
+//  ShowTextures.swift
+//  The XY Designer
+//
+//  Created by Mohamed Salah on 15/04/2023.
+//
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ShowTextures: View {
     let columns = [
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    let images = ["1174", "black-brick-wall-textured-background", "rough-white-cement-plastered-wall-texture", "grunge-wall-texture"]
+    @State private var images: [String] = []
+    let textures = Textures()
+    private static let topId = "topIdHere"
     @Binding var selectedImage: String?
+    
     var body: some View {
-        VStack{
+        VStack {
+            ScrollViewReader { reader in
             ScrollView {
-                LazyVGrid(columns: columns) {
-                    ForEach(images, id: \.self) { image in
-                        ClickableImage2(imageName: image, isSelected: image == selectedImage) {
-                            selectedImage = image
+                EmptyView().id(Self.topId)
+                    LazyVGrid(columns: columns, spacing: 10) {
+                        ForEach(images, id: \.self) { imageName in
+                           Image(imageName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipped()
+                                .shadow(radius: 20)
+                                .border(selectedImage == imageName ? Color.yellow : Color.clear, width: 10)
+                                .onTapGesture {
+                                    selectedImage = imageName
+                                    withAnimation {  // add animation for scroll to top
+                                        reader.scrollTo(Self.topId, anchor: .top) // scroll
+                                    }
+                                }
                         }
                     }
                 }
+            .id(Self.topId)
+            }
+        }
+        .onAppear(perform: loadModels)
+
+    }
+    private func loadModels() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            var loadedImages: [String] = []
+            for image in textures.images {
+                loadedImages.append(image)
+            }
+            DispatchQueue.main.async {
+                self.images = loadedImages
             }
         }
     }
@@ -32,32 +68,20 @@ struct ShowTextures: View {
 
 
 
-struct ClickableImage2: View {
-    let imageName: String
-    let isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        Image(imageName)
-            .resizable()
-            .scaledToFit()
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(isSelected ? Color.primary : Color.clear, lineWidth: 3)
-            )
-            .onTapGesture(perform: action)
-    }
-}
-
-
-
-
-
-
-
-
-//struct ShowTextures_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ShowTextures()
+//struct ClickableImage2: View {
+//    let imageURL: URL
+//    let isSelected: Bool
+//    let action: () -> Void
+//
+//    var body: some View {
+//        Image(imageName)
+//            .resizable()
+//            .scaledToFit()
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 10)
+//                    .stroke(isSelected ? Color.primary : Color.clear, lineWidth: 3)
+//            )
+//            .onTapGesture(perform: action)
 //    }
 //}
+

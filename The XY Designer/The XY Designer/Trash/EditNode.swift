@@ -67,7 +67,7 @@ struct EditNode: View {
                     }
                 }else if(selectedPage == .Textures){
                     Section(header: Text("Choose Object Texture")){
-                        ShowTextures(selectedImage: $selectedImage)
+//                        ShowTextures(selectedImage: $selectedImage)
                     }
                     
                 }else{

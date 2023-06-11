@@ -26,6 +26,25 @@ class EditFurniture{
         node.texture = imageName
         node.color = nil
     }
+    func applyTextureFromURL(to node: MaterialNode, imageURL: URL) {
+        let task = URLSession.shared.dataTask(with: imageURL) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "Unknown error")
+                return
+            }
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                let material = SCNMaterial()
+                material.diffuse.contents = image
+                node.geometry?.firstMaterial = material
+                //For The Json
+                node.texture = imageURL.absoluteString
+                node.color = nil
+            }
+        }
+        task.resume()
+    }
+
     func applyTextureFromGallery(to node: MaterialNode, imageName: UIImage) {
         let material = SCNMaterial()
         material.diffuse.contents = imageName

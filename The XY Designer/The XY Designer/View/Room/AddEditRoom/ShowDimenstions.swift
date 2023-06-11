@@ -14,12 +14,27 @@ struct ShowDimenstions: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.colorScheme) var colorScheme
     var disabled: Bool
-
+    var nodeToBeDeleted: MaterialNode!
+    init(furniture: AddEditMaster, disabled: Bool, node: MaterialNode? = nil) {
+        self.furniture = furniture
+        self.disabled = disabled
+        if node != nil {
+            self.nodeToBeDeleted = node
+        }
+    }
     var body: some View {
         ScrollView(.vertical, showsIndicators: false){
             VStack {
                 if let newFurniture = furniture as? AddFurnitureViewModel{
                     SelectCategory(newFurniture: newFurniture, selectedCategory: $selectedCategory)
+                }
+                if (disabled) {
+                    DeleteButton(action: {
+                        if let node = nodeToBeDeleted {
+                            node.removeFromParentNode()
+                        }
+                        presentationMode.wrappedValue.dismiss()
+                    })
                 }
                 EditFurnitureScale(xDimenstion: $furniture.xDimension, yDimenstion: $furniture.yDimension, zDimenstion: $furniture.zDimension)
                     .opacity(disabled ? 0.5 : 1.0)

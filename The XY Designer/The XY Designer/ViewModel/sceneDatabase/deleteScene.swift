@@ -13,6 +13,8 @@ import FirebaseStorage
 class deletescene {
     func deleteScene(userId: String, sceneId: String, completion: @escaping (Error?) -> Void) {
         let userDocumentRef = ManageSceneDataBase().documentRef
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
         
         userDocumentRef.getDocument { snapshot, error in
             if let error = error {
@@ -32,7 +34,19 @@ class deletescene {
                             print("Error updating user's list of scenes: \(error.localizedDescription)")
                             completion(error)
                         } else {
-                            print("User's list of scenes successfully updated")
+//                            print("User's list of scenes successfully updated")
+                            // Delete JSON file from Firebase Storage
+                            let jsonFileRef = storageRef.child("Scenes/file\(sceneId).json")
+                            jsonFileRef.delete { error in
+                                if let error = error {
+                                    print("Error deleting JSON file: \(error.localizedDescription)")
+                                    completion(error)
+                                } else {
+//                                    print("User's list of scenes successfully updated and JSON file deleted")
+                                    completion(nil)
+                                }
+                            }
+                                               
                             completion(nil)
                         }
                     }

@@ -53,6 +53,9 @@ struct SaveScene: View {
                 .resizable()
                 .scaledToFit()
         }
+        .onAppear{
+            uploadScene.sceneName = ""
+        }
     }
 }
     //struct SaveScene_Previews: PreviewProvider {

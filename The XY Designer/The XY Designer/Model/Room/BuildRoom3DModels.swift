@@ -67,8 +67,14 @@ class BuildRoom3DModels {
     func checkIfXZAreSwapped(node:SCNNode)->Bool{
         if node.boundingBox.max.x < node.boundingBox.max.z {
             // The X and Z dimensions are swapped
+            print("Swapped")
+            print(node.boundingBox.max.x)
+            print(node.boundingBox.max.z)
             return true
         }else{
+            print("Not Swapped")
+            print(node.boundingBox.max.x)
+            print(node.boundingBox.max.z)
             return false
         }
     }
@@ -86,7 +92,7 @@ class BuildRoom3DModels {
         let scaledBoundingBox = (min: scaledMin, max: scaledMax)
         node.boundingBox = scaledBoundingBox
     }
-    func import3DModel(name:String,extenstion: String, desiredDimenstions: simd_float3, transform: simd_float4x4, farFromWall: Bool)->SCNNode{
+    func import3DModel(name:String,extenstion: String, desiredDimenstions: simd_float3, transform: simd_float4x4, farFromWall: Bool, matNode: MaterialNode)->SCNNode{
         let modelScene = Model3dURL(name: name, extenstion: extenstion)
         let position = extractPositionFromTransform(transform: transform,farFromWall: farFromWall)
         let yAngle = extractRotationFromTransform(transform: transform)
@@ -98,7 +104,12 @@ class BuildRoom3DModels {
             node.addChildNode(childNode)
         }
         node.rotation = SCNVector4(0, 0, 0, 1)
-        if(checkIfXZAreSwapped(node: node)){
+//        if(checkIfXZAreSwapped(node: node)){
+//            node.scale = nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
+//        }else{
+//            node.scale = nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
+//        }
+        if(matNode.subObjectCategory == .bed){
             node.scale = nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
         }else{
             node.scale = nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
@@ -111,11 +122,11 @@ class BuildRoom3DModels {
     }
 
     func add3DModel(materialNode: MaterialNode, desiredDimenstions: simd_float3, transform: simd_float4x4, modelName: String, extenstion: String){
-        let node = import3DModel(name: modelName, extenstion: extenstion, desiredDimenstions: desiredDimenstions, transform: transform, farFromWall: false)
+        let node = import3DModel(name: modelName, extenstion: extenstion, desiredDimenstions: desiredDimenstions, transform: transform, farFromWall: false, matNode: materialNode)
         materialNode.addChildNode(node)
     }
     func add3DModelReturn(materialNode: MaterialNode, desiredDimenstions: simd_float3, transform: simd_float4x4, modelName: String, extenstion: String)->SCNNode{
-        let node = import3DModel(name: modelName, extenstion: extenstion, desiredDimenstions: desiredDimenstions, transform: transform, farFromWall: false)
+        let node = import3DModel(name: modelName, extenstion: extenstion, desiredDimenstions: desiredDimenstions, transform: transform, farFromWall: false, matNode: materialNode)
         return node
     }
    

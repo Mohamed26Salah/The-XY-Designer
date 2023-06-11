@@ -30,6 +30,7 @@ struct EditNodeNew: View {
     @State private var selectedImage: String?
     @State private var selectedModel: String?
     @State private var uiImage: UIImage?
+    let errorURL: URL = URL(string: "https://images.unsplash.com/photo-1623018035782-b269248df916?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80")!
     //    @State var data: Data?
     //    @State var selectedItems: [PhotosPickerItem] = []
     init(nodeToBeEdited: MaterialNode, dominantColors: [String:[UIColor]]) {
@@ -53,6 +54,7 @@ struct EditNodeNew: View {
                 .pickerStyle(.segmented)
                 .padding(.top, -10)
                 .padding(.horizontal, 15)
+               
                 Form{
                     sceneOfFurniture(furniture: editFurnitureVM)
                         .frame(height: geometry.size.height / 3)
@@ -73,7 +75,7 @@ struct EditNodeNew: View {
 //                                }else {
 //                                    ShowDimenstions(furniture: editFurnitureVM, disabled: true)
 //                                }
-                                ShowDimenstions(furniture: editFurnitureVM, disabled: true)
+                            ShowDimenstions(furniture: editFurnitureVM, disabled: true, node: nodeToBeEdited)
 
                             }
 //                        }
@@ -103,6 +105,7 @@ struct EditNodeNew: View {
                             ShowTextures(selectedImage: $selectedImage)
                                 .onChange(of: selectedImage) { newTexture in
                                     editFurniture.applyTexture(to: node, imageName: newTexture ?? "XY_V02")
+//                                    editFurniture.applyTextureFromURL(to: node, imageURL: selectedImage ?? errorURL)
                                 }
                         }
                     }else{
@@ -151,6 +154,7 @@ struct EditNodeNew: View {
                             }
                             if let selectedImage = selectedImage {
                                 editFurniture.applyTexture(to: nodeToBeEdited, imageName: selectedImage)
+//                                editFurniture.applyTextureFromURL(to: nodeToBeEdited, imageURL: selectedImage)
                             }
                             if let imageFromGallery = uiImage {
                                 editFurniture.applyTextureFromGallery(to: nodeToBeEdited, imageName: imageFromGallery)
@@ -206,6 +210,20 @@ struct EditNodeNew_Previews: PreviewProvider {
         EditNodeNew(nodeToBeEdited: nodeToBeEdited, dominantColors: roomDominantColors)
     }
 }
+struct DeleteButton: View {
+    var action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "trash")
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.red)
+                .clipShape(Circle())
+        }
+    }
+}
+
 //                HStack {
 //                    Spacer()
 //                    DismissButton {

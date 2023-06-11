@@ -45,7 +45,8 @@ class EditFurnitureViewModel: AddEditMaster {
         boxNode.geometry = box
         boxNode.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if boxNode.texture != nil {
-            BuildMyRoomAssistant().addTextures(node: boxNode)
+//            BuildMyRoomAssistant().addTextures(node: boxNode)
+            BuildMyRoomAssistant().addTexturesFromURL(node: boxNode)
         }
         if boxNode.a3dModel != nil{
             BuildMyRoomAssistant().set3dModel(node: boxNode)

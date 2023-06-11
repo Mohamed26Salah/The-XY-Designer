@@ -13,12 +13,13 @@ import GameController
 import ColorKit
 
 struct BuildMyRoomAssistant {
+    let errorURL: URL = URL(string: "https://images.unsplash.com/photo-1623018035782-b269248df916?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80")!
     func addPlatform(node: SCNNode, platFormModel: MaterialNode, wall: MaterialNode){
         let planeGeometry = SCNPlane(
             width: 50,
             height: 50)
         planeGeometry.firstMaterial?.isDoubleSided = true
-        planeGeometry.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.4)
+        planeGeometry.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.8)
         planeGeometry.cornerRadius = 5
         platFormModel.geometry = planeGeometry
         platFormModel.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
@@ -42,17 +43,18 @@ struct BuildMyRoomAssistant {
         wallModel.physicsBody?.restitution = 0
         wallModel.physicsBody?.categoryBitMask = EntityType.wall.rawValue
         if wallModel.texture != nil {
-            addTextures(node: wallModel)
+//            addTextures(node: wallModel)
+            addTexturesFromURL(node: wallModel)
         }
         node.addChildNode(wallModel)
         return wallModel
     }
     func addFloor(node: SCNNode, walls: [MaterialNode], color: UIColor = .white, cornerRadius: CGFloat = 0.0){
-      
+        
     }
-
+    
     func addWindows(node: SCNNode, windowModel: MaterialNode){
-        let box = SCNBox(width: CGFloat(windowModel.dimenstions.x), height: CGFloat(windowModel.dimenstions.y), length: CGFloat(windowModel.dimenstions.z)+0.01, chamferRadius: 0)
+        let box = SCNBox(width: CGFloat(windowModel.dimenstions.x), height: CGFloat(windowModel.dimenstions.y), length: CGFloat(windowModel.dimenstions.z)+0.03, chamferRadius: 0)
         box.firstMaterial?.isDoubleSided = true
         if let color = windowModel.color {
             box.firstMaterial?.diffuse.contents = color
@@ -62,7 +64,8 @@ struct BuildMyRoomAssistant {
         windowModel.geometry = box
         windowModel.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if windowModel.texture != nil {
-            addTextures(node: windowModel)
+//            addTextures(node: windowModel)
+            addTexturesFromURL(node: windowModel)
         }
         if windowModel.a3dModel != nil{
             set3dModel(node: windowModel)
@@ -70,7 +73,7 @@ struct BuildMyRoomAssistant {
         node.addChildNode(windowModel)
     }
     func addDoors(node: SCNNode, doorModle: MaterialNode){
-        let box = SCNBox(width: CGFloat(doorModle.dimenstions.x), height: CGFloat(doorModle.dimenstions.y), length: CGFloat(doorModle.dimenstions.z)+0.01, chamferRadius: 0)
+        let box = SCNBox(width: CGFloat(doorModle.dimenstions.x), height: CGFloat(doorModle.dimenstions.y), length: CGFloat(doorModle.dimenstions.z)+0.03, chamferRadius: 0)
         box.firstMaterial?.isDoubleSided = true
         if let color = doorModle.color {
             box.firstMaterial?.diffuse.contents = color
@@ -80,7 +83,8 @@ struct BuildMyRoomAssistant {
         doorModle.geometry = box
         doorModle.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if doorModle.texture != nil {
-            addTextures(node: doorModle)
+//            addTextures(node: doorModle)
+            addTexturesFromURL(node: doorModle)
         }
         if doorModle.a3dModel != nil{
             set3dModel(node: doorModle)
@@ -98,7 +102,8 @@ struct BuildMyRoomAssistant {
         openingModle.geometry = box
         openingModle.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if openingModle.texture != nil {
-            addTextures(node: openingModle)
+//            addTextures(node: openingModle)
+            addTexturesFromURL(node: openingModle)
         }
         node.addChildNode(openingModle)
     }
@@ -118,7 +123,8 @@ struct BuildMyRoomAssistant {
         objectModel.physicsBody?.collisionBitMask = EntityType.wall.rawValue
         objectModel.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
         if objectModel.texture != nil {
-            addTextures(node: objectModel)
+//            addTextures(node: objectModel)
+            addTexturesFromURL(node: objectModel)
         }
         if objectModel.a3dModel != nil{
             set3dModel(node: objectModel)
@@ -126,14 +132,29 @@ struct BuildMyRoomAssistant {
         
         node.addChildNode(objectModel)
     }
-    func addTextures(node: MaterialNode){
-        let material = SCNMaterial()
-        if let image = UIImage(named: node.texture){
-            material.diffuse.contents = image
-        }else{
-            material.diffuse.contents = node.texture
+//    func addTextures(node: MaterialNode){
+//        let material = SCNMaterial()
+//        if let image = UIImage(named: node.texture){
+//            material.diffuse.contents = image
+//        }else{
+//            material.diffuse.contents = node.texture
+//        }
+//        node.geometry?.materials = [material]
+//    }
+    func addTexturesFromURL(node: MaterialNode){
+        let task = URLSession.shared.dataTask(with: URL(string: node.texture ) ?? errorURL) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "Unknown error")
+                return
+            }
+            let image = UIImage(data: data)
+            DispatchQueue.main.async {
+                let material = SCNMaterial()
+                material.diffuse.contents = image
+                node.geometry?.firstMaterial = material
+            }
         }
-        node.geometry?.materials = [material]
+        task.resume()
     }
     func set3dModel(node: MaterialNode){
         var getOldPosition = SCNVector3(0,0,0)
@@ -172,7 +193,8 @@ struct BuildMyRoomAssistant {
         boxNode.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
         if newFurniture.texture != nil {
             boxNode.texture = newFurniture.texture
-            addTextures(node: boxNode)
+//            addTextures(node: boxNode)
+            addTexturesFromURL(node: boxNode)
             //            clickedFeel(materialNode: boxNode)
         }
         if newFurniture.a3dModel != nil{
