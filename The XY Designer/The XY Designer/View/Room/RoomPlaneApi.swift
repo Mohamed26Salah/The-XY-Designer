@@ -52,27 +52,28 @@ struct ScanningView: View {
                         captureController.startSession()
                     }
                 VStack{
-                    //                if let room = captureController.finalResult{
-                    Spacer()
-                    if captureController.roomIsReady{
-                        HStack{
-                            Button {
-                                showingCredits.toggle()
-                            } label: {
-                                Text("Save")
-                                    .font(.title2)
-                                    .padding(.horizontal, 2)
+                    if let room = captureController.finalResult{
+                        Spacer()
+                        if captureController.roomIsReady{
+                            HStack{
+                                Button {
+                                    showingCredits.toggle()
+                                } label: {
+                                    Text("Save")
+                                        .font(.title2)
+                                        .padding(.horizontal, 2)
+                                }
+                                .buttonStyle(.borderedProminent).cornerRadius(40).opacity(1)
+                                .padding()
+                                Button(action: {
+                                    captureController.export()
+                                    //                                dismiss()
+                                }, label: {
+                                    Text("Share").font(.title2)
+                                }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
+                                    ActivityViewControllerRep(items: [captureController.exportUrl!])
+                                })
                             }
-                            .buttonStyle(.borderedProminent).cornerRadius(40).opacity(1)
-                            .padding()
-                            Button(action: {
-                                captureController.export()
-//                                dismiss()
-                            }, label: {
-                                Text("Share").font(.title2)
-                            }).buttonStyle(.borderedProminent).cornerRadius(40).opacity(captureController.showExportButton ? 1 : 0).padding().sheet(isPresented: $captureController.showShareSheet, content:{
-                                ActivityViewControllerRep(items: [captureController.exportUrl!])
-                            })
                         }
                     }
                 }
@@ -92,6 +93,9 @@ struct ScanningView: View {
             }
             .sheet(isPresented: $showingCredits) {
                 SaveScene(uploadScene: uploadScene, captureController: captureController)
+            }
+            .onAppear{
+                captureController.finalResult = nil
             }
     }
                
