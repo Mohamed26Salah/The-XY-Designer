@@ -184,7 +184,7 @@ class AddEditMaster: ObservableObject {
         if (category == "doubleBed"){
             return "bed.double.fill"
         }else if (category == "singleBed"){
-            return "single-bed"
+            return "single-bed-deep"
         }else if (category == "stairs"){
             return "\(category)"
         }else if (category == "storage"){

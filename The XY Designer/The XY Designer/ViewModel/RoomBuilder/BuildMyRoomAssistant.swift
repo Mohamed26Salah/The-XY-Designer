@@ -24,7 +24,7 @@ struct BuildMyRoomAssistant {
         platFormModel.geometry = planeGeometry
         platFormModel.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)
         let wallHeight = wall.dimenstions.y
-        platFormModel.position = SCNVector3(node.position.x, -2, node.position.z)
+        platFormModel.position = SCNVector3(node.position.x, -wallHeight/2, node.position.z)
         platFormModel.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         node.addChildNode(platFormModel)
     }
