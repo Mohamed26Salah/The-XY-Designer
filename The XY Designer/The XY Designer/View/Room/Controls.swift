@@ -15,7 +15,7 @@ struct Controls: View {
     let draggableDiameter: CGFloat
     let geometry: GeometryProxy
     var body: some View {
-        VStack (alignment: .leading,spacing: 0){
+        VStack (spacing: 0){
             Menu("MoveType") {
                 Button("Up & Down", action: {
                     typeOfMovement = false
@@ -29,12 +29,15 @@ struct Controls: View {
             .padding(.horizontal,24)
             .padding(.vertical)
             .background{
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .foregroundColor(.secondary.opacity(0.3))
+                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                    .foregroundColor(.secondary.opacity(0.6))
+                    .frame(width: 60, height: 45)
+                BlurView(style: .systemThinMaterialDark)
+                    .cornerRadius(15)
             }
             .padding()
             HStack{
-                VStack(alignment: .center){
+                VStack{
                     if (typeOfMovement){
                         CustomTextFieldCenter(customKeyboardChoice: .num, hint: "Degree", text: $RoomModel.angelRotation)
                             .background(Color.black)
@@ -97,6 +100,8 @@ struct Controls: View {
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
+                            BlurView(style: .systemThinMaterialDark)
+                                .cornerRadius(15)
                         }
                         Button {
                             withAnimation {
@@ -112,6 +117,8 @@ struct Controls: View {
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
+                            BlurView(style: .systemThinMaterialDark)
+                                .cornerRadius(15)
                         }
                     }
                 }

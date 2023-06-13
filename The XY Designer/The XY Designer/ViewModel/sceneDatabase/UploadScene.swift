@@ -10,11 +10,12 @@ class UploadScene: ObservableObject {
     @Published var showError: Bool = false
     @Published var sceneName: String = ""
     let manageSceneDataBase = ManageSceneDataBase()
-    func uploadFile(scene: SCNScene, getSceneID: String = "", dominantColors: [String: [String]], withOptimization: Bool) {
+    func uploadFile(scene: SCNScene, getSceneID: String = "" , dominantColors : [String : [String]], withOptimization: Bool, checkName: Bool) {
+        
+        // Save the JSON data to a file in the app's documents directory
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent("scene.json")
-
-        if (getSceneID != "") {
+        if (getSceneID != ""){
             sceneName = getSceneID
         } else {
             if !Validator.isValidUsername(for: sceneName) {
@@ -26,7 +27,8 @@ class UploadScene: ObservableObject {
                 return
             }
             sceneName = Auth.auth().currentUser!.uid + sceneName.trimmingCharacters(in: .whitespacesAndNewlines)
-            
+        }
+        if checkName {
             sceneNameExists(sceneName: sceneName) { [self] exist in
                 guard !exist else {
                     DispatchQueue.main.async {
@@ -44,6 +46,14 @@ class UploadScene: ObservableObject {
                 } else {
                     print("Error reading data from file at URL: \(fileURL)")
                 }
+            }
+            
+        }else {
+            try! SceneToJson().exportJson(to: fileURL, scene: scene, specialID: sceneName, dominantColors: dominantColors)
+            if let fileData = try? Data(contentsOf: fileURL) {
+                uploadJSONAndAppendToArray(fileData: fileData, id: sceneName, withOptimization: withOptimization)
+            } else {
+                print("Error reading data from file at URL: \(fileURL)")
             }
         }
     }
@@ -165,24 +175,8 @@ class UploadScene: ObservableObject {
             }
         }
     }
-    //Made By Chat Gpt
-//    func checkSceneNameExists(userId: String, sceneName: String, completion: @escaping (Bool, Error?) -> Void) {
-//        let userDocumentRef = ManageSceneDataBase().documentRef
-//        
-//        userDocumentRef.getDocument { snapshot, error in
-//            if let error = error {
-//                print("Error fetching user document: \(error.localizedDescription)")
-//                completion(false, error)
-//            } else if let snapshot = snapshot, let data = snapshot.data(), let jsonFiles = data["jsonFiles"] as? [[String: Any]] {
-//                let nameExists = jsonFiles.contains { ($0["name"] as? String) == sceneName }
-//                completion(nameExists, nil)
-//            } else {
-//                print("Error fetching user document")
-//                completion(false, nil)
-//            }
-//        }
-//    }
-
-
+    
+    
+    
 }
 

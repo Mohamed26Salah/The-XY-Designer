@@ -30,30 +30,6 @@ struct View3DRoomNew: View {
         self._RoomModel = ObservedObject(wrappedValue: BuildMyRoom(link: link, sceneRD: sceneRendererDelegate))
     }
     var body: some View {
-//                let drag = DragGesture()
-//                    .onChanged({ gesture in
-////                        if let camera = sceneRendererDelegate.renderer?.pointOfView {
-////                            let translation = gesture.translation
-////                            let translationVector = SCNVector3(translation.width * 0.05,
-////                                                               0,
-////                                                               translation.height * 0.05)
-////                            let dVector = lastCameraOffset - translationVector
-////
-////                            let action = SCNAction.move(by: dVector, duration: 0.1)
-////                            camera.runAction(action)
-////
-////                            lastCameraOffset = translationVector
-////                        }
-////                        if let camera = sceneRendererDelegate.renderer?.pointOfView {
-////                            let rotationAngle = camera.eulerAngles.y
-////                            print("rotationAngleOutside \(rotationAngle)")
-////                            rotationAngel = rotationAngle
-////                            // Use rotationAngle to adjust joystick input
-////                        }
-//                    })
-//                    .onEnded { gesture in
-//                        lastCameraOffset = SCNVector3()
-//                    }
         GeometryReader { geometry in
             
             ZStack(alignment: .leading) {
@@ -147,7 +123,7 @@ struct View3DRoomNew: View {
                         Button(action: {
                             if let room = RoomModel.room {
                                 let stringRoomColors = room.dominantColors().mapValues { $0.map { $0.hexString } }
-                                uploadScene.uploadFile(scene: RoomModel.scene,getSceneID: room.specilaID() ,dominantColors: stringRoomColors, withOptimization: true)
+                                uploadScene.uploadFile(scene: RoomModel.scene,getSceneID: room.specilaID() ,dominantColors: stringRoomColors, withOptimization: true, checkName: false)
                                 //                            presentationMode.wrappedValue.dismiss()
                             }
                         }) {
@@ -168,7 +144,7 @@ struct View3DRoomNew: View {
                                 let stringRoomColors = room.dominantColors().mapValues { $0.map { $0.hexString } }
                                 //                            SceneToJson().shareFile(scene: RoomModel.scene, dominantColors: stringRoomColors)
                                 //                            SceneToJson().uploadFile(scene: RoomModel.scene, dominantColors: stringRoomColors, uploadScene: uploadScene)
-                                uploadScene.uploadFile(scene: RoomModel.scene,getSceneID: room.specilaID() ,dominantColors: stringRoomColors, withOptimization: false)
+                                uploadScene.uploadFile(scene: RoomModel.scene,getSceneID: room.specilaID() ,dominantColors: stringRoomColors, withOptimization: false, checkName: false)
                             }
                         }) {
                             Text("Save")

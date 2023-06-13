@@ -38,7 +38,7 @@ struct Row: View {
             ZStack(alignment: .leading) {
                 Color.flatDarkCardBackground
                 HStack {
-               NavigationLink(destination: View3DRoomNew(link: link)) {
+               NavigationLink(destination: ViewRoom(link: link)) {
                     ZStack {
                         Circle()
                             .fill(

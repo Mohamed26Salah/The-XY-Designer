@@ -105,6 +105,9 @@
 		ABAE2EBF2A268D6600330A4F /* door4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = ABAE2EBB2A268D6500330A4F /* door4.usdz */; };
 		ABAE2EC02A268D6600330A4F /* door.usdz in Resources */ = {isa = PBXBuildFile; fileRef = ABAE2EBC2A268D6500330A4F /* door.usdz */; };
 		ABAE2EC12A268D6600330A4F /* door2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = ABAE2EBD2A268D6600330A4F /* door2.usdz */; };
+		ABAE2F042A3747E000330A4F /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE2F032A3747E000330A4F /* BlurView.swift */; };
+		ABAE2F082A3750A000330A4F /* ViewRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE2F072A3750A000330A4F /* ViewRoom.swift */; };
+		ABAE2F0A2A37527300330A4F /* MenuList.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE2F092A37527300330A4F /* MenuList.swift */; };
 		ABAE511629E2FBA600142BA8 /* ContactDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */; };
 		ABAEBA4429CCF85F00EB88E1 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4329CCF85F00EB88E1 /* Home.swift */; };
 		ABAEBA4629CD028700EB88E1 /* RoomPlaneApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */; };
@@ -240,6 +243,9 @@
 		ABAE2EBB2A268D6500330A4F /* door4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = door4.usdz; sourceTree = "<group>"; };
 		ABAE2EBC2A268D6500330A4F /* door.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = door.usdz; sourceTree = "<group>"; };
 		ABAE2EBD2A268D6600330A4F /* door2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = door2.usdz; sourceTree = "<group>"; };
+		ABAE2F032A3747E000330A4F /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
+		ABAE2F072A3750A000330A4F /* ViewRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRoom.swift; sourceTree = "<group>"; };
+		ABAE2F092A37527300330A4F /* MenuList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuList.swift; sourceTree = "<group>"; };
 		ABAE511529E2FBA600142BA8 /* ContactDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDelegate.swift; sourceTree = "<group>"; };
 		ABAEBA4329CCF85F00EB88E1 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlaneApi.swift; sourceTree = "<group>"; };
@@ -430,6 +436,8 @@
 			children = (
 				ABAEBA4529CD028700EB88E1 /* RoomPlaneApi.swift */,
 				AB61581329FAA35B00F7119A /* SaveScene.swift */,
+				ABAE2F072A3750A000330A4F /* ViewRoom.swift */,
+				ABAE2F092A37527300330A4F /* MenuList.swift */,
 				AB8E167929F89F58003CC472 /* View3DRoomNew.swift */,
 				AB1D533B2A05679000C1BA8F /* Controls.swift */,
 				AB4E885329EC40ED003FF08A /* ArRoomView.swift */,
@@ -622,6 +630,7 @@
 		ABD54DF329C4C9F2000E7506 /* Customs */ = {
 			isa = PBXGroup;
 			children = (
+				ABAE2F032A3747E000330A4F /* BlurView.swift */,
 				ABD54DF429C4CA17000E7506 /* CustomTextField.swift */,
 				AB1D53392A040B6A00C1BA8F /* CustomTextFieldCenter.swift */,
 				ABD54DF829C4D091000E7506 /* SecureTextField.swift */,
@@ -778,6 +787,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABEE93442A098BD20023DFFF /* ShowDominantColors.swift in Sources */,
+				ABAE2F082A3750A000330A4F /* ViewRoom.swift in Sources */,
 				ABD54DF929C4D091000E7506 /* SecureTextField.swift in Sources */,
 				AB3A2CF129C6395400B2717A /* RegisterViewModel.swift in Sources */,
 				AB44FC6329E83B7800973891 /* BuildRoom3DModels.swift in Sources */,
@@ -792,6 +802,7 @@
 				ABD54DCF29C49FE3000E7506 /* MainView.swift in Sources */,
 				ABB862E929F5A0DF00C7D241 /* UIApplication.swift in Sources */,
 				AB4CCAA229E1A60F007E3864 /* Entity.swift in Sources */,
+				ABAE2F042A3747E000330A4F /* BlurView.swift in Sources */,
 				AB1D53362A03E99D00C1BA8F /* AddFurnitureViewModel.swift in Sources */,
 				ABD54DDF29C4A1DC000E7506 /* CustomTabBar.swift in Sources */,
 				ABFD29DF2A195970002FC8E0 /* deleteScene.swift in Sources */,
@@ -836,6 +847,7 @@
 				AB3A2CED29C6380D00B2717A /* User.swift in Sources */,
 				AB8E167829F876BA003CC472 /* BuildMyRoomAssistant.swift in Sources */,
 				ABAABE3D2A080EDD00B480B6 /* AddEditMaster.swift in Sources */,
+				ABAE2F0A2A37527300330A4F /* MenuList.swift in Sources */,
 				AB8E167629F863B9003CC472 /* BuildMyRoom.swift in Sources */,
 				ABAABE3F2A081DC100B480B6 /* EditNodeNew.swift in Sources */,
 				AB4CCAA829E1B3F6007E3864 /* Control.swift in Sources */,

@@ -19,7 +19,7 @@ struct MainView: View {
         NavigationStack (path: $router.path) {
             
             TabView(selection: $selectedTab) {
-                Home(isSignedIn: $isSignedIn)
+                Home(isSignedIn: $isSignedIn, selectedTab: $selectedTab)
                     .tabItem {
                         Image(systemName: "house")
                         Text("Home")

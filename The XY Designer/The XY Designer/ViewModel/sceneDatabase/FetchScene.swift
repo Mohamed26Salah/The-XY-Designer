@@ -14,6 +14,7 @@ class FetchScene: ObservableObject{
     @Published var showLoading: Bool = false
     @Published var errorMessage: String = ""
     @Published var showError: Bool = false
+    @Published var noScenes: Bool = false
    
 //    let manageSceneDataBase = ManageSceneDataBase()
     func fetchAllScenes(completion: @escaping ([JsonFileArrayCell]?, Error?) -> Void) {
@@ -30,8 +31,9 @@ class FetchScene: ObservableObject{
                 if !snap.exists { // Check if document doesn't exist
                     DispatchQueue.main.async {
                         self.showLoading = false
-                        self.showError = true
-                        self.errorMessage = "No scenes found"
+//                        self.showError = true
+//                        self.errorMessage = "No scenes found"
+                        self.noScenes = true
                     }
                     completion(nil, nil)
                 } else {
@@ -40,11 +42,13 @@ class FetchScene: ObservableObject{
                     if sceneJsonDocument?.arrayOfJsonFiles.isEmpty ?? true {
                         DispatchQueue.main.async {
                             self.showLoading = false
-                            self.showError = true
-                            self.errorMessage = "No scenes found"
+//                            self.showError = true
+//                            self.errorMessage = "No scenes found"
+                            self.noScenes = true
                         }
                         completion(nil, nil)
                     } else {
+                        self.noScenes = false
                         var fetchedScenes: [JsonFileArrayCell] = []
                         fetchedScenes = sceneJsonDocument!.arrayOfJsonFiles
                         let sortedScenes = fetchedScenes.sorted { $0.time.compare($1.time) == .orderedDescending }

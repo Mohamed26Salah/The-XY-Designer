@@ -52,7 +52,7 @@ struct ScanningView: View {
                         captureController.startSession()
                     }
                 VStack{
-                    if let room = captureController.finalResult{
+                    if captureController.finalResult != nil{
                         Spacer()
                         if captureController.roomIsReady{
                             HStack{

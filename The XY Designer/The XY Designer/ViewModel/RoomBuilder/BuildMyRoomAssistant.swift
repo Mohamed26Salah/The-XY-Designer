@@ -19,7 +19,7 @@ struct BuildMyRoomAssistant {
             width: 50,
             height: 50)
         planeGeometry.firstMaterial?.isDoubleSided = true
-        planeGeometry.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(0.8)
+        planeGeometry.firstMaterial?.diffuse.contents = UIColor.white.withAlphaComponent(1.0)
         planeGeometry.cornerRadius = 5
         platFormModel.geometry = planeGeometry
         platFormModel.eulerAngles = SCNVector3Make(Float.pi / 2, 0, 0)

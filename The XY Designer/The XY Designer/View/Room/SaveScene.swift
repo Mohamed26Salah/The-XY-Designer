@@ -32,7 +32,7 @@ struct SaveScene: View {
             Button {
                 let prepareRoom = PrepareRoomScanData(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
                 let stringRoomColors = prepareRoom.dominantRoomColors.mapValues { $0.map { $0.hexString } }
-                uploadScene.uploadFile(scene: prepareRoom.scene, dominantColors: stringRoomColors, withOptimization: false)
+                uploadScene.uploadFile(scene: prepareRoom.scene, dominantColors: stringRoomColors, withOptimization: false, checkName: true)
                 presentationMode.wrappedValue.dismiss()
             } label: {
                 HStack(spacing: 15){

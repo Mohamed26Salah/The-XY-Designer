@@ -11,30 +11,59 @@ struct Home: View {
     @ObservedObject var fetchScenes = FetchScene()
     @State private var scenes: [JsonFileArrayCell] = []
     @Binding var isSignedIn: Bool
+    @Binding var selectedTab: Int
     var jsonToScene = JsonToScene()
     var body: some View {
         ZStack{
             VStack{
-                List {
-                    ForEach(scenes) { scene in
-                        Row(link: scene.link, id: scene.id, time: scene.time)
-                            .disabled(scene.BeingOptimized)
-                    }
-                    .onDelete(perform: { indexSet in
-                        for index in indexSet {
-                            if let userId = Auth.auth().currentUser?.uid {
-                                deletescene().deleteScene(userId: userId, sceneId: scenes[index].id) {_ in
-//                                    print(error as Any)
-                                }
-                                scenes.remove(at: index)
-                            }
+                if fetchScenes.noScenes {
+                    Spacer()
+                    Image("Scan") // Replace "yourImageName" with the name of your image asset
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .padding()
+                    
+                    Text("You need to make some scans !")
+                        .font(.body)
+                        .padding()
+                    
+                    Button(action: {
+                        withAnimation {
+                            selectedTab = 1
                         }
-                    })
+                    }) {
+                        Text("Scan Now")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(BlurView(style: .systemChromeMaterialDark))
+                            .cornerRadius(10)
+                    }
+                    .padding()
+                    Spacer()
+
+                    
+                }else {
+                    List {
+                        ForEach(scenes) { scene in
+                            Row(link: scene.link, id: scene.id, time: scene.time)
+                                .disabled(scene.BeingOptimized)
+                        }
+                        .onDelete(perform: { indexSet in
+                            for index in indexSet {
+                                if let userId = Auth.auth().currentUser?.uid {
+                                    deletescene().deleteScene(userId: userId, sceneId: scenes[index].id) {_ in
+                                        //                                    print(error as Any)
+                                    }
+                                    scenes.remove(at: index)
+                                }
+                            }
+                        })
+                    }
+                    .listStyle(PlainListStyle()) // or InsetGroupedListStyle()
+                    .background(Color.clear) // Set the background color to clear
+                    .padding(.top,70)
                 }
-                .listStyle(PlainListStyle()) // or InsetGroupedListStyle()
-                .background(Color.clear) // Set the background color to clear
-                .padding(.top,70)
-                
             }
             if fetchScenes.showLoading {
                 ProgressView()
