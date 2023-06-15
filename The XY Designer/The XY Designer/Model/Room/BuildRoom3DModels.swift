@@ -112,7 +112,11 @@ class BuildRoom3DModels {
         if(matNode.subObjectCategory == .bed){
             node.scale = nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
         }else{
-            node.scale = nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
+            if(checkIfXZAreSwapped(node: node)){
+                node.scale = nodeScaleZX(node: node, desiredDimenstions: desiredDimenstions)
+            }else{
+                node.scale = nodeScaleXZ(node: node, desiredDimenstions: desiredDimenstions)
+            }
         }
         node.pivot = newPivot(node: node)
         calculateNewBoundingBox(node: node, desiredDimensions: desiredDimenstions)

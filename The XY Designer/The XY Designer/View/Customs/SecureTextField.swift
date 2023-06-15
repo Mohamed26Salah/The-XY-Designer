@@ -15,7 +15,10 @@ struct SecureTextFieldCustom: View {
     @FocusState var isEnabled: Bool
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
-            SecureField(hint, text: $text)
+            SecureField("", text: $text)
+                .placeholder(when: text.isEmpty) {
+                    Text(hint).foregroundColor(.gray)
+                }
                 .keyboardType(.default)
                 .textContentType(.password)
                 .focused($isEnabled)

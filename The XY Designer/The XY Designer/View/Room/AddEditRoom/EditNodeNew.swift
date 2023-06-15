@@ -5,6 +5,13 @@
 //  Created by Mohamed Salah on 07/05/2023.
 //
 
+//
+//  EditNodeNew.swift
+//  The XY Designer
+//
+//  Created by Mohamed Salah on 07/05/2023.
+//
+
 
 import SwiftUI
 import SceneKit
@@ -41,111 +48,174 @@ struct EditNodeNew: View {
     var body: some View {
         let node = editFurnitureVM.returnNewFurniture()
         GeometryReader { geometry in
-            VStack {
-                Text("Edit The object")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.vertical, 15)
-                Picker("Pages", selection: $selectedPage) {
-                    ForEach(EditState.allCases,id: \.self) { page in
-                        Text(page.rawValue.capitalized)
+            Color.white
+                .ignoresSafeArea(.all)
+            ZStack(alignment: .bottom) {
+                VStack {
+                    Text("Edit The object")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.vertical, 15)
+                        .foregroundColor(.black)
+                    Picker("Pages", selection: $selectedPage) {
+                        ForEach(EditState.allCases,id: \.self) { page in
+                            Text(page.rawValue.capitalized)
+                        }
                     }
-                }
-                .pickerStyle(.segmented)
-                .padding(.top, -10)
-                .padding(.horizontal, 15)
-               
-                Form{
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                            ),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .cornerRadius(15)
+                    .pickerStyle(.segmented)
+                    .padding(.top, -10)
+                    .padding(.horizontal, 15)
                     sceneOfFurniture(furniture: editFurnitureVM)
+                        .cornerRadius(15)
+                        .padding(.horizontal, 15)
                         .frame(height: geometry.size.height / 3)
                         .background(Color(UIColor.white))
-                    if (selectedPage == .Scale) {
-                        Section(header: Text("Change Object Dimenstions")){
-//                            if let node = editFurnitureVM.node.childNodes.first as? MaterialNode{
-//                                if (node.type != .object) {
-//                                    Text("This Object dimenstions Can't Be Edited")
-//                                        .foregroundColor(.red)
-//                                        .bold()
-//                                        .font(.system(.title3))
-//                                } else if ((node.a3dModel) != nil) {
-//                                    Text("You Need To Reset the Object, To Default, To change Dimenstions")
-//                                        .foregroundColor(.red)
-//                                        .bold()
-//                                        .font(.system(.title3))
-//                                }else {
-//                                    ShowDimenstions(furniture: editFurnitureVM, disabled: true)
-//                                }
-                            ShowDimenstions(furniture: editFurnitureVM, disabled: true, node: nodeToBeEdited)
-
+                    
+                    Form{
+                        if (selectedPage == .Scale) {
+                            Section(header: Text("Change Object Dimenstions").background(Color.white).foregroundColor(.black)){
+                                ShowDimenstions(furniture: editFurnitureVM, disabled: true, node: nodeToBeEdited)
+                                
                             }
-//                        }
-                    }else if (selectedPage == .Colors){
-                        Section(header: Text("Choose Object Color")){
-                            ColorPicker(selection: $selectedColor){
-                                Label("Color Pallete", systemImage: "paintpalette")
-                                    .symbolVariant(.fill)
-                                    .padding(.leading, 8)
-                            }
-                            .onChange(of: selectedColor) { newColor in
-//                                let node = editFurnitureVM.returnNewFurniture()
-                                editFurniture.applyColor(to: node, color: selectedColor)
-                            }
-                        }
-                        Section(header: Text("Choose From Room Extracted Colors")){
-                            ShowDominantColors(roomDominantColors: roomDominantColors, selectedColor: $selectedColor)
-                        }
-                    }else if(selectedPage == .Textures){
-//                        let node = editFurnitureVM.returnNewFurniture()
-                        Section(header: Text("Choose Texture From Your Own Gallery")){
-//                            ShowGallery(nodeToBeEdited: node, uiImage: $uiImage)
-                            ShowGallery(nodeToBeEdited: node, uiImageGallery: $uiImage)
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                            .background(
+                                Color.white
+                            )
+                            .cornerRadius(15)
+                            .padding(.horizontal, 15)
                             
-                        }
-                        Section(header: Text("Choose Object Texture")){
-                            ShowTextures(selectedImage: $selectedImage)
-                                .onChange(of: selectedImage) { newTexture in
-                                    editFurniture.applyTexture(to: node, imageName: newTexture ?? "XY_V02")
-//                                    editFurniture.applyTextureFromURL(to: node, imageURL: selectedImage ?? errorURL)
+                        }else if (selectedPage == .Colors){
+                            Section(header: Text("Choose Object Color")){
+                                ColorPicker(selection: $selectedColor){
+                                    Label("Color Pallete", systemImage: "paintpalette")
+                                        .symbolVariant(.fill)
+                                        .padding(.leading, 8)
+                                        .foregroundColor(Color.white)
                                 }
-                        }
-                    }else{
-                        if(nodeToBeEdited.type == .door || nodeToBeEdited.type == .window || nodeToBeEdited.type == .object){
-                            Section(header: Text("Choose 3D Model")){
-                                Show3DModels(node: node, selectedModel: $selectedModel)
-                                    .onChange(of: selectedModel) { new3dModel in
-                                        if let dimenstion = node.dimenstions{
-                                            if let selectedModel = new3dModel{
-                                                editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , extenstion: "usdz")
+                                .listRowInsets(EdgeInsets())
+                                .frame(height: 30)
+                                .padding(.horizontal,10)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(
+                                            colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                        ),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .cornerRadius(10)
+                                
+                                .onChange(of: selectedColor) { newColor in
+                                    //                                let node = editFurnitureVM.returnNewFurniture()
+                                    editFurniture.applyColor(to: node, color: selectedColor)
+                                }
+                            }
+                            .listRowBackground( LinearGradient(
+                                gradient: Gradient(
+                                    colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                ),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
+                            .padding(.horizontal, 17)
+                            //                        .onChange(of: selectedColor) { newColor in
+                            //                            //                                let node = editFurnitureVM.returnNewFurniture()
+                            //                            editFurniture.applyColor(to: node, color: selectedColor)
+                            //                        }
+                            Section(header: Text("Choose From Room Extracted Colors")){
+                                ShowDominantColors(roomDominantColors: roomDominantColors, selectedColor: $selectedColor)
+                                    .padding(.horizontal, 17)
+                                    .cornerRadius(15)
+                            }
+                            .listRowBackground(Color.white)
+                            .listRowInsets(EdgeInsets())
+                            
+                        }else if(selectedPage == .Textures){
+                            Section(header: Text("Choose Texture From Your Own Gallery")){
+                                HStack {
+                                    Spacer()
+                                    ShowGallery(nodeToBeEdited: node, uiImageGallery: $uiImage)
+                                        .background(
+                                            LinearGradient(
+                                                gradient: Gradient(
+                                                    colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                                ),
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            )
+                                        )
+                                        .cornerRadius(15)
+                                    Spacer()
+                                }
+                                
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                            Section(header: Text("Choose Object Texture")){
+                                ShowTextures(selectedImage: $selectedImage)
+                                    .onChange(of: selectedImage) { newTexture in
+                                        editFurniture.applyTexture(to: node, imageName: newTexture ?? "XY_V02")
+                                    }
+                            }
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                        }else{
+                            if(nodeToBeEdited.type == .door || nodeToBeEdited.type == .window || nodeToBeEdited.type == .object){
+                                Section(header: Text("Choose 3D Model")){
+                                    Show3DModels(node: node, selectedModel: $selectedModel)
+                                        .onChange(of: selectedModel) { new3dModel in
+                                            if let dimenstion = node.dimenstions{
+                                                if let selectedModel = new3dModel{
+                                                    editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , extenstion: "usdz")
+                                                }
                                             }
                                         }
-                                    }
                                     
+                                }
+                                .listRowInsets(EdgeInsets())
+                                .listRowBackground(Color.white)
+                            }
+                            else {
+                                Text("This object cant be changed.")
+                                    .bold()
+                                    .foregroundColor(.black)
                             }
                         }
-                        else {
-                            Text("This object cant be changed.")
-                                .bold()
-                        }
                     }
+                    .foregroundColor(.black)
+                    .tint(LinearGradient(
+                        gradient: Gradient(
+                            colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                        ),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+                    .scrollContentBackground(.hidden)
+                    
                 }
-                
                 HStack{
                     Spacer()
                     Button {
         
                         if let editableNode = editFurnitureVM.node.childNodes.first as? MaterialNode {
-//                            if (nodeToBeEdited.dimenstions != editableNode.dimenstions){
-////                                    editFurnitureVM.applyScale(to: nodeToBeEdited, desiredDimenstions: editableNode.dimenstions)
-//                                let scale = editFurnitureVM.scaleWithoutA3dModel(node: nodeToBeEdited, x: editableNode.dimenstions.x, y: editableNode.dimenstions.y, z: editableNode.dimenstions.z)
-//                                nodeToBeEdited.scale = scale
-//                                nodeToBeEdited.dimenstions = editableNode.dimenstions
-//                            }
                             if let isReseted = editableNode.a3dModel {
                                 if let dimenstion = nodeToBeEdited.dimenstions{
-//                                    if let selectedModel = selectedModel{
+    //                                    if let selectedModel = selectedModel{
                                         editFurniture.apply3dModel(to: nodeToBeEdited, modelName: isReseted, dimesntions: dimenstion , extenstion: "usdz")
                                     }
-//                                }
+    //                                }
                             }else {
                                 editFurniture.reset3dModel(to: nodeToBeEdited, dimesntions: editableNode.dimenstions, transform: nodeToBeEdited.transform)
                             }
@@ -153,8 +223,9 @@ struct EditNodeNew: View {
                                 editFurniture.applyColor(to: nodeToBeEdited, color: Color(color))
                             }
                             if let selectedImage = selectedImage {
+                                print("First")
                                 editFurniture.applyTexture(to: nodeToBeEdited, imageName: selectedImage)
-//                                editFurniture.applyTextureFromURL(to: nodeToBeEdited, imageURL: selectedImage)
+    //                                editFurniture.applyTextureFromURL(to: nodeToBeEdited, imageURL: selectedImage)
                             }
                             if let imageFromGallery = uiImage {
                                 editFurniture.applyTextureFromGallery(to: nodeToBeEdited, imageName: imageFromGallery)
@@ -168,26 +239,32 @@ struct EditNodeNew: View {
                                 .contentTransition(.identity)
                         }
                     }
-                    .foregroundColor(.primary)
                     .padding(.horizontal,25)
                     .padding(.vertical)
-                    .background{
-                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                            .foregroundColor(.secondary.opacity(0.3))
-                    }
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                            ),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .cornerRadius(15)
+                    .padding(.vertical,25)
+                    .foregroundColor(.white)
                     Spacer()
                 }
             }
-            .background(
-                Color(UIColor { traitCollection in
-                    return traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.systemBackground
-                })
-            )
-            .foregroundColor(Color(UIColor { traitCollection in
-                return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
-            }))
+           
         }
-//        .background(Color(UIColor.white))
+        .onAppear{
+            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+            AppDelegate.orientationLock = .portrait
+        }
+        .onDisappear{
+            AppDelegate.orientationLock = .all
+        }
     }
 }
 

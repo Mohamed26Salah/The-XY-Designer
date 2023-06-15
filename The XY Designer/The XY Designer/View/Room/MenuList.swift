@@ -15,6 +15,7 @@ struct MenuList: View {
     @GestureState var gestureOffset: CGFloat = 0
     @Binding var show: Bool
     @Binding var isARPresented: Bool
+    @Binding var showingAddFurniture: Bool
     var RoomModel: BuildMyRoom
     var uploadScene: UploadScene
     var body: some View {
@@ -30,7 +31,7 @@ struct MenuList: View {
                             .fill(Color.white)
                             .frame(width: 60, height: 4)
                             .padding(.top)
-                        BottomContent(show: $show, offset: $offset, isARPresented: $isARPresented, proxy: proxy, uploadScene: uploadScene, RoomModel: RoomModel)
+                        BottomContent(show: $show, offset: $offset, isARPresented: $isARPresented, showingAddFurniture: $showingAddFurniture, proxy: proxy, uploadScene: uploadScene, RoomModel: RoomModel)
                     }
                     .padding(.horizontal)
                     .frame(maxHeight: .infinity, alignment: .top)
@@ -75,6 +76,7 @@ struct MenuList: View {
         @Binding var show: Bool
         @Binding var offset: CGFloat
         @Binding var isARPresented: Bool
+        @Binding var showingAddFurniture: Bool
         var proxy: GeometryProxy
         var uploadScene: UploadScene
         var RoomModel: BuildMyRoom
@@ -142,6 +144,26 @@ struct MenuList: View {
                                         .clipShape(Circle())
                                 }
                                 Text("Optimize")
+                                    .foregroundColor(.white)
+                                
+                            }
+                            VStack(spacing: 8){
+                                Button {
+                                    
+                                    withAnimation {
+                                        offset = 0
+                                        show.toggle()
+                                        showingAddFurniture.toggle()
+                                    }
+                                } label: {
+                                    Image(systemName: "plus")
+                                        .font(.title)
+                                        .frame(width: 65, height: 65)
+                                        .foregroundColor(Color.white)
+                                        .background(BlurView(style: .dark))
+                                        .clipShape(Circle())
+                                }
+                                Text("Add")
                                     .foregroundColor(.white)
                                 
                             }

@@ -11,6 +11,7 @@ struct SaveScene: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var uploadScene: UploadScene
     var captureController: RoomCaptureController
+    @Binding var selectedTab: Int
     var body: some View {
         VStack {
             Text("Enter the Scene Name")
@@ -33,6 +34,7 @@ struct SaveScene: View {
                 let prepareRoom = PrepareRoomScanData(room: captureController.finalResult!, dominantRoomColors: captureController.roomColors)
                 let stringRoomColors = prepareRoom.dominantRoomColors.mapValues { $0.map { $0.hexString } }
                 uploadScene.uploadFile(scene: prepareRoom.scene, dominantColors: stringRoomColors, withOptimization: false, checkName: true)
+                selectedTab = 0
                 presentationMode.wrappedValue.dismiss()
             } label: {
                 HStack(spacing: 15){

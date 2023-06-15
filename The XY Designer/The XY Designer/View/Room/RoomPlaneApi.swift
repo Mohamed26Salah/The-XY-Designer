@@ -35,12 +35,13 @@ struct ScanningView: View {
 //    @EnvironmentObject var coordinator: Coordinator
     @ObservedObject var uploadScene: UploadScene = UploadScene()
     @State private var showingCredits = false
+    @Binding var selectedTab: Int
     
     var body: some View {
             ZStack {
                 RoomCaptureViewRep()
                     .navigationBarBackButtonHidden(true)
-                    .navigationBarItems(leading: Button("Cancel") {
+                    .navigationBarItems(leading: Button("Back") {
                         captureController.stopSession()
                         dismiss()
                     })
@@ -92,7 +93,7 @@ struct ScanningView: View {
                 }
             }
             .sheet(isPresented: $showingCredits) {
-                SaveScene(uploadScene: uploadScene, captureController: captureController)
+                SaveScene(uploadScene: uploadScene, captureController: captureController, selectedTab: $selectedTab)
             }
             .onAppear{
                 captureController.finalResult = nil
@@ -103,17 +104,19 @@ struct ScanningView: View {
 }
 
 struct RoomPlaneApi: View {
+    @Binding var selectedTab: Int
     var body: some View {
         VStack {
             Image(systemName: "camera.metering.matrix")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
-            Text("Roomscanner").font(.title)
+            Text("Roomscanner").font(.title).foregroundColor(.black)
             Spacer().frame(height: 40)
             Text("Scan the room by pointing the camera at all surfaces. Model export supports usdz and obj format.")
+                .foregroundColor(.black)
             Spacer().frame(height: 40)
             //                ScanningView()
-            NavigationLink(destination: ScanningView(), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
+            NavigationLink(destination: ScanningView(selectedTab: $selectedTab), label: {Text("Start Scan")}).buttonStyle(.borderedProminent).cornerRadius(40).font(.title2)
         }
     }
 }
@@ -128,8 +131,8 @@ struct DismissButton: View {
     }
 }
 
-struct RoomPlaneApi_Previews: PreviewProvider {
-    static var previews: some View {
-        RoomPlaneApi()
-    }
-}
+//struct RoomPlaneApi_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RoomPlaneApi()
+//    }
+//}

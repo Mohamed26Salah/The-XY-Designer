@@ -123,13 +123,13 @@ struct ViewRoom: View {
             .blur(radius: getBlurRadius())
             //             Bottom Sheet....
             if show {
-                MenuList(offset: $offset, getgestureOffset: $getGestureOffset, show: $show, isARPresented: $isARPresented, RoomModel: RoomModel, uploadScene: uploadScene)
+                MenuList(offset: $offset, getgestureOffset: $getGestureOffset, show: $show, isARPresented: $isARPresented, showingAddFurniture: $showingAddFurniture, RoomModel: RoomModel, uploadScene: uploadScene)
             }
             HStack{
                 Spacer()
                 if uploadScene.showLoading {
                     ProgressView()
-                        .tint(.primary)
+                        .tint(.black)
                         .foregroundColor(.secondary)
                         .scaleEffect(3)
                     
@@ -154,12 +154,9 @@ struct ViewRoom: View {
             ArRoomView(scene: RoomModel.scene, applySkyBoxAgain: RoomModel.lightSkyBox(), isARPresented: $isARPresented)
         }
         .onAppear(perform: {
-            //            superController.connect()
-            //            superController.handleRightPad = RoomModel.handleRightPad
             sceneRendererDelegate.onEachFrame = RoomModel.onEachFrame
         })
         .onDisappear(perform: {
-            //            superController.disconnect()
             sceneRendererDelegate.onEachFrame = nil
         })
         

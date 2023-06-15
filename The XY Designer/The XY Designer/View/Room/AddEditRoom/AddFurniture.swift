@@ -35,86 +35,150 @@ struct AddFurniture: View {
     var body: some View {
         let node = newFurniture.returnNewFurniture()
         GeometryReader { geometry in
-            VStack {
-                Text("Add New Furniture")
-                    .font(.title2)
-                    .fontWeight(.bold)
-                    .padding(.vertical, 15)
-                Picker("Pages", selection: $selectedPage) {
-                    ForEach(AddState.allCases,id: \.self) { page in
-                        Text(page.rawValue.capitalized)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.top, -10)
-                .padding(.horizontal, 15)
-                Form{
-                    sceneOfNewFurniture(newFurniture: newFurniture)
-                        .frame(height: geometry.size.height / 3)
-                        .background(Color(UIColor.white))
-                    if (selectedPage == .Scale) {
-                        Section(header: Text("Change Object Dimenstions")){
-                            ShowDimenstions(furniture: newFurniture, disabled: false)
-                            
+            //            PortraitOnlyView()
+            Color.white
+                .ignoresSafeArea(.all)
+            ZStack(alignment: .bottom){
+                VStack {
+                    Text("Add New Furniture")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.vertical, 15)
+                        .foregroundColor(.black)
+                    Picker("Pages", selection: $selectedPage) {
+                        ForEach(AddState.allCases,id: \.self) { page in
+                            Text(page.rawValue.capitalized)
                         }
-                        //                        }
-                    }else if (selectedPage == .Colors){
-                        Section(header: Text("Choose Object Color")){
-                            ColorPicker(selection: $selectedColor){
-                                Label("Color Pallete", systemImage: "paintpalette")
-                                    .symbolVariant(.fill)
-                                    .padding(.leading, 8)
+                    }
+                    //                    .foregroundColor(.opacity(0.4))
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                            ),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .cornerRadius(15)
+                    .pickerStyle(.segmented)
+                    .padding(.top, -10)
+                    .padding(.horizontal, 15)
+                   
+                        sceneOfNewFurniture(newFurniture: newFurniture)
+                            .cornerRadius(15)
+                            .padding(.horizontal, 15)
+                            .frame(height: geometry.size.height / 3)
+                            .background(Color(UIColor.white))
+                    Form{
+                        if (selectedPage == .Scale) {
+                            Section(header: Text("Change Object Dimenstions").background(Color.white).foregroundColor(.black)){
+                                ShowDimenstions(furniture: newFurniture, disabled: false)
                             }
+                            .listRowInsets(EdgeInsets())
+                            .listRowBackground(Color.white)
+                            .background(
+                                Color.white
+                            )
+                            .cornerRadius(15)
+                            .padding(.horizontal, 15)
+                        }else if (selectedPage == .Colors){
+                            Section(header: Text("Choose Object Color")){
+                                ColorPicker(selection: $selectedColor){
+                                    Label("Color Pallete", systemImage: "paintpalette")
+                                        .symbolVariant(.fill)
+                                        .padding(.leading, 8)
+                                        .foregroundColor(Color.white)
+                                }
+                                .listRowInsets(EdgeInsets())
+                                .frame(height: 30)
+                                .padding(.horizontal,10)
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(
+                                            colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                        ),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .cornerRadius(10)
+                                
+                            }
+                            .listRowBackground( LinearGradient(
+                                gradient: Gradient(
+                                    colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                ),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ))
+                            .padding(.horizontal, 17)
                             .onChange(of: selectedColor) { newColor in
                                 //                                let node = editFurnitureVM.returnNewFurniture()
                                 editFurniture.applyColor(to: node, color: selectedColor)
                             }
-                        }
-                        Section(header: Text("Choose From Room Extracted Colors")){
-                            ShowDominantColors(roomDominantColors: roomDominantColors, selectedColor: $selectedColor)
-                        }
-                    }else if(selectedPage == .Textures){
-                        //                        let node = editFurnitureVM.returnNewFurniture()
-                        Section(header: Text("Choose Texture From Your Own Gallery")){
-                            ShowGallery(nodeToBeEdited: node, uiImageGallery: $uiImage)
-                        }
-                        Section(header: Text("Choose Object Texture")){
-                            ShowTextures(selectedImage: $selectedImage)
-                                .onChange(of: selectedImage) { newTexture in
-                                    editFurniture.applyTexture(to: node, imageName: newTexture ?? "XY_V02")
-//                                    editFurniture.applyTextureFromURL(to: node, imageURL: selectedImage ?? errorURL)
+                            //                            }
+                            Section(header: Text("Choose From Room Extracted Colors")){
+                                ShowDominantColors(roomDominantColors: roomDominantColors, selectedColor: $selectedColor)
+                                    .padding(.horizontal, 17)
+                                    .cornerRadius(15)
+                            }
+                            .listRowBackground(Color.white)
+                            .listRowInsets(EdgeInsets())
+                            
+                            
+                        }else if(selectedPage == .Textures){
+                                Section(header: Text("Choose Texture From Your Own Gallery")){
+                                    HStack {
+                                        Spacer()
+                                        ShowGallery(nodeToBeEdited: node, uiImageGallery: $uiImage)
+                                            .background(
+                                                LinearGradient(
+                                                    gradient: Gradient(
+                                                        colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                                    ),
+                                                    startPoint: .topLeading,
+                                                    endPoint: .bottomTrailing
+                                                )
+                                            )
+                                            .cornerRadius(15)
+                                        Spacer()
+                                    }
                                 }
-                        }
+                                .listRowInsets(EdgeInsets())
+                                .listRowBackground(Color.white)
+                               
+                                Section(header: Text("Choose Object Texture")){
+                                    ShowTextures(selectedImage: $selectedImage)
+                                        .onChange(of: selectedImage) { newTexture in
+                                            editFurniture.applyTexture(to: node, imageName: newTexture ?? "XY_V02")
+                                        }
+                                }
+                                .listRowInsets(EdgeInsets())
+                                .listRowBackground(Color.white)
+                            }
                     }
-                    //                    else{
-                    //                            Section(header: Text("Choose 3D Model")){
-                    //                                Show3DModels(node: node, selectedModel: $selectedModel)
-                    //                                    .onChange(of: selectedModel) { new3dModel in
-                    ////                                        if let dimenstion = node.dimenstions{
-                    //                                            if let selectedModel = new3dModel{
-                    ////                                                editFurniture.apply3dModel(to: node, modelName: selectedModel, dimesntions: dimenstion , extenstion: "usdz")
-                    //                                                node.a3dModel = selectedModel
-                    //                                                BuildMyRoomAssistant().set3dModel(node: node)
-                    //                                            }
-                    //                                        }
-                    ////                                    }
-                    //
-                    //                            }
-                    //                    }
-                    //                }
+                    .foregroundColor(.black)
+                    .tint(LinearGradient(
+                        gradient: Gradient(
+                            colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                        ),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+                    .scrollContentBackground(.hidden)
                 }
-             SaveChangesButton(newFurniture: newFurniture, mainNode: mainN)
+                SaveChangesButton(newFurniture: newFurniture, mainNode: mainN)
             }
-            .background(
-                Color(UIColor { traitCollection in
-                    return traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.systemBackground
-                })
-            )
-            .foregroundColor(Color(UIColor { traitCollection in
-                return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
-            }))
         }
-
+        .onAppear{
+            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+            AppDelegate.orientationLock = .portrait
+        }
+        .onDisappear{
+            AppDelegate.orientationLock = .all
+        }
+        
         
     }
 }
@@ -133,15 +197,22 @@ struct SaveChangesButton: View {
                 Text("Apply Changes")
                     .fontWeight(.semibold)
                     .contentTransition(.identity)
+                    .foregroundColor(.white)
             }
         }
         .foregroundColor(.primary)
         .padding(.horizontal,25)
         .padding(.vertical)
-        .background{
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .foregroundColor(.grayFancy)
-        }
+        .background(
+            LinearGradient(
+                gradient: Gradient(
+                    colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                ),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+        .cornerRadius(15)
         .padding(.vertical,25)
     }
 }

@@ -39,26 +39,38 @@ struct Show3DModels: View {
                         Text("Reset 3D Model")
                             .fontWeight(.semibold)
                             .contentTransition(.identity)
+                            .foregroundColor(.white)
                     }
                 }
-                .foregroundColor(.primary)
                 .padding(.horizontal,25)
                 .padding(.vertical)
-                .background{
-                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .foregroundColor(.secondary.opacity(0.3))
-                }
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(
+                            colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                        ),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .cornerRadius(15)
+                .padding(.vertical,25)
                 Spacer()
             }
             ScrollView (showsIndicators: true){
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 30) {
                     ForEach(models, id: \.self) { model in
-//                        VStack {
-//                            Text(model)
-                            ModelView(modelName: model,isSelected: model == selectedModel){
+                            SceneView(
+                                scene: SCNScene(named: model),
+                                options: [.allowsCameraControl, .autoenablesDefaultLighting]
+                            )
+                            .frame(width: 180, height: 250)
+                            .border(Color.black, width: 5)
+                            .shadow(radius: 20)
+                            .border(selectedModel == model ? Color.yellow : Color.clear, width: 10)
+                            .onTapGesture {
                                 selectedModel = model
                             }
-//                        }
                     }
                 }
             }
@@ -148,25 +160,25 @@ struct Show3DModels: View {
     
 }
 
-struct ModelView: View {
-    let modelName: String
-    var isSelected: Bool
-    let action: () -> Void
-    
-    var body: some View {
-        SceneView(
-            scene: SCNScene(named: modelName),
-            options: [.allowsCameraControl, .autoenablesDefaultLighting]
-        )
-        .frame(width: 180, height: 250)
-        .border(Color.black, width: 5)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(isSelected ? Color.red : Color.clear, lineWidth: 3)
-        )
-        .onTapGesture(perform: action)
-    }
-}
+//struct ModelView: View {
+//    let modelName: String
+//    var isSelected: Bool
+//    let action: () -> Void
+//
+//    var body: some View {
+//        SceneView(
+//            scene: SCNScene(named: modelName),
+//            options: [.allowsCameraControl, .autoenablesDefaultLighting]
+//        )
+//        .frame(width: 180, height: 250)
+//        .border(Color.black, width: 5)
+//        .overlay(
+//            RoundedRectangle(cornerRadius: 10)
+//                .stroke(isSelected ? Color.red : Color.clear, lineWidth: 3)
+//        )
+//        .onTapGesture(perform: action)
+//    }
+//}
 //struct Show3DModels_Previews: PreviewProvider {
 //    static var previews: some View {
 //        Show3DModels()

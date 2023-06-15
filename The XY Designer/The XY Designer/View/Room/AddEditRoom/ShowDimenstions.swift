@@ -100,16 +100,21 @@ struct EditFurnitureScale: View {
                 Text("Height(m)")
                     .bold()
                 CustomTextFieldCenter(customKeyboardChoice: .scale, hint: "1", text: $yDimenstion)
+                    
             }
             HStack{
                 Text("Length(m)")
                     .bold()
                 CustomTextFieldCenter(customKeyboardChoice: .scale, hint: "1", text: $zDimenstion)
+                   
             }
         }
-        .foregroundColor(Color(UIColor { traitCollection in
-            return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
-        }))    }
+        .foregroundColor(.black)
+//        .foregroundColor(Color(UIColor { traitCollection in
+//            return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
+//        }))
+        
+    }
 }
 
 struct ObjectCategory: View {

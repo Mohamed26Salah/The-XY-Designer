@@ -14,12 +14,19 @@ struct MainView: View {
     @State var isSignedIn: Bool
     @State private var selectedTab = 0
     @StateObject var ProfileModel: ProfileViewModel = .init()
-    
+    init(isSigned: Bool) {
+        self.isSignedIn = isSigned
+        UITabBar.appearance().barTintColor = .black
+    }
     var body: some View {
         NavigationStack (path: $router.path) {
             
             TabView(selection: $selectedTab) {
-                Home(isSignedIn: $isSignedIn, selectedTab: $selectedTab)
+                ZStack {
+                    Color.white
+                        .ignoresSafeArea(.all)
+                    Home(isSignedIn: $isSignedIn, selectedTab: $selectedTab)
+                }
                     .tabItem {
                         Image(systemName: "house")
                         Text("Home")
@@ -30,7 +37,7 @@ struct MainView: View {
                         EditButton()
                             .font(.system(.title2))
                             .padding()
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .cornerRadius(10)
                             .padding(16),
                         alignment: .topTrailing
@@ -39,7 +46,7 @@ struct MainView: View {
                         VStack {
                             Text("Scenes")
                                 .font(.title)
-                                .foregroundColor(.white)
+                                .foregroundColor(.black)
                                 .padding()
                             
                             Spacer()
@@ -48,15 +55,22 @@ struct MainView: View {
                             .padding(),
                         alignment: .topLeading
                     )
-                
-                RoomPlaneApi()
+                ZStack {
+                    Color.white
+                        .ignoresSafeArea(.all)
+                    RoomPlaneApi(selectedTab: $selectedTab)
+                }
                     .tabItem {
                         Image(systemName: "plus.circle")
                         Text("Add Room")
                     }
                     .bold()
                     .tag(1)
-                Profile(isSignedIn: $isSignedIn)
+                ZStack {
+                    Color.white
+                        .ignoresSafeArea(.all)
+                    Profile(isSignedIn: $isSignedIn, selectedTab: $selectedTab)
+                }
                     .tabItem {
                         Image(systemName: "gear")
                         Text("Profile")
@@ -69,19 +83,16 @@ struct MainView: View {
                             isSignedIn.toggle()
                         }
                             .padding()
-                            .foregroundColor(.white)
+                            .foregroundColor(.black)
                             .cornerRadius(10)
                             .padding(16),
                         alignment: .topTrailing
                     )
                 
             }
-            //            .tint(Gradient(colors: [.lightGrayFancy, .lightGrayFancy, .lightGrayFancy]))
+            .tint(Color(hex: "#42C2FF"))
             .navigationBarHidden(true)
         }
-        //        .onAppear{
-        //           UITabBar.appearance().isHidden = false
-        //        }
         .fullScreenCover(isPresented: $isSignedIn) {
             Login(userisNotSignedIn: $isSignedIn)
         }
@@ -93,7 +104,7 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        MainView(isSignedIn: true)
+        MainView(isSigned: true)
             .environmentObject(Router())
     }
 }

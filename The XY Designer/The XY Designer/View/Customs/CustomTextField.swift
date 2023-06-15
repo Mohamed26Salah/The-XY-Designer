@@ -48,12 +48,16 @@ struct CustomTextField: View {
 //    var contentType: UITextContentType = keyboardType
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
-            TextField(hint, text: $text)
+            TextField("", text: $text)
+                .placeholder(when: text.isEmpty) {
+                    Text(hint).foregroundColor(.gray)
+                }
                 .keyboardType(keyboardType)
                 .textContentType(keyboardContentType)
                 .focused($isEnabled)
-                .padding(.horizontal,10)
+//                .padding(.horizontal,10)
                 .padding(.top,10)
+            
                 
             
             ZStack(alignment: .leading) {

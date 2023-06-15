@@ -26,9 +26,9 @@ struct ShowTextures: View {
     
     var body: some View {
         VStack {
-            ScrollViewReader { reader in
+//            ScrollViewReader { reader in
             ScrollView {
-                EmptyView().id(Self.topId)
+//                EmptyView().id(Self.topId)
                     LazyVGrid(columns: columns, spacing: 10) {
                         ForEach(images, id: \.self) { imageName in
                            Image(imageName)
@@ -39,16 +39,26 @@ struct ShowTextures: View {
                                 .border(selectedImage == imageName ? Color.yellow : Color.clear, width: 10)
                                 .onTapGesture {
                                     selectedImage = imageName
-                                    withAnimation {  // add animation for scroll to top
-                                        reader.scrollTo(Self.topId, anchor: .top) // scroll
-                                    }
+//                                    withAnimation {  // add animation for scroll to top
+//                                        reader.scrollTo(Self.topId, anchor: .top) // scroll
+//                                    }
                                 }
                         }
                     }
-                }
-            .id(Self.topId)
+//                }
+//            .id(Self.topId)
             }
         }
+        .background(
+            LinearGradient(
+                gradient: Gradient(
+                    colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                ),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .opacity(0.3)
+        )
         .onAppear(perform: loadModels)
 
     }

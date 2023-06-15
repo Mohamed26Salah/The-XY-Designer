@@ -10,12 +10,13 @@ import SwiftUI
 struct Profile: View {
     @StateObject var ProfileModel: ProfileViewModel = .init()
     @Binding var isSignedIn: Bool
+    @Binding var selectedTab: Int
     var body: some View {
             ZStack {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 15) {
                         Text("My Profile")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.black)
                             .font(.title)
                             .fontWeight(.semibold)
                             .lineSpacing(10)
@@ -26,9 +27,11 @@ struct Profile: View {
                         SecureTextFieldCustom(hint: "New Password", text: $ProfileModel.newPassword)
                             .opacity(1)
                             .padding(.top,30)
+                            .foregroundColor(.black)
                         SecureTextFieldCustom(hint: "Confirm Password", text: $ProfileModel.confirmNewPassword)
                             .opacity(1)
                             .padding(.top,30)
+                            .foregroundColor(.black)
                         
                         //MARK: Stopped Here
                         HStack {
@@ -49,10 +52,16 @@ struct Profile: View {
                                 .foregroundColor(.primary)
                                 .padding(.horizontal,25)
                                 .padding(.vertical)
-                                .background{
-                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .foregroundColor(.secondary.opacity(0.3))
-                                }
+                                .background(
+                                    LinearGradient(
+                                        gradient: Gradient(
+                                            colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                        ),
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .cornerRadius(15)
                             }
                             Spacer()
                             
@@ -70,17 +79,28 @@ struct Profile: View {
                 }
                 if ProfileModel.showLoading {
                     ProgressView()
-                        .tint(.primary)
+                        .tint(.black)
                         .foregroundColor(.secondary)
                         .scaleEffect(3)
                 }
             }
             .toolbar {
-                Button("Log Out") {ProfileModel.logOutUser()}
-                    .bold()
-                    .scaleEffect(1.3)
-                    .padding()
-                    .tint(Color(.label))
+//                Button("Log Out") {ProfileModel.logOutUser()}
+//                    .bold()
+//                    .scaleEffect(1.3)
+//                    .padding()
+//                    .tint(Color(.label))
+                Button {
+                    selectedTab = 0
+                    ProfileModel.logOutUser()
+                } label: {
+                    Text("Log Out")
+                        .bold()
+                        .scaleEffect(1.3)
+                        .padding()
+                        .tint(Color(.label))
+                }
+
                 
             }
         }

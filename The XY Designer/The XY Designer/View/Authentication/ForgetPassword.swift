@@ -11,14 +11,17 @@ struct ForgetPassword: View {
     @StateObject var forgetModel: ForgetPasswordViewModel = .init()
     var body: some View {
         ZStack {
+            Color.white
+                .ignoresSafeArea(.all)
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .center, spacing: 15) {
-                    Image(systemName: "triangle")
-                        .font(.system(size: 38))
-                        .foregroundColor(.indigo)
+                    Image("XY_V02")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 90, height: 70)
                     
                     (Text("Forgot Password")
-                        .foregroundColor(.primary) +
+                        .foregroundColor(.black) +
                      Text("\nReset your password")
                         .foregroundColor(.gray)
                         .font(.title3)
@@ -36,6 +39,7 @@ struct ForgetPassword: View {
                         .opacity(1)
                         .padding(.top,50)
                         .padding(.bottom,30)
+                        .foregroundColor(.black)
                     
                     //MARK: Stopped Here
                     HStack {
@@ -53,10 +57,16 @@ struct ForgetPassword: View {
                             .foregroundColor(.primary)
                             .padding(.horizontal,25)
                             .padding(.vertical)
-                            .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .foregroundColor(.secondary.opacity(0.3))
-                            }
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(
+                                        colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                    ),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .cornerRadius(15)
                         }
                         Spacer()
                     }
@@ -73,7 +83,7 @@ struct ForgetPassword: View {
             }
             if forgetModel.showLoading {
                 ProgressView()
-                    .tint(.primary)
+                    .tint(.black)
                     .foregroundColor(.secondary)
                     .scaleEffect(3)
                 

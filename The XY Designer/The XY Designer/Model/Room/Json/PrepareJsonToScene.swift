@@ -54,7 +54,6 @@ struct PrepareJsonToScene {
                                     confidence: returnNodeConfidence(nodeConfidence: nodeSurface.confidence)
             )
             checkColorTexture3DModel(node: node, color: nodeSurface.color, texture: nodeSurface.texture, a3dModel: nodeSurface.a3DModel)
-
             if let edges = nodeSurface.edges {
                 node.completedEdges = convertBoolArrayToEdgeSet(boolArray: edges)
             }

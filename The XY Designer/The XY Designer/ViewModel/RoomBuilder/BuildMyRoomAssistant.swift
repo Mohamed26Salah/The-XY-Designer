@@ -43,8 +43,8 @@ struct BuildMyRoomAssistant {
         wallModel.physicsBody?.restitution = 0
         wallModel.physicsBody?.categoryBitMask = EntityType.wall.rawValue
         if wallModel.texture != nil {
-//            addTextures(node: wallModel)
-            addTexturesFromURL(node: wallModel)
+            addTextures(node: wallModel)
+//            addTexturesFromURL(node: wallModel)
         }
         node.addChildNode(wallModel)
         return wallModel
@@ -64,8 +64,8 @@ struct BuildMyRoomAssistant {
         windowModel.geometry = box
         windowModel.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if windowModel.texture != nil {
-//            addTextures(node: windowModel)
-            addTexturesFromURL(node: windowModel)
+            addTextures(node: windowModel)
+//            addTexturesFromURL(node: windowModel)
         }
         if windowModel.a3dModel != nil{
             set3dModel(node: windowModel)
@@ -83,8 +83,8 @@ struct BuildMyRoomAssistant {
         doorModle.geometry = box
         doorModle.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if doorModle.texture != nil {
-//            addTextures(node: doorModle)
-            addTexturesFromURL(node: doorModle)
+            addTextures(node: doorModle)
+//            addTexturesFromURL(node: doorModle)
         }
         if doorModle.a3dModel != nil{
             set3dModel(node: doorModle)
@@ -102,8 +102,8 @@ struct BuildMyRoomAssistant {
         openingModle.geometry = box
         openingModle.physicsBody = SCNPhysicsBody(type: .static, shape: nil)
         if openingModle.texture != nil {
-//            addTextures(node: openingModle)
-            addTexturesFromURL(node: openingModle)
+            addTextures(node: openingModle)
+//            addTexturesFromURL(node: openingModle)
         }
         node.addChildNode(openingModle)
     }
@@ -123,8 +123,8 @@ struct BuildMyRoomAssistant {
         objectModel.physicsBody?.collisionBitMask = EntityType.wall.rawValue
         objectModel.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
         if objectModel.texture != nil {
-//            addTextures(node: objectModel)
-            addTexturesFromURL(node: objectModel)
+            addTextures(node: objectModel)
+//            addTexturesFromURL(node: objectModel)
         }
         if objectModel.a3dModel != nil{
             set3dModel(node: objectModel)
@@ -132,30 +132,30 @@ struct BuildMyRoomAssistant {
         
         node.addChildNode(objectModel)
     }
-//    func addTextures(node: MaterialNode){
-//        let material = SCNMaterial()
-//        if let image = UIImage(named: node.texture){
-//            material.diffuse.contents = image
-//        }else{
-//            material.diffuse.contents = node.texture
-//        }
-//        node.geometry?.materials = [material]
-//    }
-    func addTexturesFromURL(node: MaterialNode){
-        let task = URLSession.shared.dataTask(with: URL(string: node.texture ) ?? errorURL) { data, response, error in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "Unknown error")
-                return
-            }
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                let material = SCNMaterial()
-                material.diffuse.contents = image
-                node.geometry?.firstMaterial = material
-            }
+    func addTextures(node: MaterialNode){
+        let material = SCNMaterial()
+        if let image = UIImage(named: node.texture){
+            material.diffuse.contents = image
+        }else{
+            material.diffuse.contents = node.texture
         }
-        task.resume()
+        node.geometry?.materials = [material]
     }
+//    func addTexturesFromURL(node: MaterialNode){
+//        let task = URLSession.shared.dataTask(with: URL(string: node.texture ) ?? errorURL) { data, response, error in
+//            guard let data = data, error == nil else {
+//                print(error?.localizedDescription ?? "Unknown error")
+//                return
+//            }
+//            let image = UIImage(data: data)
+//            DispatchQueue.main.async {
+//                let material = SCNMaterial()
+//                material.diffuse.contents = image
+//                node.geometry?.firstMaterial = material
+//            }
+//        }
+//        task.resume()
+//    }
     func set3dModel(node: MaterialNode){
         var getOldPosition = SCNVector3(0,0,0)
         var getOldRotation: Float = 0.0
@@ -193,8 +193,8 @@ struct BuildMyRoomAssistant {
         boxNode.physicsBody?.contactTestBitMask = EntityType.object.rawValue | EntityType.wall.rawValue
         if newFurniture.texture != nil {
             boxNode.texture = newFurniture.texture
-//            addTextures(node: boxNode)
-            addTexturesFromURL(node: boxNode)
+            addTextures(node: boxNode)
+//            addTexturesFromURL(node: boxNode)
             //            clickedFeel(materialNode: boxNode)
         }
         if newFurniture.a3dModel != nil{

@@ -15,14 +15,17 @@ struct Login: View {
     var body: some View {
         NavigationStack{
             ZStack {
+                Color.white
+                    .ignoresSafeArea(.all)
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 15) {
-                        Image(systemName: "triangle")
-                            .font(.system(size: 38))
-                            .foregroundColor(.indigo)
+                        Image("XYB-removebg-preview")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 90, height: 70)
                         
                         (Text("Welcome,")
-                            .foregroundColor(.primary) +
+                            .foregroundColor(.black) +
                          Text("\nLogin to continue")
                             .foregroundColor(.gray)
                         )
@@ -37,10 +40,12 @@ struct Login: View {
                             .disabled(loginModel.showVerify)
                             .opacity(loginModel.showVerify ? 0.4 : 1)
                             .padding(.top,50)
+                            .foregroundColor(.black)
                         SecureTextFieldCustom(hint: "**********", text: $loginModel.password)
                             .disabled(loginModel.showVerify)
                             .opacity(loginModel.showVerify ? 0.4 : 1)
                             .padding(.top,30)
+                            .foregroundColor(.black)
                         
                         HStack {
                             Button {
@@ -68,10 +73,16 @@ struct Login: View {
                             .foregroundColor(.primary)
                             .padding(.horizontal,25)
                             .padding(.vertical)
-                            .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .foregroundColor(.secondary.opacity(0.3))
-                            }
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(
+                                        colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                    ),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .cornerRadius(15)
                             Spacer()
                             NavigationLink(destination: Register(userisNotSignedIn: $userisNotSignedIn)) {
                                 HStack(spacing: 15){
@@ -83,21 +94,24 @@ struct Login: View {
                             .foregroundColor(.primary)
                             .padding(.horizontal,25)
                             .padding(.vertical)
-                            .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .foregroundColor(.secondary.opacity(0.3))
-                            }
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(
+                                        colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                    ),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .cornerRadius(15)
                         }
                         HStack {
                             Spacer()
                             NavigationLink(destination: ForgetPassword()) {
                                 Text("Forgot Password?")
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     .font(.headline)
                                     .padding()
-                                    .background(
-                                        Color.clear
-                                    )
                             }
                             Spacer()
                         }
@@ -115,7 +129,7 @@ struct Login: View {
                 }
                 if loginModel.showLoading {
                     ProgressView()
-                        .tint(.primary)
+                        .tint(.black)
                         .foregroundColor(.secondary)
                         .scaleEffect(3)
                     

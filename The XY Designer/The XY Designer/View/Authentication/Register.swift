@@ -12,11 +12,14 @@ struct Register: View {
     @Binding var userisNotSignedIn: Bool
     var body: some View {
         ZStack {
+            Color.white
+                .ignoresSafeArea(.all)
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 15) {
-                    Image(systemName: "triangle")
-                        .font(.system(size: 38))
-                        .foregroundColor(.indigo)
+                    Image("XYB-removebg-preview")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 90, height: 70)
                     
                     (Text("Get Started,")
                         .foregroundColor(.primary) +
@@ -34,18 +37,22 @@ struct Register: View {
                         .disabled(RegisterModel.showVerify)
                         .opacity(RegisterModel.showVerify ? 0.4 : 1)
                         .padding(.top,50)
+                        .foregroundColor(.black)
                     CustomTextField(customKeyboardChoice: .email, hint: "salah@gmail.com", text: $RegisterModel.email)
                         .disabled(RegisterModel.showVerify)
                         .opacity(RegisterModel.showVerify ? 0.4 : 1)
                         .padding(.top,30)
+                        .foregroundColor(.black)
                     SecureTextFieldCustom(hint: "**********", text: $RegisterModel.password)
                         .disabled(RegisterModel.showVerify)
                         .opacity(RegisterModel.showVerify ? 0.4 : 1)
                         .padding(.top,30)
+                        .foregroundColor(.black)
                     SecureTextFieldCustom(hint: "ConfirmPassword", text: $RegisterModel.confirmPassword)
                         .disabled(RegisterModel.showVerify)
                         .opacity(RegisterModel.showVerify ? 0.4 : 1)
                         .padding(.top,30)
+                        .foregroundColor(.black)
                     
                     
                     HStack {
@@ -73,10 +80,16 @@ struct Register: View {
                         .foregroundColor(.primary)
                         .padding(.horizontal,25)
                         .padding(.vertical)
-                        .background{
-                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                .foregroundColor(.secondary.opacity(0.3))
-                        }
+                        .background(
+                            LinearGradient(
+                                gradient: Gradient(
+                                    colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                ),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .cornerRadius(15)
                         Spacer()
 
                     }
@@ -93,7 +106,7 @@ struct Register: View {
             }
             if RegisterModel.showLoading {
                 ProgressView()
-                    .tint(.primary)
+                    .tint(.black)
                     .foregroundColor(.secondary)
                     .scaleEffect(3)
                 

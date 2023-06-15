@@ -16,8 +16,8 @@ struct ShowGallery: View {
     @Binding var uiImageGallery: UIImage?
     @Environment(\.presentationMode) var presentationMode
     var body: some View {
-        HStack{
-            Spacer()
+//        HStack{
+//            Spacer()
             PhotosPicker(
                 selection: $selectedItems,
                 maxSelectionCount: 1,
@@ -26,6 +26,7 @@ struct ShowGallery: View {
                 Text("Select From Gallary")
                     .fontWeight(.semibold)
                     .contentTransition(.identity)
+                    .foregroundColor(.white)
             }
             .foregroundColor(.primary)
             .padding(.horizontal,25)
@@ -60,8 +61,8 @@ struct ShowGallery: View {
                     
                 }
             }
-            Spacer()
-        }
+//            Spacer()
+//        }
     }
 }
 

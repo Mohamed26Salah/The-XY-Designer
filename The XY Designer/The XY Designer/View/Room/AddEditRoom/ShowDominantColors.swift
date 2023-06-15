@@ -11,24 +11,27 @@ struct ShowDominantColors: View {
     let roomDominantColors: [String : [UIColor]]
     @Binding var selectedColor: Color
     var body: some View {
-        List {
-            ForEach(roomDominantColors.keys.sorted(), id: \.self) { room in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        let parts = room.components(separatedBy: "+")
-                        Text(parts.first ?? "Furniture")
-                            .font(.headline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        Spacer()
-                        
-                        ForEach(roomDominantColors[room]!, id: \.self) { color in
-                            ColorCircle(color: Color(color),choosedColor: $selectedColor)
+            List {
+                ForEach(roomDominantColors.keys.sorted(), id: \.self) { room in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack {
+                            let parts = room.components(separatedBy: "+")
+                            Text(parts.first ?? "Furniture")
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            Spacer()
+                            ForEach(roomDominantColors[room]!, id: \.self) { color in
+                                ColorCircle(color: Color(color),choosedColor: $selectedColor)
+                            }
                         }
+                        .ignoresSafeArea(.all)
+                        .padding(.vertical, 1)
                     }
-                    .padding(.vertical, 1)
+                    .scrollContentBackground(.hidden)
                 }
+                
+                .scrollContentBackground(.hidden)
             }
-        }
     }
 }
 struct ColorCircle: View {
@@ -51,7 +54,7 @@ struct ColorCircle: View {
                     isTapped = false
                 }
                 UIImpactFeedbackGenerator(style: .light).impactOccurred()
-                print("Tapped on Sama color \(color)")
+//                print("Tapped on Sama color \(color)")
             }
     }
 }

@@ -35,15 +35,16 @@ struct Row: View {
         dateFormatter.dateFormat = "yyyy-MM-dd"
     }
     var body: some View {
-            ZStack(alignment: .leading) {
-                Color.flatDarkCardBackground
-                HStack {
-               NavigationLink(destination: ViewRoom(link: link)) {
+        ZStack(alignment: .leading) {
+            Color.white
+                .edgesIgnoringSafeArea(.all)
+            HStack {
+                NavigationLink(destination: ViewRoom(link: link)) {
                     ZStack {
                         Circle()
                             .fill(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [.white,.black,.black]),
+                                    gradient: Gradient(colors: [Color(hex: "#42C2FF"),Color(hex: "#42C2FF"),Color(hex: "#DA9FF9")]),
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
@@ -53,9 +54,9 @@ struct Row: View {
                                 .font(.system(size: 20, weight: .bold))
                                 .foregroundColor(.white)
                             
-//                            Text("km")
-//                                .font(.caption)
-//                                .foregroundColor(.white)
+                            //                            Text("km")
+                            //                                .font(.caption)
+                            //                                .foregroundColor(.white)
                         }
                     }
                     .frame(width: 70, height: 70, alignment: .center)
@@ -66,21 +67,24 @@ struct Row: View {
                             .fontWeight(.bold)
                             .lineLimit(2)
                             .padding(.bottom, 5)
+                            .foregroundColor(.black)
                         
                         Text("\(dateFormatter.string(from: time))")
                             .padding(.bottom, 5)
+                            .foregroundColor(.black)
                     }
                     .padding(.horizontal, 5)
                 }
-               .background(Color.flatDarkCardBackground)
-               .cornerRadius(10)
-               .padding(15)
-
+                .background(.white)
+                .cornerRadius(10)
+                .padding(15)
+                
             }
             .clipShape(RoundedRectangle(cornerRadius: 15))
-      
-            }
-            .cornerRadius(10)
+            
+        }
+        .background(.white)
+        .cornerRadius(10)
     }
 }
 

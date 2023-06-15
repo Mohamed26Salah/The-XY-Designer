@@ -15,6 +15,9 @@ struct Home: View {
     var jsonToScene = JsonToScene()
     var body: some View {
         ZStack{
+//            Color(hex: "#00FFCA")
+//                .opacity(0.5)
+//                .edgesIgnoringSafeArea(.all)
             VStack{
                 if fetchScenes.noScenes {
                     Spacer()
@@ -33,11 +36,21 @@ struct Home: View {
                         }
                     }) {
                         Text("Scan Now")
-                            .font(.title2)
+                            .foregroundColor(Color.black)
+                            .font(.title3)
                             .foregroundColor(.white)
                             .padding()
-                            .background(BlurView(style: .systemChromeMaterialDark))
-                            .cornerRadius(10)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(
+                                        colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                                    ),
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .cornerRadius(15)
+                            .shadow(color: .gray, radius: 5, x: 2, y: 2)
                     }
                     .padding()
                     Spacer()
@@ -48,6 +61,7 @@ struct Home: View {
                         ForEach(scenes) { scene in
                             Row(link: scene.link, id: scene.id, time: scene.time)
                                 .disabled(scene.BeingOptimized)
+                                .listRowBackground(Color.white)
                         }
                         .onDelete(perform: { indexSet in
                             for index in indexSet {
@@ -60,16 +74,17 @@ struct Home: View {
                             }
                         })
                     }
-                    .listStyle(PlainListStyle()) // or InsetGroupedListStyle()
-                    .background(Color.clear) // Set the background color to clear
+                    .listStyle(PlainListStyle())// or InsetGroupedListStyle()
+                    .background(Color.white)
+                    .foregroundColor(Color.white)// Set the background color to clear
                     .padding(.top,70)
                 }
             }
             if fetchScenes.showLoading {
                 ProgressView()
-                    .tint(.primary)
+                    .tint(.black)
                     .foregroundColor(.secondary)
-                    .scaleEffect(2)
+                    .scaleEffect(3)
             }
         }
         .onAppear {
@@ -127,9 +142,11 @@ struct SceneDetailView: View {
 }
 
 
-//struct Home_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Home(isSignedIn: true)
-//    }
-//}
+struct Home_Previews: PreviewProvider {
+    @State static var bool = true
+    @State static var selected = 0
+    static var previews: some View {
+        Home(isSignedIn: $bool, selectedTab: $selected)
+    }
+}
 

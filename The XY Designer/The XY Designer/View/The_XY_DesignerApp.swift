@@ -22,9 +22,8 @@ struct The_XY_DesignerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            MainView(isSignedIn: isLoggedIn)
-                .environmentObject(router)
-            //                    }
+                MainView(isSigned: isLoggedIn)
+                    .environmentObject(router)
         }
         
         
@@ -33,6 +32,10 @@ struct The_XY_DesignerApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    static var orientationLock = UIInterfaceOrientationMask.all
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return AppDelegate.orientationLock
+    }
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         FirebaseApp.configure()
