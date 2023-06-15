@@ -190,7 +190,8 @@ struct EditNodeNew: View {
                             else {
                                 Text("This object cant be changed.")
                                     .bold()
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
+                                    
                             }
                         }
                     }
