@@ -13,7 +13,11 @@ struct SaveScene: View {
     var captureController: RoomCaptureController
     @Binding var selectedTab: Int
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
+            Image("XY_V02")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 120, height: 100)
             Text("Enter the Scene Name")
                 .font(.title)
                 .fontWeight(.bold)
@@ -43,17 +47,23 @@ struct SaveScene: View {
                         .contentTransition(.identity)
                 }
             }
-            .foregroundColor(.primary)
+            .foregroundColor(.white)
             .padding(.horizontal,25)
             .padding(.vertical)
-            .background{
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .foregroundColor(.secondary.opacity(0.3))
-            }
+            .background(
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [Color(hex: "#42C2FF"), Color(hex: "#00B4D8")]
+                    ),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+            .cornerRadius(15)
             .padding(.top, 50)
-            Image("XY_V02")
-                .resizable()
-                .scaledToFit()
+//            Image("XY_V02")
+//                .resizable()
+//                .scaledToFit()
         }
         .onAppear{
             uploadScene.sceneName = ""

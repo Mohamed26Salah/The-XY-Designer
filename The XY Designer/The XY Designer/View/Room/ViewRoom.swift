@@ -21,6 +21,7 @@ struct ViewRoom: View {
     @State private var showingAddFurniture = false
     @State private var isARPresented = false
     @State private var typeOfMovement = true
+    @State private var selectedLight = "Default Light"
     //    @State private var rotationAngel: Float = 0.0
     var moniter = JoystickMonitor()
     private let draggableDiameter: CGFloat = 150
@@ -72,7 +73,7 @@ struct ViewRoom: View {
                                     RoundedRectangle(cornerRadius: 15, style: .continuous)
                                         .foregroundColor(.secondary.opacity(0.6))
                                         .frame(width: 55, height: 45)
-                                    BlurView(style: .systemThinMaterialDark)
+                                    BlurView(style: .systemThinMaterial)
                                         .cornerRadius(15)
                                 }
                         }
@@ -106,7 +107,7 @@ struct ViewRoom: View {
                                         RoundedRectangle(cornerRadius: 15, style: .continuous)
                                             .foregroundColor(.secondary.opacity(0.6))
                                             .frame(width: 55, height: 45)
-                                        BlurView(style: .systemThinMaterialDark)
+                                        BlurView(style: .systemThinMaterial)
                                             .cornerRadius(15)
                                     }
                                 }
@@ -123,7 +124,7 @@ struct ViewRoom: View {
             .blur(radius: getBlurRadius())
             //             Bottom Sheet....
             if show {
-                MenuList(offset: $offset, getgestureOffset: $getGestureOffset, show: $show, isARPresented: $isARPresented, showingAddFurniture: $showingAddFurniture, RoomModel: RoomModel, uploadScene: uploadScene)
+                MenuList(offset: $offset, getgestureOffset: $getGestureOffset, show: $show, isARPresented: $isARPresented, showingAddFurniture: $showingAddFurniture, selectedLight: $selectedLight, RoomModel: RoomModel, uploadScene: uploadScene)
             }
             HStack{
                 Spacer()

@@ -54,7 +54,7 @@ struct ForgetPassword: View {
                                     .font(.title3)
                                     .rotationEffect(.init(degrees: 45))
                             }
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                             .padding(.horizontal,25)
                             .padding(.vertical)
                             .background(

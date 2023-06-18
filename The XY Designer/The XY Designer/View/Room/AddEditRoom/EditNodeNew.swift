@@ -188,9 +188,9 @@ struct EditNodeNew: View {
                                 .listRowBackground(Color.white)
                             }
                             else {
-                                Text("This object cant be changed.")
+                                Text("This object cant be changed !")
                                     .bold()
-                                    .foregroundColor(.white)
+                                    .foregroundColor(.black)
                                     
                             }
                         }

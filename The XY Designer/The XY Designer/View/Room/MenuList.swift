@@ -16,6 +16,7 @@ struct MenuList: View {
     @Binding var show: Bool
     @Binding var isARPresented: Bool
     @Binding var showingAddFurniture: Bool
+    @Binding var selectedLight: String
     var RoomModel: BuildMyRoom
     var uploadScene: UploadScene
     var body: some View {
@@ -31,7 +32,7 @@ struct MenuList: View {
                             .fill(Color.white)
                             .frame(width: 60, height: 4)
                             .padding(.top)
-                        BottomContent(show: $show, offset: $offset, isARPresented: $isARPresented, showingAddFurniture: $showingAddFurniture, proxy: proxy, uploadScene: uploadScene, RoomModel: RoomModel)
+                        BottomContent(show: $show, offset: $offset, isARPresented: $isARPresented, showingAddFurniture: $showingAddFurniture, selectedLight: $selectedLight, proxy: proxy, uploadScene: uploadScene, RoomModel: RoomModel)
                     }
                     .padding(.horizontal)
                     .frame(maxHeight: .infinity, alignment: .top)
@@ -77,11 +78,13 @@ struct MenuList: View {
         @Binding var offset: CGFloat
         @Binding var isARPresented: Bool
         @Binding var showingAddFurniture: Bool
+        @Binding var selectedLight: String
         var proxy: GeometryProxy
         var uploadScene: UploadScene
         var RoomModel: BuildMyRoom
 //        @ObservedObject var uploadScene: UploadScene = UploadScene()
-        @State private var selectedLight = "Default Light"
+        
+//        @State private var selectedLight = "Default Light"
         let themes = ["Default Light", "Spot Light", "Ambient Light"]
         var body: some View {
             ZStack {
@@ -134,7 +137,7 @@ struct MenuList: View {
                             }
                             VStack(spacing: 8){
                                 Button {
-                                    print("FuckMe")
+                                    print("Speed Still Working on It")
                                 } label: {
                                     Image(systemName: "wand.and.stars")
                                         .font(.title)
@@ -197,16 +200,7 @@ struct MenuList: View {
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                         Spacer()
-                        
-                        //                    Button {
-                        //                        print("FuckMe")
-                        //                    } label: {
-                        //                        Text("See All")
-                        //                            .fontWeight(.bold)
-                        //                            .foregroundColor(.gray)
-                        //                    }
                     }
-                    //                .padding(.top, 20)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(.white)
@@ -215,11 +209,8 @@ struct MenuList: View {
                             ForEach(themes, id: \.self) {
                                 Text($0)
                             }
-                            //                            .background(BlurView(style: .dark))
                         }
-                        //                        .background(BlurView(style: .dark))
                         .pickerStyle(.inline)
-                        //                    Toggle("Bold Text", isOn: .constant(true))
                     }
                     .padding(.top, -20)
                     .padding(.horizontal, -10)

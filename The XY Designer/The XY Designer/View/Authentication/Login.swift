@@ -64,11 +64,13 @@ struct Login: View {
                                     Text(loginModel.showVerify ? "Verify Email" : "Sign In")
                                         .fontWeight(.semibold)
                                         .contentTransition(.identity)
+                                        
                                     
                                     Image(systemName: "line.diagonal.arrow")
                                         .font(.title3)
                                         .rotationEffect(.init(degrees: 45))
                                 }
+                                .foregroundColor(.white)
                             }
                             .foregroundColor(.primary)
                             .padding(.horizontal,25)
@@ -91,7 +93,7 @@ struct Login: View {
                                         .contentTransition(.identity)
                                 }
                             }
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                             .padding(.horizontal,25)
                             .padding(.vertical)
                             .background(

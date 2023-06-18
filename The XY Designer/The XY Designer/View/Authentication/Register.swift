@@ -76,6 +76,7 @@ struct Register: View {
                                     .font(.title3)
                                     .rotationEffect(.init(degrees: 45))
                             }
+                            .foregroundColor(.white)
                         }
                         .foregroundColor(.primary)
                         .padding(.horizontal,25)

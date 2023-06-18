@@ -93,6 +93,7 @@ struct MainView: View {
             .tint(Color(hex: "#42C2FF"))
             .navigationBarHidden(true)
         }
+        .preferredColorScheme(.light)
         .fullScreenCover(isPresented: $isSignedIn) {
             Login(userisNotSignedIn: $isSignedIn)
         }
