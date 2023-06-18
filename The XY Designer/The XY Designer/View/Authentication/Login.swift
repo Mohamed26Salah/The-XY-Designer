@@ -72,7 +72,6 @@ struct Login: View {
                                 }
                                 .foregroundColor(.white)
                             }
-                            .foregroundColor(.primary)
                             .padding(.horizontal,25)
                             .padding(.vertical)
                             .background(

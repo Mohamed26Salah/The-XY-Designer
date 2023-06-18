@@ -25,31 +25,31 @@ struct Controls: View {
                 })
             }
             .bold()
-            .foregroundColor(.primary)
+            .foregroundColor(.white)
             .padding(.horizontal,24)
             .padding(.vertical)
             .background{
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
                     .foregroundColor(.secondary.opacity(0.6))
                     .frame(width: 60, height: 45)
-                BlurView(style: .systemThinMaterialDark)
+                BlurView(style: .systemThickMaterialDark)
                     .cornerRadius(15)
             }
+//            systemThinMaterialDark
             .padding()
             HStack{
-                VStack{
+                VStack(alignment: .center){
                     if (typeOfMovement){
                         CustomTextFieldCenter(customKeyboardChoice: .num, hint: "Degree", text: $RoomModel.angelRotation)
-                            .background(Color.black)
-                            .background(
-                                Color(UIColor { traitCollection in
-                                    return traitCollection.userInterfaceStyle == .dark ? UIColor.black : UIColor.systemBackground
-                                })
-                            )
-                            .foregroundColor(Color(UIColor { traitCollection in
-                                return traitCollection.userInterfaceStyle == .dark ? UIColor.white : UIColor.black
-                            }))
-                            .cornerRadius(10)
+                            .background{
+                                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.6))
+                                BlurView(style: .systemThickMaterialDark)
+                                    
+                            }
+                            .foregroundColor(.white)
+                            .cornerRadius(15)
+                            .padding(.leading, 20)
                         HStack(){
                             Button {
                                 withAnimation {
@@ -57,33 +57,38 @@ struct Controls: View {
                                 }
                             } label: {
                                 Image(systemName: "rotate.left")
-                                    .font(.title3)
+                                    .font(.title2)
                             }
-                            .foregroundColor(.primary)
+                            .foregroundColor(Color.white)
                             .padding(.horizontal,25)
                             .padding(.vertical)
                             .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .foregroundColor(.secondary.opacity(0.3))
+                                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.6))
+                                    .frame(width: 55, height: 45)
+                                BlurView(style: .systemThickMaterialDark)
+                                    
                             }
+                            .cornerRadius(15)
                             Button {
                                 withAnimation {
                                     RoomModel.rightRotation()
                                 }
                             } label: {
                                 Image(systemName: "rotate.right")
-                                    .font(.title3)
+                                    .font(.title2)
                             }
-                            .foregroundColor(.primary)
+                            .foregroundColor(Color.white)
                             .padding(.horizontal,25)
                             .padding(.vertical)
                             .background{
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .foregroundColor(.secondary.opacity(0.3))
+                                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                    .foregroundColor(.secondary.opacity(0.6))
+                                    .frame(width: 55, height: 45)
+                                BlurView(style: .systemThickMaterialDark)
                             }
+                            .cornerRadius(15)
                         }
-                        .background(Color.black)
-                        .cornerRadius(10)
                         .padding(.leading,20)
                     }else {
                         Button {
@@ -92,34 +97,35 @@ struct Controls: View {
                             }
                         } label: {
                             Image(systemName: "arrow.up")
-                                .font(.title3)
+                                .font(.title2)
                         }
-                        .foregroundColor(.primary)
+                        .foregroundColor(.white)
                         .padding(.horizontal,25)
                         .padding(.vertical)
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
-                            BlurView(style: .systemThinMaterialDark)
-                                .cornerRadius(15)
+                            BlurView(style: .systemThickMaterialDark)
+                                
                         }
+                        .cornerRadius(15)
                         Button {
                             withAnimation {
                                 RoomModel.moveDown()
                             }
                         } label: {
                             Image(systemName: "arrow.down")
-                                .font(.title3)
+                                .font(.title2)
                         }
-                        .foregroundColor(.primary)
+                        .foregroundColor(.white)
                         .padding(.horizontal,25)
                         .padding(.vertical)
                         .background{
                             RoundedRectangle(cornerRadius: 10, style: .continuous)
                                 .foregroundColor(.secondary.opacity(0.3))
-                            BlurView(style: .systemThinMaterialDark)
-                                .cornerRadius(15)
+                            BlurView(style: .systemThickMaterialDark)
                         }
+                        .cornerRadius(15)
                     }
                 }
                 .frame(width: UIScreen.main.bounds.width / 4, height: UIScreen.main.bounds.height / 4)
