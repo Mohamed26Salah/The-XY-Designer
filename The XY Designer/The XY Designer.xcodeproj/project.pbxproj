@@ -438,7 +438,6 @@
 				AB61581329FAA35B00F7119A /* SaveScene.swift */,
 				ABAE2F072A3750A000330A4F /* ViewRoom.swift */,
 				ABAE2F092A37527300330A4F /* MenuList.swift */,
-				AB8E167929F89F58003CC472 /* View3DRoomNew.swift */,
 				AB1D533B2A05679000C1BA8F /* Controls.swift */,
 				AB4E885329EC40ED003FF08A /* ArRoomView.swift */,
 				ABEE93472A09FCEE0023DFFF /* AddEditRoom */,
@@ -506,6 +505,7 @@
 		ABB1464929F9A9BE00CC9EBD /* Trash */ = {
 			isa = PBXGroup;
 			children = (
+				AB8E167929F89F58003CC472 /* View3DRoomNew.swift */,
 				AB8E166329F75A19003CC472 /* ThingsToDo.swift */,
 				ABB4CC0429F5504600D6278A /* testJson.swift */,
 				AB5FC6CB29DF6334005FDCA8 /* BuildMyRoom2.swift */,

@@ -65,7 +65,7 @@ extension BuildMyRoom {
         spotLight.light = SCNLight()
         spotLight.light?.type = SCNLight.LightType.spot
         spotLight.light?.intensity = 200
-        spotLight.position = node.position
+//        spotLight.position = node.position
         spotLight.light?.spotInnerAngle = 120
         spotLight.light?.spotOuterAngle = 120
         spotLight.light?.color = UIColor.white
@@ -76,7 +76,7 @@ extension BuildMyRoom {
         spotLight.light?.shadowMode = .deferred
         spotLight.light?.shadowMapSize = CGSize(width: 2048, height: 2048)
         spotLight.light?.shadowColor = UIColor.black.withAlphaComponent(1)
-        spotLight.position = SCNVector3(x: 0, y: 5, z: 0)
+        spotLight.position = SCNVector3(x: node.position.x, y: 5, z: node.position.z)
         spotLight.eulerAngles = SCNVector3(-Float.pi / 2, 0, 0)
         spotLight.name = "spotLight"
         scene.rootNode.addChildNode(spotLight)
