@@ -19,17 +19,17 @@ The Interior Design AR App is a graduation project that utilizes the Lidar senso
 ## Screenshots
 
 <div style="display: flex;">
-<img src="/ScreenShots/2.png" alt="Screenshot 2" width="200">
-<img src="/ScreenShots/3.png" alt="Screenshot 3" width="200">
-<img src="/ScreenShots/4.png" alt="Screenshot 4" width="200">
-<img src="/ScreenShots/5.png" alt="Screenshot 5" width="200">
-<img src="/ScreenShots/6.png" alt="Screenshot 6" width="200">
-<img src="/ScreenShots/7.png" alt="Screenshot 7" width="200">
-<img src="/ScreenShots/8.png" alt="Screenshot 8" width="200">
-<img src="/ScreenShots/9.png" alt="Screenshot 9" width="200">
-<img src="/ScreenShots/10.png" alt="Screenshot 10" width="200">
-<img src="/ScreenShots/11.png" alt="Screenshot 11" width="200">
-<img src="/ScreenShots/12.png" alt="Screenshot 12" width="200">
+<img src="/ScreenShots/2.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/3.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/4.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/5.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/6.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/7.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/8.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/9.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/10.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/11.png" alt="Screenshot 1" width="200">
+<img src="/ScreenShots/12.png" alt="Screenshot 1" width="200">
 </div>
 ## Installation
 
