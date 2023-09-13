@@ -2,6 +2,8 @@
 
 The Interior Design AR App is a graduation project that utilizes the Lidar sensor of the iPhone to create an augmented reality (AR) experience for interior design enthusiasts. The app allows users to extract room walls, furniture, and openings, along with their positions, transformations, and rotations, using the Lidar sensor. It then reconstructs the room in the app using SceneKit, providing users with a virtual environment where they can design and visualize their dream room.
 
+<img src="/ScreenShots/1.png" alt="Screenshot 1" width="200">
+
 ## Features
 
 - Room Extraction: Utilize the Lidar sensor of the iPhone to accurately extract room dimensions, including walls, furniture, and openings.
@@ -14,6 +16,21 @@ The Interior Design AR App is a graduation project that utilizes the Lidar senso
 - User-Friendly Interface: The app is designed to be easy to use, making it accessible for users without prior design experience.
 - Furniture Layout Optimization: Implement a reinforcement learning model to optimize furniture layout based on common rules, such as maintaining appropriate distances from doors and windows.
 
+## Screenshots
+
+<div style="display: flex;">
+<img src="/ScreenShots/2.png" alt="Screenshot 2" width="200">
+<img src="/ScreenShots/3.png" alt="Screenshot 3" width="200">
+<img src="/ScreenShots/4.png" alt="Screenshot 4" width="200">
+<img src="/ScreenShots/5.png" alt="Screenshot 5" width="200">
+<img src="/ScreenShots/6.png" alt="Screenshot 6" width="200">
+<img src="/ScreenShots/7.png" alt="Screenshot 7" width="200">
+<img src="/ScreenShots/8.png" alt="Screenshot 8" width="200">
+<img src="/ScreenShots/9.png" alt="Screenshot 9" width="200">
+<img src="/ScreenShots/10.png" alt="Screenshot 10" width="200">
+<img src="/ScreenShots/11.png" alt="Screenshot 11" width="200">
+<img src="/ScreenShots/12.png" alt="Screenshot 12" width="200">
+</div>
 ## Installation
 
 To install and run the Interior Design AR App on your iPhone, follow these steps:
